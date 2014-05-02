@@ -1,0 +1,593 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5AAD102E190866970057BB66 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AAD102D190866970057BB66 /* Foundation.framework */; };
+		5AAD1030190866970057BB66 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AAD102F190866970057BB66 /* CoreGraphics.framework */; };
+		5AAD1032190866970057BB66 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AAD1031190866970057BB66 /* UIKit.framework */; };
+		5AAD1038190866970057BB66 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AAD1036190866970057BB66 /* InfoPlist.strings */; };
+		5AAD103A190866970057BB66 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAD1039190866970057BB66 /* main.m */; };
+		5AAD103E190866970057BB66 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAD103D190866970057BB66 /* AppDelegate.m */; };
+		5AAD1041190866970057BB66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AAD103F190866970057BB66 /* Main.storyboard */; };
+		5AAD1046190866970057BB66 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AAD1045190866970057BB66 /* Images.xcassets */; };
+		5AAD104D190866970057BB66 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AAD104C190866970057BB66 /* XCTest.framework */; };
+		5AAD104E190866970057BB66 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AAD102D190866970057BB66 /* Foundation.framework */; };
+		5AAD104F190866970057BB66 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AAD1031190866970057BB66 /* UIKit.framework */; };
+		5AAD1057190866970057BB66 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5AAD1055190866970057BB66 /* InfoPlist.strings */; };
+		5AAD1059190866970057BB66 /* PaceMobileTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAD1058190866970057BB66 /* PaceMobileTests.m */; };
+		5AAD1068190867860057BB66 /* YearTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAD1067190867860057BB66 /* YearTableViewController.m */; };
+		5AAD106B19086C090057BB66 /* MakeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAD106A19086C090057BB66 /* MakeTableViewController.m */; };
+		5AAD106E19086C160057BB66 /* ModelTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAD106D19086C160057BB66 /* ModelTableViewController.m */; };
+		5AAD107119086C540057BB66 /* ProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAD107019086C540057BB66 /* ProductTableViewController.m */; };
+		5AE90E02190F18D100467F74 /* PMXMLBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E01190F18D100467F74 /* PMXMLBuilder.m */; };
+		5AE90E071910142C00467F74 /* PMXMLBuilderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E061910142C00467F74 /* PMXMLBuilderTestCase.m */; };
+		5AE90E0A19103E8500467F74 /* PMNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E0919103E8500467F74 /* PMNetwork.m */; };
+		5AE90E0D19103F0B00467F74 /* NetworkTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E0C19103F0B00467F74 /* NetworkTestViewController.m */; };
+		5AE90E191912CEEF00467F74 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E181912CEEF00467F74 /* LoginViewController.m */; };
+		5AE90E1D1912D1FD00467F74 /* BlueSage_BG@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5AE90E1C1912D1FD00467F74 /* BlueSage_BG@2x.jpg */; };
+		5AE90E1F1912D50C00467F74 /* BlueSage_BG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5AE90E1E1912D50C00467F74 /* BlueSage_BG.jpg */; };
+		5AE90E251912EC0800467F74 /* PMUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E241912EC0800467F74 /* PMUser.m */; };
+		5AE90E311912F33C00467F74 /* PMAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E301912F33C00467F74 /* PMAccount.m */; };
+		5AE90E341912F6D800467F74 /* IPConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E331912F6D800467F74 /* IPConfigViewController.m */; };
+		5AE90E361912FC2900467F74 /* IPConfigView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AE90E351912FC2900467F74 /* IPConfigView.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5AAD1050190866970057BB66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5AAD1022190866970057BB66 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5AAD1029190866970057BB66;
+			remoteInfo = TicketBuilder;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5AAD102A190866970057BB66 /* PaceMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaceMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AAD102D190866970057BB66 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5AAD102F190866970057BB66 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5AAD1031190866970057BB66 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5AAD1035190866970057BB66 /* PaceMobile-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PaceMobile-Info.plist"; sourceTree = "<group>"; };
+		5AAD1037190866970057BB66 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5AAD1039190866970057BB66 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5AAD103B190866970057BB66 /* PaceMobile-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PaceMobile-Prefix.pch"; sourceTree = "<group>"; };
+		5AAD103C190866970057BB66 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5AAD103D190866970057BB66 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5AAD1040190866970057BB66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5AAD1045190866970057BB66 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		5AAD104B190866970057BB66 /* PaceMobileTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PaceMobileTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AAD104C190866970057BB66 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		5AAD1054190866970057BB66 /* PaceMobileTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PaceMobileTests-Info.plist"; sourceTree = "<group>"; };
+		5AAD1056190866970057BB66 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5AAD1058190866970057BB66 /* PaceMobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaceMobileTests.m; sourceTree = "<group>"; };
+		5AAD1066190867860057BB66 /* YearTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YearTableViewController.h; sourceTree = "<group>"; };
+		5AAD1067190867860057BB66 /* YearTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YearTableViewController.m; sourceTree = "<group>"; };
+		5AAD106919086C090057BB66 /* MakeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakeTableViewController.h; sourceTree = "<group>"; };
+		5AAD106A19086C090057BB66 /* MakeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakeTableViewController.m; sourceTree = "<group>"; };
+		5AAD106C19086C160057BB66 /* ModelTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelTableViewController.h; sourceTree = "<group>"; };
+		5AAD106D19086C160057BB66 /* ModelTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelTableViewController.m; sourceTree = "<group>"; };
+		5AAD106F19086C540057BB66 /* ProductTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductTableViewController.h; sourceTree = "<group>"; };
+		5AAD107019086C540057BB66 /* ProductTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductTableViewController.m; sourceTree = "<group>"; };
+		5AE90E00190F18D100467F74 /* PMXMLBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMXMLBuilder.h; sourceTree = "<group>"; };
+		5AE90E01190F18D100467F74 /* PMXMLBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMXMLBuilder.m; sourceTree = "<group>"; };
+		5AE90E061910142C00467F74 /* PMXMLBuilderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMXMLBuilderTestCase.m; sourceTree = "<group>"; };
+		5AE90E0819103E8500467F74 /* PMNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMNetwork.h; sourceTree = "<group>"; };
+		5AE90E0919103E8500467F74 /* PMNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMNetwork.m; sourceTree = "<group>"; };
+		5AE90E0B19103F0B00467F74 /* NetworkTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkTestViewController.h; sourceTree = "<group>"; };
+		5AE90E0C19103F0B00467F74 /* NetworkTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkTestViewController.m; sourceTree = "<group>"; };
+		5AE90E171912CEEF00467F74 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		5AE90E181912CEEF00467F74 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		5AE90E1C1912D1FD00467F74 /* BlueSage_BG@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "BlueSage_BG@2x.jpg"; sourceTree = "<group>"; };
+		5AE90E1E1912D50C00467F74 /* BlueSage_BG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = BlueSage_BG.jpg; sourceTree = "<group>"; };
+		5AE90E231912EC0800467F74 /* PMUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMUser.h; sourceTree = "<group>"; };
+		5AE90E241912EC0800467F74 /* PMUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMUser.m; sourceTree = "<group>"; };
+		5AE90E2F1912F33C00467F74 /* PMAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMAccount.h; sourceTree = "<group>"; };
+		5AE90E301912F33C00467F74 /* PMAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMAccount.m; sourceTree = "<group>"; };
+		5AE90E321912F6D800467F74 /* IPConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPConfigViewController.h; sourceTree = "<group>"; };
+		5AE90E331912F6D800467F74 /* IPConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPConfigViewController.m; sourceTree = "<group>"; };
+		5AE90E351912FC2900467F74 /* IPConfigView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPConfigView.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5AAD1027190866970057BB66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AAD1030190866970057BB66 /* CoreGraphics.framework in Frameworks */,
+				5AAD1032190866970057BB66 /* UIKit.framework in Frameworks */,
+				5AAD102E190866970057BB66 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5AAD1048190866970057BB66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AAD104D190866970057BB66 /* XCTest.framework in Frameworks */,
+				5AAD104F190866970057BB66 /* UIKit.framework in Frameworks */,
+				5AAD104E190866970057BB66 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5AAD1021190866970057BB66 = {
+			isa = PBXGroup;
+			children = (
+				5AAD1033190866970057BB66 /* PaceMobile */,
+				5AAD1052190866970057BB66 /* PaceMobileTests */,
+				5AAD102C190866970057BB66 /* Frameworks */,
+				5AAD102B190866970057BB66 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5AAD102B190866970057BB66 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5AAD102A190866970057BB66 /* PaceMobile.app */,
+				5AAD104B190866970057BB66 /* PaceMobileTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5AAD102C190866970057BB66 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5AAD102D190866970057BB66 /* Foundation.framework */,
+				5AAD102F190866970057BB66 /* CoreGraphics.framework */,
+				5AAD1031190866970057BB66 /* UIKit.framework */,
+				5AAD104C190866970057BB66 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5AAD1033190866970057BB66 /* PaceMobile */ = {
+			isa = PBXGroup;
+			children = (
+				5AE90E1A1912D1EB00467F74 /* Images */,
+				5AAD10631908675B0057BB66 /* Models */,
+				5AAD1062190867530057BB66 /* Controllers */,
+				5AAD103C190866970057BB66 /* AppDelegate.h */,
+				5AAD103D190866970057BB66 /* AppDelegate.m */,
+				5AAD103F190866970057BB66 /* Main.storyboard */,
+				5AAD1045190866970057BB66 /* Images.xcassets */,
+				5AAD1034190866970057BB66 /* Supporting Files */,
+				5AE90E351912FC2900467F74 /* IPConfigView.xib */,
+			);
+			name = PaceMobile;
+			path = TicketBuilder;
+			sourceTree = "<group>";
+		};
+		5AAD1034190866970057BB66 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5AAD1035190866970057BB66 /* PaceMobile-Info.plist */,
+				5AAD1036190866970057BB66 /* InfoPlist.strings */,
+				5AAD1039190866970057BB66 /* main.m */,
+				5AAD103B190866970057BB66 /* PaceMobile-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5AAD1052190866970057BB66 /* PaceMobileTests */ = {
+			isa = PBXGroup;
+			children = (
+				5AAD1058190866970057BB66 /* PaceMobileTests.m */,
+				5AAD1053190866970057BB66 /* Supporting Files */,
+				5AE90E061910142C00467F74 /* PMXMLBuilderTestCase.m */,
+			);
+			name = PaceMobileTests;
+			path = TicketBuilderTests;
+			sourceTree = "<group>";
+		};
+		5AAD1053190866970057BB66 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5AAD1054190866970057BB66 /* PaceMobileTests-Info.plist */,
+				5AAD1055190866970057BB66 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5AAD1062190867530057BB66 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5AAD10651908676E0057BB66 /* CatalogControllers */,
+				5AE90E0B19103F0B00467F74 /* NetworkTestViewController.h */,
+				5AE90E0C19103F0B00467F74 /* NetworkTestViewController.m */,
+				5AE90E171912CEEF00467F74 /* LoginViewController.h */,
+				5AE90E181912CEEF00467F74 /* LoginViewController.m */,
+				5AE90E321912F6D800467F74 /* IPConfigViewController.h */,
+				5AE90E331912F6D800467F74 /* IPConfigViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		5AAD10631908675B0057BB66 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5AE90E00190F18D100467F74 /* PMXMLBuilder.h */,
+				5AE90E01190F18D100467F74 /* PMXMLBuilder.m */,
+				5AE90E0819103E8500467F74 /* PMNetwork.h */,
+				5AE90E0919103E8500467F74 /* PMNetwork.m */,
+				5AE90E231912EC0800467F74 /* PMUser.h */,
+				5AE90E241912EC0800467F74 /* PMUser.m */,
+				5AE90E2F1912F33C00467F74 /* PMAccount.h */,
+				5AE90E301912F33C00467F74 /* PMAccount.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		5AAD10651908676E0057BB66 /* CatalogControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5AAD1066190867860057BB66 /* YearTableViewController.h */,
+				5AAD1067190867860057BB66 /* YearTableViewController.m */,
+				5AAD106919086C090057BB66 /* MakeTableViewController.h */,
+				5AAD106A19086C090057BB66 /* MakeTableViewController.m */,
+				5AAD106C19086C160057BB66 /* ModelTableViewController.h */,
+				5AAD106D19086C160057BB66 /* ModelTableViewController.m */,
+				5AAD106F19086C540057BB66 /* ProductTableViewController.h */,
+				5AAD107019086C540057BB66 /* ProductTableViewController.m */,
+			);
+			name = CatalogControllers;
+			sourceTree = "<group>";
+		};
+		5AE90E1A1912D1EB00467F74 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				5AE90E1B1912D1F200467F74 /* Backgrounds */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		5AE90E1B1912D1F200467F74 /* Backgrounds */ = {
+			isa = PBXGroup;
+			children = (
+				5AE90E1E1912D50C00467F74 /* BlueSage_BG.jpg */,
+				5AE90E1C1912D1FD00467F74 /* BlueSage_BG@2x.jpg */,
+			);
+			name = Backgrounds;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5AAD1029190866970057BB66 /* PaceMobile */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5AAD105C190866970057BB66 /* Build configuration list for PBXNativeTarget "PaceMobile" */;
+			buildPhases = (
+				5AAD1026190866970057BB66 /* Sources */,
+				5AAD1027190866970057BB66 /* Frameworks */,
+				5AAD1028190866970057BB66 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PaceMobile;
+			productName = TicketBuilder;
+			productReference = 5AAD102A190866970057BB66 /* PaceMobile.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5AAD104A190866970057BB66 /* PaceMobileTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5AAD105F190866970057BB66 /* Build configuration list for PBXNativeTarget "PaceMobileTests" */;
+			buildPhases = (
+				5AAD1047190866970057BB66 /* Sources */,
+				5AAD1048190866970057BB66 /* Frameworks */,
+				5AAD1049190866970057BB66 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5AAD1051190866970057BB66 /* PBXTargetDependency */,
+			);
+			name = PaceMobileTests;
+			productName = TicketBuilderTests;
+			productReference = 5AAD104B190866970057BB66 /* PaceMobileTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5AAD1022190866970057BB66 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = Bluesage;
+				TargetAttributes = {
+					5AAD104A190866970057BB66 = {
+						TestTargetID = 5AAD1029190866970057BB66;
+					};
+				};
+			};
+			buildConfigurationList = 5AAD1025190866970057BB66 /* Build configuration list for PBXProject "PaceMobile" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5AAD1021190866970057BB66;
+			productRefGroup = 5AAD102B190866970057BB66 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5AAD1029190866970057BB66 /* PaceMobile */,
+				5AAD104A190866970057BB66 /* PaceMobileTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5AAD1028190866970057BB66 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AAD1046190866970057BB66 /* Images.xcassets in Resources */,
+				5AE90E361912FC2900467F74 /* IPConfigView.xib in Resources */,
+				5AAD1038190866970057BB66 /* InfoPlist.strings in Resources */,
+				5AAD1041190866970057BB66 /* Main.storyboard in Resources */,
+				5AE90E1F1912D50C00467F74 /* BlueSage_BG.jpg in Resources */,
+				5AE90E1D1912D1FD00467F74 /* BlueSage_BG@2x.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5AAD1049190866970057BB66 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AAD1057190866970057BB66 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5AAD1026190866970057BB66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AAD1068190867860057BB66 /* YearTableViewController.m in Sources */,
+				5AAD106B19086C090057BB66 /* MakeTableViewController.m in Sources */,
+				5AAD103E190866970057BB66 /* AppDelegate.m in Sources */,
+				5AAD103A190866970057BB66 /* main.m in Sources */,
+				5AE90E311912F33C00467F74 /* PMAccount.m in Sources */,
+				5AE90E191912CEEF00467F74 /* LoginViewController.m in Sources */,
+				5AE90E251912EC0800467F74 /* PMUser.m in Sources */,
+				5AE90E02190F18D100467F74 /* PMXMLBuilder.m in Sources */,
+				5AE90E341912F6D800467F74 /* IPConfigViewController.m in Sources */,
+				5AAD106E19086C160057BB66 /* ModelTableViewController.m in Sources */,
+				5AE90E0D19103F0B00467F74 /* NetworkTestViewController.m in Sources */,
+				5AE90E0A19103E8500467F74 /* PMNetwork.m in Sources */,
+				5AAD107119086C540057BB66 /* ProductTableViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5AAD1047190866970057BB66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AAD1059190866970057BB66 /* PaceMobileTests.m in Sources */,
+				5AE90E071910142C00467F74 /* PMXMLBuilderTestCase.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5AAD1051190866970057BB66 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5AAD1029190866970057BB66 /* PaceMobile */;
+			targetProxy = 5AAD1050190866970057BB66 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5AAD1036190866970057BB66 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5AAD1037190866970057BB66 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		5AAD103F190866970057BB66 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5AAD1040190866970057BB66 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5AAD1055190866970057BB66 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5AAD1056190866970057BB66 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5AAD105A190866970057BB66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		5AAD105B190866970057BB66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5AAD105D190866970057BB66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TicketBuilder/PaceMobile-Prefix.pch";
+				INFOPLIST_FILE = "TicketBuilder/PaceMobile-Info.plist";
+				PRODUCT_NAME = PaceMobile;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		5AAD105E190866970057BB66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TicketBuilder/PaceMobile-Prefix.pch";
+				INFOPLIST_FILE = "TicketBuilder/PaceMobile-Info.plist";
+				PRODUCT_NAME = PaceMobile;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		5AAD1060190866970057BB66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TicketBuilder.app/TicketBuilder";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TicketBuilder/TicketBuilder-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "TicketBuilderTests/PaceMobileTests-Info.plist";
+				PRODUCT_NAME = PaceMobileTests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		5AAD1061190866970057BB66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TicketBuilder.app/TicketBuilder";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TicketBuilder/TicketBuilder-Prefix.pch";
+				INFOPLIST_FILE = "TicketBuilderTests/PaceMobileTests-Info.plist";
+				PRODUCT_NAME = PaceMobileTests;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5AAD1025190866970057BB66 /* Build configuration list for PBXProject "PaceMobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5AAD105A190866970057BB66 /* Debug */,
+				5AAD105B190866970057BB66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5AAD105C190866970057BB66 /* Build configuration list for PBXNativeTarget "PaceMobile" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5AAD105D190866970057BB66 /* Debug */,
+				5AAD105E190866970057BB66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5AAD105F190866970057BB66 /* Build configuration list for PBXNativeTarget "PaceMobileTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5AAD1060190866970057BB66 /* Debug */,
+				5AAD1061190866970057BB66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5AAD1022190866970057BB66 /* Project object */;
+}
