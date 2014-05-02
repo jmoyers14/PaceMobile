@@ -91,18 +91,6 @@
     [self.loginView setOpaque:NO];
 }
 
-//show the activity spinner
-- (void) showSpinner {
-    [self.spinner setHidden:NO];
-    [self.spinner startAnimating];
-}
-
-//hide the activity spinner
-- (void) hideSpinner {
-    [self.spinner setHidden:YES];
-    [self.spinner stopAnimating];
-}
-
 //log user into pacesetter
 - (void)login {
     if([[_usernameField text] length] > 0 && [[_passwordField text] length] > 0) {

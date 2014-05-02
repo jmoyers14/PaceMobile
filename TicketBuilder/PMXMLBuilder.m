@@ -41,7 +41,7 @@
         if (name == nil) {
             name = @"";
         }
-        NSString *xmlBody = [NSString stringWithFormat:@"<storeId>%d</storeId><anum>%d</anum><name>%@</name>", storeID, anum, name];
+        NSString *xmlBody = [NSString stringWithFormat:@"<storeId>%lu</storeId><anum>%lu</anum><name>%@</name>", (unsigned long)storeID, (unsigned long)anum, name];
         xml = [PMXMLBuilder formatWithFunction:@"findacct" user:username pass:password body:xmlBody];
     } else {
         xml = nil;
@@ -58,9 +58,9 @@
         NSString *body;
         //if cnum is 0 remove value from tag
         if(cnum == 0) {
-            body = [NSString stringWithFormat:@"<storeId>%d</storeId><anum>%d</anum><cnum></cnum>", storeID, anum];
+            body = [NSString stringWithFormat:@"<storeId>%lu</storeId><anum>%lu</anum><cnum></cnum>", (unsigned long)storeID, (unsigned long)anum];
         } else {
-            body = [NSString stringWithFormat:@"<storeId>%d</storeId><anum>%d</anum><cnum>%d</cnum>", storeID, anum, cnum];
+            body = [NSString stringWithFormat:@"<storeId>%lu</storeId><anum>%lu</anum><cnum>%lu</cnum>", (unsigned long)storeID, (unsigned long)anum, (unsigned long)cnum];
         }
         
         xml = [PMXMLBuilder formatWithFunction:@"checkcust" user:username pass:password body:body];
@@ -75,7 +75,7 @@
     
     NSString *xml;
     if(TB_isValidCreds(username, password)) {
-        NSString *body = [NSString stringWithFormat:@"<acctRow>%d</acctRow>", acctRow];
+        NSString *body = [NSString stringWithFormat:@"<acctRow>%lu</acctRow>", (unsigned long)acctRow];
         xml = [PMXMLBuilder formatWithFunction:@"confacct" user:username pass:password body:body];
     } else {
         xml = nil;
@@ -88,7 +88,7 @@
     
     NSString *xml;
     if(TB_isValidCreds(username, password)) {
-        NSString *body = [NSString stringWithFormat:@"<custRow>%d</custRow>", custRow];
+        NSString *body = [NSString stringWithFormat:@"<custRow>%lu</custRow>", (unsigned long)custRow];
         xml = [PMXMLBuilder formatWithFunction:@"confcust" user:username pass:password body:body];
     } else {
         xml = nil;

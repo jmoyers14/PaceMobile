@@ -36,7 +36,7 @@
     _years = [[NSMutableArray alloc] init];
     NSInteger baseYear = 2014;
     for(int i=0; i < 115;i++) {
-        [_years addObject:[NSString stringWithFormat:@"%d", baseYear]];
+        [_years addObject:[NSString stringWithFormat:@"%ld", (long)baseYear]];
         baseYear--;
     }
 

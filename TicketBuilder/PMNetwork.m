@@ -28,7 +28,7 @@
     NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     
-    NSLog(@"Status code = %d", httpResponse.statusCode);
+    NSLog(@"Status code = %ld", (long)httpResponse.statusCode);
     
     
     NSString *responseString = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];

@@ -11,6 +11,8 @@
 #import "PMNetwork.h"
 #import "PMXMLBuilder.h"
 #import "IPConfigViewController.h"
+#import "NetworkViewController.h"
+
 @interface LoginViewController : UIViewController <IPConfigDelegate, UIPopoverControllerDelegate, UITextFieldDelegate>
 
 @property IBOutlet UITextField *usernameField;
