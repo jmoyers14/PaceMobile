@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5AAD1029190866970057BB66"
-               BuildableName = "TicketBuilder.app"
+               BuildableName = "PaceMobile.app"
                BlueprintName = "PaceMobile"
                ReferencedContainer = "container:PaceMobile.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5AAD104A190866970057BB66"
-               BuildableName = "TicketBuilderTests.xctest"
+               BuildableName = "PaceMobileTests.xctest"
                BlueprintName = "PaceMobileTests"
                ReferencedContainer = "container:PaceMobile.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5AAD1029190866970057BB66"
-            BuildableName = "TicketBuilder.app"
+            BuildableName = "PaceMobile.app"
             BlueprintName = "PaceMobile"
             ReferencedContainer = "container:PaceMobile.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5AAD1029190866970057BB66"
-            BuildableName = "TicketBuilder.app"
+            BuildableName = "PaceMobile.app"
             BlueprintName = "PaceMobile"
             ReferencedContainer = "container:PaceMobile.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5AAD1029190866970057BB66"
-            BuildableName = "TicketBuilder.app"
+            BuildableName = "PaceMobile.app"
             BlueprintName = "PaceMobile"
             ReferencedContainer = "container:PaceMobile.xcodeproj">
          </BuildableReference>
