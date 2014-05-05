@@ -11,4 +11,5 @@
 @interface UIViewController (NetworkViewController)
 - (void) showSpinner;
 - (void) hideSpinner;
+- (void) displayErrorMessage:(NSString *)message;
 @end

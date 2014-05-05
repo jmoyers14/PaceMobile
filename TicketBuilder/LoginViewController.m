@@ -100,6 +100,22 @@
     
         NSString *xml = [PMXMLBuilder loginXMLWithUsername:[[PMUser sharedInstance] username]
                                                andPassword:[[PMUser sharedInstance] password]];
+        
+        NSString *response = [PMNetwork postXML:xml toURL:[_user url]];
+        NSDictionary *test = [PMNetwork parseLoginReply:response];
+        
+        if([test objectForKey:@"error"] != nil) {
+            [self displayErrorMessage:[test objectForKey:@"error"]];
+        } else {
+            NSLog(@"Login success!");
+            NSArray *stores = [test objectForKey:@"stores"];
+            for(PMStore *s in stores) {
+                NSLog(@"%@ id:%d", [s name], [s storeId]);
+            }
+        }
+        
+        [self hideSpinner];
+        
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input Error" message:@"Please enter a username and password" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
         [alert show];

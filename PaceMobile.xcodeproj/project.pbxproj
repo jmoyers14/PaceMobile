@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5A94FC041914342700FCCACD /* NetworkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94FC031914342700FCCACD /* NetworkViewController.m */; };
+		5A94FC0719144B2600FCCACD /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94FC0619144B2600FCCACD /* TBXML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5A94FC0E19144E4C00FCCACD /* PMStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94FC0D19144E4C00FCCACD /* PMStore.m */; };
 		5AAD102E190866970057BB66 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AAD102D190866970057BB66 /* Foundation.framework */; };
 		5AAD1030190866970057BB66 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AAD102F190866970057BB66 /* CoreGraphics.framework */; };
 		5AAD1032190866970057BB66 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AAD1031190866970057BB66 /* UIKit.framework */; };
@@ -36,6 +38,8 @@
 		5AE90E311912F33C00467F74 /* PMAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E301912F33C00467F74 /* PMAccount.m */; };
 		5AE90E341912F6D800467F74 /* IPConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E331912F6D800467F74 /* IPConfigViewController.m */; };
 		5AE90E361912FC2900467F74 /* IPConfigView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AE90E351912FC2900467F74 /* IPConfigView.xib */; };
+		5AEF6BBA191615AC00BE766C /* PMNetworkTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF6BB9191615AC00BE766C /* PMNetworkTestCase.m */; };
+		5AEF6BC0191823CF00BE766C /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF6BBF191823CF00BE766C /* XMLWriter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +55,10 @@
 /* Begin PBXFileReference section */
 		5A94FC021914342700FCCACD /* NetworkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkViewController.h; sourceTree = "<group>"; };
 		5A94FC031914342700FCCACD /* NetworkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkViewController.m; sourceTree = "<group>"; };
+		5A94FC0619144B2600FCCACD /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
+		5A94FC0819144B3300FCCACD /* TBXML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBXML.h; sourceTree = "<group>"; };
+		5A94FC0C19144E4C00FCCACD /* PMStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMStore.h; sourceTree = "<group>"; };
+		5A94FC0D19144E4C00FCCACD /* PMStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMStore.m; sourceTree = "<group>"; };
 		5AAD102A190866970057BB66 /* PaceMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PaceMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AAD102D190866970057BB66 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5AAD102F190866970057BB66 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -94,6 +102,9 @@
 		5AE90E321912F6D800467F74 /* IPConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPConfigViewController.h; sourceTree = "<group>"; };
 		5AE90E331912F6D800467F74 /* IPConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPConfigViewController.m; sourceTree = "<group>"; };
 		5AE90E351912FC2900467F74 /* IPConfigView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IPConfigView.xib; sourceTree = "<group>"; };
+		5AEF6BB9191615AC00BE766C /* PMNetworkTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMNetworkTestCase.m; sourceTree = "<group>"; };
+		5AEF6BBE191823CF00BE766C /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
+		5AEF6BBF191823CF00BE766C /* XMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLWriter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +140,15 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		5A94FC0519144B1000FCCACD /* TBXML */ = {
+			isa = PBXGroup;
+			children = (
+				5A94FC0819144B3300FCCACD /* TBXML.h */,
+				5A94FC0619144B2600FCCACD /* TBXML.m */,
+			);
+			name = TBXML;
+			sourceTree = "<group>";
+		};
 		5AAD1021190866970057BB66 = {
 			isa = PBXGroup;
 			children = (
@@ -162,13 +182,14 @@
 		5AAD1033190866970057BB66 /* PaceMobile */ = {
 			isa = PBXGroup;
 			children = (
-				5A94FC01191433FA00FCCACD /* Categories */,
-				5AE90E1A1912D1EB00467F74 /* Images */,
-				5AAD10631908675B0057BB66 /* Models */,
-				5AAD1062190867530057BB66 /* Controllers */,
 				5AAD103C190866970057BB66 /* AppDelegate.h */,
 				5AAD103D190866970057BB66 /* AppDelegate.m */,
 				5AAD103F190866970057BB66 /* Main.storyboard */,
+				5AAD10631908675B0057BB66 /* Models */,
+				5AAD1062190867530057BB66 /* Controllers */,
+				5A94FC01191433FA00FCCACD /* Categories */,
+				5AEF6BBD191823C000BE766C /* XMLWritier */,
+				5A94FC0519144B1000FCCACD /* TBXML */,
 				5AAD1045190866970057BB66 /* Images.xcassets */,
 				5AAD1034190866970057BB66 /* Supporting Files */,
 				5AE90E351912FC2900467F74 /* IPConfigView.xib */,
@@ -180,6 +201,7 @@
 		5AAD1034190866970057BB66 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5AE90E1A1912D1EB00467F74 /* Images */,
 				5AAD1035190866970057BB66 /* PaceMobile-Info.plist */,
 				5AAD1036190866970057BB66 /* InfoPlist.strings */,
 				5AAD1039190866970057BB66 /* main.m */,
@@ -194,6 +216,7 @@
 				5AAD1058190866970057BB66 /* PaceMobileTests.m */,
 				5AAD1053190866970057BB66 /* Supporting Files */,
 				5AE90E061910142C00467F74 /* PMXMLBuilderTestCase.m */,
+				5AEF6BB9191615AC00BE766C /* PMNetworkTestCase.m */,
 			);
 			name = PaceMobileTests;
 			path = TicketBuilderTests;
@@ -233,6 +256,8 @@
 				5AE90E241912EC0800467F74 /* PMUser.m */,
 				5AE90E2F1912F33C00467F74 /* PMAccount.h */,
 				5AE90E301912F33C00467F74 /* PMAccount.m */,
+				5A94FC0C19144E4C00FCCACD /* PMStore.h */,
+				5A94FC0D19144E4C00FCCACD /* PMStore.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -267,6 +292,15 @@
 				5AE90E1C1912D1FD00467F74 /* BlueSage_BG@2x.jpg */,
 			);
 			name = Backgrounds;
+			sourceTree = "<group>";
+		};
+		5AEF6BBD191823C000BE766C /* XMLWritier */ = {
+			isa = PBXGroup;
+			children = (
+				5AEF6BBE191823CF00BE766C /* XMLWriter.h */,
+				5AEF6BBF191823CF00BE766C /* XMLWriter.m */,
+			);
+			name = XMLWritier;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -372,6 +406,7 @@
 				5AAD1068190867860057BB66 /* YearTableViewController.m in Sources */,
 				5AAD106B19086C090057BB66 /* MakeTableViewController.m in Sources */,
 				5AAD103E190866970057BB66 /* AppDelegate.m in Sources */,
+				5A94FC0719144B2600FCCACD /* TBXML.m in Sources */,
 				5AAD103A190866970057BB66 /* main.m in Sources */,
 				5AE90E311912F33C00467F74 /* PMAccount.m in Sources */,
 				5AE90E191912CEEF00467F74 /* LoginViewController.m in Sources */,
@@ -381,7 +416,9 @@
 				5A94FC041914342700FCCACD /* NetworkViewController.m in Sources */,
 				5AAD106E19086C160057BB66 /* ModelTableViewController.m in Sources */,
 				5AE90E0D19103F0B00467F74 /* NetworkTestViewController.m in Sources */,
+				5AEF6BC0191823CF00BE766C /* XMLWriter.m in Sources */,
 				5AE90E0A19103E8500467F74 /* PMNetwork.m in Sources */,
+				5A94FC0E19144E4C00FCCACD /* PMStore.m in Sources */,
 				5AAD107119086C540057BB66 /* ProductTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AAD1059190866970057BB66 /* PaceMobileTests.m in Sources */,
+				5AEF6BBA191615AC00BE766C /* PMNetworkTestCase.m in Sources */,
 				5AE90E071910142C00467F74 /* PMXMLBuilderTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
