@@ -169,8 +169,31 @@ NSString *password;
     NSUInteger line = 134;
     NSUInteger part = 88765;
     
-    NSString *correctXML = [NSString stringWithFormat:
-                            @"%@<user>%@</user><password>%@</password><acctRow>%d</acctRow><line>%d</line><part>%d</part>", xmlHead, username, password, acctRow, line, part];
+    id<XMLStreamWriter> xmlWriter = [[XMLWriter alloc] init];
+
+    [xmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [xmlWriter writeStartElement:@"findpart"];
+    [xmlWriter writeStartElement:@"user"];
+    [xmlWriter writeCharacters:username];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeStartElement:@"password"];
+    [xmlWriter writeCharacters:password];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeStartElement:@"acctRow"];
+    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)acctRow]];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeStartElement:@"line"];
+    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)line]];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeStartElement:@"part"];
+    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)part]];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeEndDocument];
+
+    
+    
+    NSString *correctXML = [xmlWriter toString];
     
     NSString *xml = [PMXMLBuilder findpartXMLWithUsername:username password:password accountRow:acctRow lineNumber:line partNumber:part];
     
@@ -182,8 +205,28 @@ NSString *password;
     NSUInteger line = 134;
     NSUInteger part = 88765;
     
-    NSString *correctXML = [NSString stringWithFormat:
-                            @"%@<user>%@</user><password>%@</password><acctRow></acctRow><line>%d</line><part>%d</part>", xmlHead, username, password, line, part];
+    id<XMLStreamWriter> xmlWriter = [[XMLWriter alloc] init];
+    
+    [xmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [xmlWriter writeStartElement:@"findpart"];
+    [xmlWriter writeStartElement:@"user"];
+    [xmlWriter writeCharacters:username];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeStartElement:@"password"];
+    [xmlWriter writeCharacters:password];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeStartElement:@"acctRow"];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeStartElement:@"line"];
+    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)line]];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeStartElement:@"part"];
+    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)part]];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeEndDocument];
+    
+    NSString *correctXML = [xmlWriter toString];
     
     NSString *xml = [PMXMLBuilder findpartXMLWithUsername:username password:password accountRow:acctRow lineNumber:line partNumber:part];
     
@@ -195,8 +238,28 @@ NSString *password;
     NSUInteger line = 0;
     NSUInteger part = 88765;
     
-    NSString *correctXML = [NSString stringWithFormat:
-                            @"%@<user>%@</user><password>%@</password><acctRow>%d</acctRow><line></line><part>%d</part>", xmlHead, username, password, acctRow, part];
+    id<XMLStreamWriter> xmlWriter = [[XMLWriter alloc] init];
+    
+    [xmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [xmlWriter writeStartElement:@"findpart"];
+    [xmlWriter writeStartElement:@"user"];
+    [xmlWriter writeCharacters:username];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeStartElement:@"password"];
+    [xmlWriter writeCharacters:password];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeStartElement:@"acctRow"];
+    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)acctRow]];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeStartElement:@"line"];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeStartElement:@"part"];
+    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)part]];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeEndElement];
+    [xmlWriter writeEndDocument];
+    
+    NSString *correctXML = [xmlWriter toString];
     
     NSString *xml = [PMXMLBuilder findpartXMLWithUsername:username password:password accountRow:acctRow lineNumber:line partNumber:part];
     
@@ -207,34 +270,85 @@ NSString *password;
 - (void) testInqPartXML {
     NSUInteger acctRow = 1234;
     NSUInteger partRow = 4321;
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
     
-    NSString *correctXML = [NSString stringWithFormat:
-                            @"%@<user>%@</user><password>%@</password><acctRow>%d</acctRow><part>%d</part>", xmlHead, username, password, acctRow, partRow];
+    [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [writer writeStartElement:@"inqpart"];
+    [writer writeStartElement:@"user"];
+    [writer writeCharacters:username];
+    [writer writeEndElement];
+    [writer writeStartElement:@"password"];
+    [writer writeCharacters:password];
+    [writer writeEndElement];
+    [writer writeStartElement:@"acctRow"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)acctRow]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"partRow"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)partRow]];
+    [writer writeEndElement];
+    [writer writeEndElement];
+    [writer writeEndDocument];
     
+    NSString *correctXML = [writer toString];
     NSString *xml = [PMXMLBuilder inqpartXMLWithUsername:username password:password accountRow:acctRow partRow:partRow];
     
     XCTAssertTrue([correctXML isEqualToString:xml], @"xml:%@ shoudl equal correctxml: %@", xml,correctXML);
 }
 
 #pragma mark - checkord
-- (void) checkOrdXML {
+- (void) testCheckOrdXML {
     NSUInteger acctRow = 1234;
     NSUInteger custRow = 4321;
     
-    NSString *correctXML = [NSString stringWithFormat:
-                            @"%@<user>%@</user><password>%@</password><acctRow>%d</acctRow><custRow>%d</custRow>", xmlHead, username, password, acctRow, custRow];
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [writer writeStartElement:@"checkord"];
+    [writer writeStartElement:@"user"];
+    [writer writeCharacters:username];
+    [writer writeEndElement];
+    [writer writeStartElement:@"password"];
+    [writer writeCharacters:password];
+    [writer writeEndElement];
+    [writer writeStartElement:@"acctRow"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) acctRow]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"custRow"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) custRow]];
+    [writer writeEndElement];
+    [writer writeEndElement];
+    [writer writeEndDocument];
+    
+    
+    NSString *correctXML = [writer toString];
     
     NSString *xml = [PMXMLBuilder checkordXMLWithUsername:username password:password accountRow:acctRow customerRow:custRow];
     
     XCTAssertTrue([correctXML isEqualToString:xml], @"xml:%@ shoudl equal correctxml: %@", xml,correctXML);
 }
 
-- (void) checkOrdXMLBlankCustRow {
+- (void) testCheckOrdXMLBlankCustRow {
     NSUInteger acctRow = 1234;
     NSUInteger custRow = 0;
     
-    NSString *correctXML = [NSString stringWithFormat:
-                            @"%@<user>%@</user><password>%@</password><acctRow>%d</acctRow><custRow></custRow>", xmlHead, username, password, acctRow];
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [writer writeStartElement:@"checkord"];
+    [writer writeStartElement:@"user"];
+    [writer writeCharacters:username];
+    [writer writeEndElement];
+    [writer writeStartElement:@"password"];
+    [writer writeCharacters:password];
+    [writer writeEndElement];
+    [writer writeStartElement:@"acctRow"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) acctRow]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"custRow"];
+    [writer writeEndElement];
+    [writer writeEndElement];
+    [writer writeEndDocument];
+    
+    
+    NSString *correctXML = [writer toString];
     
     NSString *xml = [PMXMLBuilder checkordXMLWithUsername:username password:password accountRow:acctRow customerRow:custRow];
     
@@ -242,7 +356,7 @@ NSString *password;
 }
 
 #pragma mark - createord
-- (void) createOrderXML {
+- (void) testCreateOrderXML {
     NSUInteger acctRow = 1234;
     NSUInteger custRow = 4321;
     NSString *ordComment = @"This is a comment";
@@ -250,11 +364,67 @@ NSString *password;
     NSArray *shipText = [NSArray arrayWithObjects:@"1134 old town rd", @"San Diego", @"Ca 93401", @"Another line", @"Another line 2", nil];
     NSArray *messageText = [NSArray arrayWithObjects:@"message1", @"message2", @"message3", @"message4", @"message5", @"message6", nil];
     
-    NSString *correctXML = [NSString stringWithFormat:@"%@<user>%@</user><password>%@</password><acctRow>%d</acctRow><custRow>%d</custRow><ordComment>%@</ordComment><custPoNum>%d</custPoNum><shipInfo><shipText>%@</shipText><shipText>%@</shipText><shipText>%@</shipText><shipText>%@</shipText></shipInfo><messageInfo><messageText>%@</messageText><messageText>%@</messageText><messageText>%@</messageText><messageText>%@</messageText><messageText>%@</messageText><messageText>%@</messageText></messageInfo>", xmlHead, username, password, acctRow, custRow, ordComment, custPoNum, [shipText objectAtIndex:0], [shipText objectAtIndex:1], [shipText objectAtIndex:2], [shipText objectAtIndex:3], [messageText objectAtIndex:0], [messageText objectAtIndex:1], [messageText objectAtIndex:2], [messageText objectAtIndex:3], [messageText objectAtIndex:4], [messageText objectAtIndex:5]];
+    
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [writer writeStartElement:@"checkord"];
+    
+    [writer writeStartElement:@"user"];
+    [writer writeCharacters:username];
+    [writer writeEndElement];
+    [writer writeStartElement:@"password"];
+    [writer writeCharacters:password];
+    [writer writeEndElement];
+    [writer writeStartElement:@"acctRow"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) acctRow]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"custRow"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) custRow]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"ordComment"];
+    [writer writeCharacters:ordComment];
+    [writer writeEndElement];
+    [writer writeStartElement:@"custPoNum"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)custPoNum]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"shipInfo"];
+    for(NSString *s in shipText) {
+        [writer writeStartElement:@"shipText"];
+        [writer writeCharacters:s];
+        [writer writeEndElement];
+    }
+    [writer writeEndElement];
+    [writer writeStartElement:@"messageInfo"];
+    for(NSString *s in messageText) {
+        [writer writeStartElement:@"messageText"];
+        [writer writeCharacters:s];
+        [writer writeEndElement];
+    }
+    [writer writeEndElement];
+    [writer writeEndElement];
+    [writer writeEndDocument];
+    
+    NSString *correctXML = [writer toString];
     
     NSString *xml = [PMXMLBuilder createordXMLWithUsername:username password:password accountRow:acctRow customerRow:custRow orderComment:ordComment customerPONumber:custPoNum shipText:shipText messageText:messageText];
     
     XCTAssertTrue([correctXML isEqualToString:xml], @"xml:%@ shoudl equal correctxml: %@", xml,correctXML);
+}
+
+- (void) testCreatOrdXMLOutOfBounds {
+    NSUInteger acctRow = 1234;
+    NSUInteger custRow = 4321;
+    NSString *ordComment = @"This is a comment";
+    NSUInteger custPoNum = 8776543;
+    NSArray *messageText = [NSArray arrayWithObjects:@"message1", @"message2", @"message3", @"message4", @"message5", @"message6", nil];
+    NSMutableArray *shipText = [[NSMutableArray alloc] init];
+    for(int i = 0; i < 15; i++) {
+        [shipText addObject:[NSString stringWithFormat:@"Line%d", i]];
+    }
+    
+    NSString *xml = [PMXMLBuilder createordXMLWithUsername:username password:password accountRow:acctRow customerRow:custRow orderComment:ordComment customerPONumber:custPoNum shipText:shipText messageText:messageText];
+    
+    XCTAssertTrue((xml == nil), @"createord out of bounds should return nil");
 }
 
 @end

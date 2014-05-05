@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A59E50E191854510058AA66 /* PMStoreTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A59E50D191854510058AA66 /* PMStoreTestCase.m */; };
 		5A94FC041914342700FCCACD /* NetworkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94FC031914342700FCCACD /* NetworkViewController.m */; };
 		5A94FC0719144B2600FCCACD /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94FC0619144B2600FCCACD /* TBXML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5A94FC0E19144E4C00FCCACD /* PMStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94FC0D19144E4C00FCCACD /* PMStore.m */; };
@@ -39,7 +40,7 @@
 		5AE90E341912F6D800467F74 /* IPConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E331912F6D800467F74 /* IPConfigViewController.m */; };
 		5AE90E361912FC2900467F74 /* IPConfigView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AE90E351912FC2900467F74 /* IPConfigView.xib */; };
 		5AEF6BBA191615AC00BE766C /* PMNetworkTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF6BB9191615AC00BE766C /* PMNetworkTestCase.m */; };
-		5AEF6BC0191823CF00BE766C /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF6BBF191823CF00BE766C /* XMLWriter.m */; };
+		5AEF6BC0191823CF00BE766C /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF6BBF191823CF00BE766C /* XMLWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A59E50D191854510058AA66 /* PMStoreTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMStoreTestCase.m; sourceTree = "<group>"; };
 		5A94FC021914342700FCCACD /* NetworkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkViewController.h; sourceTree = "<group>"; };
 		5A94FC031914342700FCCACD /* NetworkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkViewController.m; sourceTree = "<group>"; };
 		5A94FC0619144B2600FCCACD /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
@@ -214,9 +216,10 @@
 			isa = PBXGroup;
 			children = (
 				5AAD1058190866970057BB66 /* PaceMobileTests.m */,
-				5AAD1053190866970057BB66 /* Supporting Files */,
 				5AE90E061910142C00467F74 /* PMXMLBuilderTestCase.m */,
 				5AEF6BB9191615AC00BE766C /* PMNetworkTestCase.m */,
+				5A59E50D191854510058AA66 /* PMStoreTestCase.m */,
+				5AAD1053190866970057BB66 /* Supporting Files */,
 			);
 			name = PaceMobileTests;
 			path = TicketBuilderTests;
@@ -429,6 +432,7 @@
 			files = (
 				5AAD1059190866970057BB66 /* PaceMobileTests.m in Sources */,
 				5AEF6BBA191615AC00BE766C /* PMNetworkTestCase.m in Sources */,
+				5A59E50E191854510058AA66 /* PMStoreTestCase.m in Sources */,
 				5AE90E071910142C00467F74 /* PMXMLBuilderTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -572,21 +576,21 @@
 		5AAD1060190866970057BB66 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TicketBuilder.app/TicketBuilder";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PaceMobile.app/PaceMobile";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TicketBuilder/TicketBuilder-Prefix.pch";
+				GCC_PREFIX_HEADER = "TicketBuilder/PaceMobile-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "TicketBuilderTests/PaceMobileTests-Info.plist";
 				PRODUCT_NAME = PaceMobileTests;
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PaceMobile.app/PaceMobile";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -594,17 +598,17 @@
 		5AAD1061190866970057BB66 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/TicketBuilder.app/TicketBuilder";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PaceMobile.app/PaceMobile";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "TicketBuilder/TicketBuilder-Prefix.pch";
+				GCC_PREFIX_HEADER = "TicketBuilder/PaceMobile-Prefix.pch";
 				INFOPLIST_FILE = "TicketBuilderTests/PaceMobileTests-Info.plist";
 				PRODUCT_NAME = PaceMobileTests;
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PaceMobile.app/PaceMobile";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;

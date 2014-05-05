@@ -26,4 +26,12 @@
     return [self initWithName:@"Unnamed Store" andID:0];
 }
 
+- (BOOL) isEqualToStore:(PMStore *)store {
+    
+    if([_name isEqualToString:[store name]] && (_storeId == [store storeId])) {
+        return YES;
+    }
+    return NO;
+}
+
 @end

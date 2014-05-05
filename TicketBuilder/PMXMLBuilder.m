@@ -18,6 +18,10 @@
     return [NSString stringWithFormat:@"%@<%@><user>%@</user><password>%@</password>%@</%@>", xmlHeader, func, user, pass, body, func];
 }
 
++ (void) credError:(NSString *)method  {
+    NSLog(@"%@: invalid username or password", method);
+}
+
 
 //Return an xml string to log user in with MOE
 + (NSString *) loginXMLWithUsername:(NSString *)username andPassword:(NSString *)password {
@@ -50,7 +54,7 @@
     return xml;
 }
 
-
+//cnum 0 == blank cnum tag
 + (NSString *) checkcustXMLWithUsername:(NSString *)username password:(NSString *)password storeID:(NSUInteger)storeID accountNumber:(NSUInteger)anum customerNumber:(NSUInteger)cnum {
     
     NSString *xml;
@@ -70,7 +74,7 @@
     
     return xml;
 }
-
+#pragma mark - confacct
 + (NSString *) confacctXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow {
     
     NSString *xml;
@@ -95,6 +99,155 @@
     }
     
     return xml;
+}
+
+//acctRow 0 == blank acctRow tag
+//line 0 == blank line tag
++ (NSString *) findpartXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow lineNumber:(NSUInteger)line partNumber:(NSUInteger)part {
+
+    id<XMLStreamWriter> xmlWriter = [[XMLWriter alloc] init];
+    if(TB_isValidCreds(username, password)) {
+        [xmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [xmlWriter writeStartElement:@"findpart"];
+        [xmlWriter writeStartElement:@"user"];
+        [xmlWriter writeCharacters:username];
+        [xmlWriter writeEndElement];
+        [xmlWriter writeStartElement:@"password"];
+        [xmlWriter writeCharacters:password];
+        [xmlWriter writeEndElement];
+        [xmlWriter writeStartElement:@"acctRow"];
+        if (acctRow > 0) {
+            [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)acctRow]];
+        }
+        [xmlWriter writeEndElement];
+        [xmlWriter writeStartElement:@"line"];
+        if (line > 0) {
+            [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)line]];
+        }
+        [xmlWriter writeEndElement];
+        [xmlWriter writeStartElement:@"part"];
+        [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)part]];
+        [xmlWriter writeEndElement];
+        [xmlWriter writeEndElement];
+        [xmlWriter writeEndDocument];
+    } else {
+        NSLog(@"findpart: invalid username and password");
+        return nil;
+    }
+    return [xmlWriter toString];
+}
+
+#pragma mark inqpart
++ (NSString *) inqpartXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow partRow:(NSUInteger)partRow {
+    
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if(TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"inqpart"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"acctRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)acctRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"partRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)partRow]];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"inqpart"];
+        return nil;
+    }
+    
+    return [writer toString];
+}
+
+#pragma mark - checkord
+//custRow 0 == blank customerRow tag
++ (NSString *)checkordXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow customerRow:(NSUInteger)custRow {
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if(TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"checkord"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"acctRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) acctRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"custRow"];
+        if(custRow > 0) {
+            [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) custRow]];
+        }
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"checkord"];
+        return nil;
+    }
+    
+    return [writer toString];
+}
+
+#pragma mark - createord
++ (NSString *) createordXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow customerRow:(NSUInteger)custRow orderComment:(NSString *)ordComment customerPONumber:(NSUInteger)custPoNum shipText:(NSArray *)shipText messageText:(NSArray *)messageText {
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    
+    if([shipText count] > 10 || [messageText count] > 10) {
+        NSLog(@"createord: shiptext or message text exceeds 10 lines");
+        return nil;
+    }
+    if(TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"checkord"];
+        
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"acctRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) acctRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"custRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) custRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"ordComment"];
+        [writer writeCharacters:ordComment];
+        [writer writeEndElement];
+        [writer writeStartElement:@"custPoNum"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)custPoNum]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"shipInfo"];
+        for(NSString *s in shipText) {
+            [writer writeStartElement:@"shipText"];
+            [writer writeCharacters:s];
+            [writer writeEndElement];
+        }
+        [writer writeEndElement];
+        [writer writeStartElement:@"messageInfo"];
+        for(NSString *s in messageText) {
+            [writer writeStartElement:@"messageText"];
+            [writer writeCharacters:s];
+            [writer writeEndElement];
+        }
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"createord"];
+    }
+
+    return [writer toString];
 }
 
 @end

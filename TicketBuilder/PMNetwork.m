@@ -189,10 +189,12 @@
         [stores addObject:store];
     }
     
-    NSDictionary *returnData = [NSDictionary dictionaryWithObjectsAndKeys:@"storeCnt", [NSNumber numberWithInteger:storeCnt],
-                                                                          @"stores", stores, nil];
+    NSDictionary *returnData = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:storeCnt],
+                                                                          @"storeCnt", stores, @"stores", nil];
 
     return returnData;
 }
+
+
 
 @end

@@ -14,5 +14,5 @@
 @property (nonatomic, readonly) NSUInteger storeId;
 
 - (id) initWithName:(NSString *)name andID:(NSUInteger)storeId;
-
+- (BOOL) isEqualToStore:(PMStore *)store;
 @end

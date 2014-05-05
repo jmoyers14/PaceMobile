@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XMLWriter.h"
 
 @interface PMXMLBuilder : NSObject
 //xml to log user into MOE
