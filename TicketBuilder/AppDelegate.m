@@ -7,12 +7,22 @@
 //
 
 #import "AppDelegate.h"
-
+#import "LoginViewController.h"
+#import "StorePickerViewController.h"
 @implementation AppDelegate
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+
+    
+    //Show the login view controller modally
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    [self.window makeKeyAndVisible];
+    LoginViewController *loginViewController = [sb instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    UINavigationController *navController = (UINavigationController *)[self.window rootViewController];
+    [[navController topViewController] presentViewController:loginViewController animated:NO completion:nil];
+    
     return YES;
 }
 							

@@ -10,8 +10,8 @@
 		5A59E50E191854510058AA66 /* PMStoreTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A59E50D191854510058AA66 /* PMStoreTestCase.m */; };
 		5A59E51219186AF00058AA66 /* PMNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A59E51119186AF00058AA66 /* PMNetworkOperation.m */; };
 		5A796FA1191ABD6E00EFF0D8 /* PMUserTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A796FA0191ABD6E00EFF0D8 /* PMUserTestCase.m */; };
-		5A796FA4191ACD5100EFF0D8 /* StorePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A796FA3191ACD5100EFF0D8 /* StorePickerViewController.m */; };
-		5A796FA7191ACD5F00EFF0D8 /* AccountPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A796FA6191ACD5F00EFF0D8 /* AccountPickerViewController.m */; };
+		5A796FB3191AD60F00EFF0D8 /* StoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A796FB2191AD60F00EFF0D8 /* StoreTableViewController.m */; };
+		5A796FB6191AD61A00EFF0D8 /* AccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A796FB5191AD61A00EFF0D8 /* AccountTableViewController.m */; };
 		5A94FC041914342700FCCACD /* NetworkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94FC031914342700FCCACD /* NetworkViewController.m */; };
 		5A94FC0719144B2600FCCACD /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94FC0619144B2600FCCACD /* TBXML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5A94FC0E19144E4C00FCCACD /* PMStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94FC0D19144E4C00FCCACD /* PMStore.m */; };
@@ -62,10 +62,10 @@
 		5A59E51019186AF00058AA66 /* PMNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMNetworkOperation.h; sourceTree = "<group>"; };
 		5A59E51119186AF00058AA66 /* PMNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMNetworkOperation.m; sourceTree = "<group>"; };
 		5A796FA0191ABD6E00EFF0D8 /* PMUserTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMUserTestCase.m; sourceTree = "<group>"; };
-		5A796FA2191ACD5100EFF0D8 /* StorePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorePickerViewController.h; sourceTree = "<group>"; };
-		5A796FA3191ACD5100EFF0D8 /* StorePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StorePickerViewController.m; sourceTree = "<group>"; };
-		5A796FA5191ACD5F00EFF0D8 /* AccountPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountPickerViewController.h; sourceTree = "<group>"; };
-		5A796FA6191ACD5F00EFF0D8 /* AccountPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountPickerViewController.m; sourceTree = "<group>"; };
+		5A796FB1191AD60F00EFF0D8 /* StoreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreTableViewController.h; sourceTree = "<group>"; };
+		5A796FB2191AD60F00EFF0D8 /* StoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreTableViewController.m; sourceTree = "<group>"; };
+		5A796FB4191AD61A00EFF0D8 /* AccountTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewController.h; sourceTree = "<group>"; };
+		5A796FB5191AD61A00EFF0D8 /* AccountTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountTableViewController.m; sourceTree = "<group>"; };
 		5A94FC021914342700FCCACD /* NetworkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkViewController.h; sourceTree = "<group>"; };
 		5A94FC031914342700FCCACD /* NetworkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkViewController.m; sourceTree = "<group>"; };
 		5A94FC0619144B2600FCCACD /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
@@ -266,10 +266,10 @@
 				5AE90E181912CEEF00467F74 /* LoginViewController.m */,
 				5AE90E321912F6D800467F74 /* IPConfigViewController.h */,
 				5AE90E331912F6D800467F74 /* IPConfigViewController.m */,
-				5A796FA2191ACD5100EFF0D8 /* StorePickerViewController.h */,
-				5A796FA3191ACD5100EFF0D8 /* StorePickerViewController.m */,
-				5A796FA5191ACD5F00EFF0D8 /* AccountPickerViewController.h */,
-				5A796FA6191ACD5F00EFF0D8 /* AccountPickerViewController.m */,
+				5A796FB1191AD60F00EFF0D8 /* StoreTableViewController.h */,
+				5A796FB2191AD60F00EFF0D8 /* StoreTableViewController.m */,
+				5A796FB4191AD61A00EFF0D8 /* AccountTableViewController.h */,
+				5A796FB5191AD61A00EFF0D8 /* AccountTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -435,12 +435,12 @@
 				5AAD1068190867860057BB66 /* YearTableViewController.m in Sources */,
 				5AAD106B19086C090057BB66 /* MakeTableViewController.m in Sources */,
 				5AAD103E190866970057BB66 /* AppDelegate.m in Sources */,
-				5A796FA4191ACD5100EFF0D8 /* StorePickerViewController.m in Sources */,
+				5A796FB6191AD61A00EFF0D8 /* AccountTableViewController.m in Sources */,
 				5A94FC0719144B2600FCCACD /* TBXML.m in Sources */,
 				5AAD103A190866970057BB66 /* main.m in Sources */,
-				5A796FA7191ACD5F00EFF0D8 /* AccountPickerViewController.m in Sources */,
 				5A59E51219186AF00058AA66 /* PMNetworkOperation.m in Sources */,
 				5AE90E311912F33C00467F74 /* PMAccount.m in Sources */,
+				5A796FB3191AD60F00EFF0D8 /* StoreTableViewController.m in Sources */,
 				5AE90E191912CEEF00467F74 /* LoginViewController.m in Sources */,
 				5AE90E251912EC0800467F74 /* PMUser.m in Sources */,
 				5AE90E02190F18D100467F74 /* PMXMLBuilder.m in Sources */,

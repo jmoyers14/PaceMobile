@@ -1,5 +1,5 @@
 //
-//  AccountPickerViewController.h
+//  StoreTableViewController.h
 //  PaceMobile
 //
 //  Created by Jeremy Moyers on 5/7/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AccountPickerViewController : UIViewController
+@interface StoreTableViewController : UITableViewController
 
 @end

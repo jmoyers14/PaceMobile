@@ -159,7 +159,7 @@
             } else {
                 NSLog(@"Login success!");
                 [_user setStores:[data objectForKey:@"stores"]];
-                [self performSegueWithIdentifier:@"presentStorePicker" sender:self];
+                [self dismissViewControllerAnimated:YES completion:nil];
             }
         }
     } else {
