@@ -13,6 +13,7 @@
     IPConfigViewController *_ipConfViewController;
     UIPopoverController *_ipConfigPopover;
     PMUser *_user;
+    NSOperationQueue *_operations;
 }
 
 @end
@@ -35,6 +36,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    _operations = [[NSOperationQueue alloc] init];
+    [_operations setMaxConcurrentOperationCount:1];
+    [_operations setName:@"login operation"];
+    
     [self hideSpinner];
     [self styleTheLoginView];
     _user = [PMUser sharedInstance];
@@ -101,20 +107,13 @@
         NSString *xml = [PMXMLBuilder loginXMLWithUsername:[[PMUser sharedInstance] username]
                                                andPassword:[[PMUser sharedInstance] password]];
         
-        NSString *response = [PMNetwork postXML:xml toURL:[_user url]];
-        NSDictionary *test = [PMNetwork parseLoginReply:response];
+
+        PMNetworkOperation *loginOperation = [[PMNetworkOperation alloc] initWithIdentifier:@"login" XML:xml andURL:[_user url]];
+        loginOperation.delegate = self;
         
-        if([test objectForKey:@"error"] != nil) {
-            [self displayErrorMessage:[test objectForKey:@"error"]];
-        } else {
-            NSLog(@"Login success!");
-            NSArray *stores = [test objectForKey:@"stores"];
-            for(PMStore *s in stores) {
-                NSLog(@"%@ id:%d", [s name], [s storeId]);
-            }
-        }
-        
-        [self hideSpinner];
+        [_operations addOperation:loginOperation];
+
+
         
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Input Error" message:@"Please enter a username and password" delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
@@ -144,6 +143,30 @@
         [_ipConfigPopover presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
         
     }
+}
+
+
+#pragma mark - PMNetworkOperationDelegate
+
+- (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
+
+    if(![operation failed]) {
+        if([[operation identifier] isEqualToString:@"login"]) {
+            NSDictionary *data = [PMNetwork parseLoginReply:operation.responseXML];
+    
+            if([data objectForKey:@"error"] != nil) {
+                [self displayErrorMessage:[data objectForKey:@"error"]];
+            } else {
+                NSLog(@"Login success!");
+                [_user setStores:[data objectForKey:@"stores"]];
+                [self performSegueWithIdentifier:@"presentStorePicker" sender:self];
+            }
+        }
+    } else {
+        NSLog(@"Operation failed");
+    }
+    
+    [self hideSpinner];
 }
 
 #pragma mark - UITextFieldDelegate

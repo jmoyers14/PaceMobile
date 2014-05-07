@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "PMAccount.h"
+#import "PMStore.h"
 
 @interface PMUser : NSObject
 
@@ -15,9 +16,9 @@
 @property (nonatomic, strong) NSString *password;
 @property (nonatomic, strong) NSString *ip;
 @property (nonatomic, strong) NSString *urlPort;
-@property (nonatomic, readonly) NSString *url;
-@property (nonatomic, assign) NSUInteger storeNum;
-@property (nonatomic, strong) PMAccount *currAccount;
+@property (nonatomic, readonly, strong) NSString *url;
+@property (nonatomic, strong) NSArray *stores;
+@property (nonatomic, strong) PMStore *currentStore;
 
 + (id) sharedInstance;
 + (BOOL) sharedInstanceExists;
