@@ -51,7 +51,7 @@ NSUInteger _currentStoreIndex;
 }
 
 - (PMStore *) currentStore {
-    if (_currentStoreIndex > [_stores count]) {
+    if (_currentStoreIndex < [_stores count]) {
         return [_stores objectAtIndex:_currentStoreIndex];
     } else {
         NSLog(@"user has no stores");

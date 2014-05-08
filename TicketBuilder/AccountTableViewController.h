@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface AccountTableViewController : UITableViewController
+#import "PMNetworkOperation.h"
+#import "NetworkViewController.h"
+@interface AccountTableViewController : UITableViewController <PMNetworkOperationDelegate>
 
 @end

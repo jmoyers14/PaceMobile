@@ -24,5 +24,5 @@
 @property (nonatomic, strong) NSString *email;
 
 -(id) initWithName:(NSString *)name row:(NSUInteger)acctRow num:(NSUInteger)anum;
-
+-(BOOL) isEqualToAccount:(PMAccount *)account;
 @end

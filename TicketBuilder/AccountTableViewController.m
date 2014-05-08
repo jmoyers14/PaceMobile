@@ -7,8 +7,12 @@
 //
 
 #import "AccountTableViewController.h"
-
-@interface AccountTableViewController ()
+#import "PMUser.h"
+#import "PMXMLBuilder.h"
+@interface AccountTableViewController () {
+    PMUser *_user;
+    NSOperationQueue *_operations;
+}
 
 @end
 
@@ -26,40 +30,71 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self setTitle:@"Accounts"];
+    _user = [PMUser sharedInstance];
+    _operations = [[NSOperationQueue alloc] init];
+    [_operations setMaxConcurrentOperationCount:1];
+    [_operations setName:@"Find Accounts Operations"];
+    
+    //xml to lookup all accounts for the store
+    NSString *xml = [PMXMLBuilder findacctXMLWithUsername:[_user username]
+                                                 password:[_user password]
+                                                  storeID:[[_user currentStore] storeId]
+                                            accountNumber:0
+                                                storeName:@"*"];
+    
+    PMNetworkOperation *findacct = [[PMNetworkOperation alloc] initWithIdentifier:@"findacct" XML:xml andURL:[_user url]];
+    [findacct setDelegate:self];
+    [_operations addOperation:findacct];
+    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    return 0;
+    return [[[_user currentStore] accounts] count];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AccountCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    [[cell textLabel] setText:[[[[_user currentStore] accounts] objectAtIndex:indexPath.row] name]];
     
     return cell;
 }
-*/
+
+#pragma mark - PMNetworkOperationDelegate
+
+- (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
+    if(![operation failed]) {
+        if([[operation identifier] isEqualToString:@"findacct"]) {
+            NSDictionary *response = [PMNetwork parseFindacctReply:[operation responseXML]];
+            if([response objectForKey:@"error"] != nil) {
+                [self displayErrorMessage:[response objectForKey:@"error"]];
+            } else {
+                [[_user currentStore] setAccounts:[response objectForKey:@"accounts"]];
+                [self.tableView reloadData];
+            }
+        }
+    } else {
+        NSLog(@"findacct operation failed");
+    }
+
+}
 
 /*
 // Override to support conditional editing of the table view.

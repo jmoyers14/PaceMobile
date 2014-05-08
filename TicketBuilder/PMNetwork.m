@@ -114,29 +114,6 @@
 }
 
 /**************************************************************
- *Extract the root element from the xml data
- *
- *params
- *  xml - NSString* - string value of xml data
- *
- *return
- *  TBXMLElement* - root element of the xml data, returns nil
- *                  if an error occurs
- **************************************************************/
-+ (TBXMLElement *) extractRoot:(NSString *)xml {
-    NSError *tbError;
-    TBXML *tbxml = [TBXML newTBXMLWithXMLString:xml error:&tbError];
-    if(tbError) {
-        NSLog(@"Error value pasrsing error code:%d, message: %@", [tbError code], [tbError localizedDescription]);
-        return nil;
-    }
-    
-    TBXMLElement *root = [tbxml rootXMLElement];
-    
-    return root;
-}
-
-/**************************************************************
  *parse the response from the login function
  *
  *params
@@ -149,12 +126,15 @@
  *      stores     => array of store objects returned
  ***************************************************************/
 + (NSDictionary *) parseLoginReply:(NSString *)xml {
-    
-    TBXMLElement *root = [PMNetwork extractRoot:xml];
-    if(root == nil) {
-        NSLog(@"parseLoginReply could not find root");
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%d, message: %@", [rootError code], [rootError localizedDescription]);
         return nil;
     }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
     
     //parse errors
     TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
@@ -186,6 +166,7 @@
         storeIdElement   = [TBXML childElementNamed:@"storeId" parentElement:storeElement];
         PMStore *store   = [[PMStore alloc] initWithName:[TBXML textForElement:storeNameElement]
                                                   andID:[[TBXML textForElement:storeIdElement] integerValue]];
+        NSLog(@"%@", [store name]);
         [stores addObject:store];
     }
     
@@ -195,6 +176,73 @@
     return returnData;
 }
 
+/**************************************************************
+ *parse the response from the findacct function
+ *
+ *params
+ *  data - NSString* - xml data returned from a network request
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *      error      => error code if there is an error
+ *      acctCnt    => number of stores returned
+ *      accounts   => array of account objects returned
+ ***************************************************************/
 
++ (NSDictionary *) parseFindacctReply:(NSString *)xml {
+
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%d, message: %@", [rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    //Parse store count
+    TBXMLElement *acctCntEle = [TBXML childElementNamed:@"acctCnt" parentElement:root];
+    NSInteger acctCnt = [[TBXML textForElement:acctCntEle] integerValue];
+
+    //Parse stores
+    TBXMLElement *acctElement     = [TBXML childElementNamed:@"accts" parentElement:root];
+    TBXMLElement *acctNameElement = [TBXML childElementNamed:@"name" parentElement:acctElement];
+    TBXMLElement *acctNumElement  = [TBXML childElementNamed:@"anum" parentElement:acctElement];
+    TBXMLElement *acctRowElement  = [TBXML childElementNamed:@"acctRow" parentElement:acctElement];
+    PMAccount *account1 = [[PMAccount alloc] initWithName:[TBXML textForElement:acctNameElement]
+                                                      row:[[TBXML textForElement:acctRowElement] integerValue]
+                                                      num:[[TBXML textForElement:acctNumElement] integerValue]];
+    NSMutableArray *accounts = [[NSMutableArray alloc] initWithObjects:account1, nil];
+    
+    while ((acctElement = acctElement->nextSibling)) {
+        acctNameElement = [TBXML childElementNamed:@"name" parentElement:acctElement];
+        acctNumElement  = [TBXML childElementNamed:@"anum" parentElement:acctElement];
+        acctRowElement  = [TBXML childElementNamed:@"acctRow" parentElement:acctElement];
+        PMAccount *account = [[PMAccount alloc] initWithName:[TBXML textForElement:acctNameElement]
+                                                         row:[[TBXML textForElement:acctRowElement] integerValue]
+                                                         num:[[TBXML textForElement:acctNumElement] integerValue]];
+        NSLog(@"%@", [account name]);
+        
+        [accounts addObject:account];
+    }
+    
+    NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:acctCnt], @"acctCnt", accounts, @"accounts", nil];
+    
+    return response;
+}
 
 @end

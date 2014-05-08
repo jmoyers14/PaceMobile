@@ -37,4 +37,17 @@
     return [self initWithName:@"Unnamed account" row:0 num:0];
 }
 
+
+//WARNING only compares account name, row, and number!
+- (BOOL) isEqualToAccount:(PMAccount *)account {
+    if([_name isEqualToString:[account name]] &&
+       (_acctRow == [account acctRow]) &&
+       (_anum == [account anum])) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+
 @end

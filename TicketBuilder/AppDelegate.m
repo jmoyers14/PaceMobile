@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
-#import "StorePickerViewController.h"
 @implementation AppDelegate
 
 

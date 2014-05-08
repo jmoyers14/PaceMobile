@@ -7,8 +7,10 @@
 //
 
 #import "StoreTableViewController.h"
-
-@interface StoreTableViewController ()
+#import "PMUser.h"
+@interface StoreTableViewController () {
+    PMUser *_user;
+}
 
 @end
 
@@ -27,6 +29,14 @@
 {
     [super viewDidLoad];
     [self setTitle:@"Stores"];
+    
+}
+
+- (void) viewDidAppear:(BOOL)animated {
+    _user = [PMUser sharedInstance];
+    [[self tableView] reloadData];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -39,28 +49,24 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [[_user stores] count];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StoreCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    [[cell textLabel] setText:[[[_user stores] objectAtIndex:indexPath.row] name]];
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -100,15 +106,21 @@
 }
 */
 
-/*
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    PMStore *currStore = [[_user stores] objectAtIndex:indexPath.row];
+    [_user setCurrentStore:currStore];
+    
+    NSLog(@"Set current store to %@", [[_user currentStore] name]);
+}
+
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+
 }
-*/
+
 
 @end
