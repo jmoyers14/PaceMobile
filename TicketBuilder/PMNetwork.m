@@ -166,7 +166,6 @@
         storeIdElement   = [TBXML childElementNamed:@"storeId" parentElement:storeElement];
         PMStore *store   = [[PMStore alloc] initWithName:[TBXML textForElement:storeNameElement]
                                                   andID:[[TBXML textForElement:storeIdElement] integerValue]];
-        NSLog(@"%@", [store name]);
         [stores addObject:store];
     }
     
@@ -235,12 +234,78 @@
         PMAccount *account = [[PMAccount alloc] initWithName:[TBXML textForElement:acctNameElement]
                                                          row:[[TBXML textForElement:acctRowElement] integerValue]
                                                          num:[[TBXML textForElement:acctNumElement] integerValue]];
-        NSLog(@"%@", [account name]);
-        
         [accounts addObject:account];
     }
     
     NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:acctCnt], @"acctCnt", accounts, @"accounts", nil];
+    
+    return response;
+}
+
+/**************************************************************
+ *parse the response from the confacct function
+ *
+ *params
+ *  data - NSString* - xml data returned from a network request
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *      error      => error code if there is an error
+ *      anum       => account number
+ *      name       => name of account
+ *      addr1      => address line one
+ *      addr2      => address line two
+ *      city       => account city
+ *      state      => account state
+ *      zip        => account zip code
+ *      phone      => account phone number
+ *      fax        => account fax number
+ *      contact    => account contact name
+ *      email      => account email address
+ ***************************************************************/
+
++ (NSDictionary *) parseConfacctReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%d, message: %@", [rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    NSArray *keys = [PMAccount dictionaryKeys];
+    NSMutableDictionary *response = [[NSMutableDictionary alloc] init];
+    for(NSString *key in keys) {
+        TBXMLElement *element = [TBXML childElementNamed:key parentElement:root];
+        if(element) {
+            //special case for anum value
+            if ([key isEqualToString:@"anum"]) {
+                NSNumber *anum = [NSNumber numberWithInteger:[[TBXML textForElement:element] intValue]];
+                [response setObject:anum forKey:key];
+            } else {
+                [response setObject:[TBXML textForElement:element] forKey:key];
+            }
+        } else {
+            NSLog(@"parse confacct: element not found for key %@", key);
+        }
+    }
+
+    
     
     return response;
 }

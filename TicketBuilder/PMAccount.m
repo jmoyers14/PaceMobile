@@ -49,5 +49,20 @@
     }
 }
 
-
+//returns an array of key values that will be found in dictionaries
+//containing the values used to initialize an account
++ (NSArray *) dictionaryKeys {
+    
+    return [NSArray arrayWithObjects:@"anum",
+            @"name",
+            @"addr1",
+            @"addr2",
+            @"city",
+            @"state",
+            @"zip",
+            @"phone",
+            @"fax",
+            @"contact",
+            @"email", nil];
+}
 @end

@@ -20,5 +20,5 @@
 //Request parsing
 + (NSDictionary *) parseLoginReply:(NSString *)data;
 + (NSDictionary *) parseFindacctReply:(NSString *)data;
-
++ (NSDictionary *) parseConfacctReply:(NSString *)xml;
 @end

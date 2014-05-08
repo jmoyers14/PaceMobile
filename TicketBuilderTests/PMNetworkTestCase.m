@@ -141,6 +141,7 @@
     
 }
 
+#pragma mark - findacct
 
 - (void) testParseFindacct {
     NSString *error = @"00";
@@ -202,5 +203,77 @@
     
 }
 
+#pragma mark - confacct
+
+- (void) testConfacct {
+    NSNumber *anum = [NSNumber numberWithInteger:22];
+    NSString *name = @"Account Name";
+    NSString *addr1 = @"Address line 1";
+    NSString *addr2 = @"Address line 2";
+    NSString *city = @"City Name";
+    NSString *state = @"State Name";
+    NSString *zip = @"Account Zip";
+    NSString *phone = @"666-666-6666";
+    NSString *fax = @"777-777-7777";
+    NSString *contact = @"John Doe";
+    NSString *email = @"John@store.com";
+    
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"confacctReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"anum"];
+    [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%@", anum]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"name"];
+    [cxmlWriter writeCharacters:name];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"addr1"];
+    [cxmlWriter writeCharacters:addr1];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"addr2"];
+    [cxmlWriter writeCharacters:addr2];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"city"];
+    [cxmlWriter writeCharacters:city];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"state"];
+    [cxmlWriter writeCharacters:state];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"zip"];
+    [cxmlWriter writeCharacters:zip];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"phone"];
+    [cxmlWriter writeCharacters:phone];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"fax"];
+    [cxmlWriter writeCharacters:fax];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"contact"];
+    [cxmlWriter writeCharacters:contact];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"email"];
+    [cxmlWriter writeCharacters:email];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    //build correct response
+    
+    NSDictionary *response = [PMNetwork parseConfacctReply:[cxmlWriter toString]];
+    
+    XCTAssertTrue([anum isEqualToNumber:[response objectForKey:@"anum"]], @"anums should be equal");
+    XCTAssertTrue([[response objectForKey:@"name"] isEqualToString:name], @"correct name %@ should equal name:%@", name, [response objectForKey:@"name"]);
+    XCTAssertTrue([[response objectForKey:@"addr1"] isEqualToString:addr1], @"correct addr1 %@ should equal addr1 %@", addr1, [response objectForKey:@"addr1"]);
+    XCTAssertTrue([[response objectForKey:@"addr2"] isEqualToString:addr2], @"correct addr2 %@ should equal addr2 %@", addr2, [response objectForKey:@"addr2"]);
+    XCTAssertTrue([[response objectForKey:@"city"] isEqualToString:city], @"correct city %@ should equal city %@", city, [response objectForKey:@"city"]);
+    XCTAssertTrue([[response objectForKey:@"state"] isEqualToString:state], @"correct state %@ should equal state %@", state, [response objectForKey:@"state"]);
+    XCTAssertTrue([[response objectForKey:@"zip"] isEqualToString:zip], @"correct zip %@ shoudl equal zip %@", zip, [response objectForKey:@"zip"]);
+    XCTAssertTrue([[response objectForKey:@"phone"] isEqualToString:phone], @"correct phone %@ should equal phone %@", phone, [response objectForKey:@"phone"]);
+    XCTAssertTrue([[response objectForKey:@"fax"] isEqualToString:fax], @"correct fax %@ shoudl equal fax %@", fax, [response objectForKey:@"fax"]);
+    XCTAssertTrue([[response objectForKey:@"contact"] isEqualToString:contact], @"correct contact %@ shoudl equal contact %@", contact, [response objectForKey:@"contact"]);
+    XCTAssertTrue([[response objectForKey:@"email"] isEqualToString:email], @"correct email %@ should equal email %@", email, [response objectForKey:@"email"]);
+}
 
 @end

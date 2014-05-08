@@ -25,4 +25,6 @@
 
 -(id) initWithName:(NSString *)name row:(NSUInteger)acctRow num:(NSUInteger)anum;
 -(BOOL) isEqualToAccount:(PMAccount *)account;
+
++(NSArray *) dictionaryKeys;
 @end

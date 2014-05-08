@@ -96,6 +96,11 @@
 
 }
 
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [[_user currentStore] setCurrentAccount:[[[_user currentStore] accounts] objectAtIndex:indexPath.row]];
+    NSLog(@"current account is %@", [[[_user currentStore] currentAccount] name]);
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
