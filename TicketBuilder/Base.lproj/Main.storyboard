@@ -356,6 +356,40 @@
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <tableView opaque="NO" clipsSubviews="YES" alpha="0.94999999999999996" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="II2-SI-EOD">
+                                <rect key="frame" x="10" y="296" width="748" height="684"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="748" id="Ujt-3C-c2r"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FunctionCell" rowHeight="88" id="PW0-oK-OhK" customClass="FuncitonCell">
+                                        <rect key="frame" x="0.0" y="22" width="748" height="88"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PW0-oK-OhK" id="ZSf-AB-jev">
+                                            <rect key="frame" x="0.0" y="0.0" width="715" height="87"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZOU-ec-rUc">
+                                                    <rect key="frame" x="153" y="22" width="409" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="textLabel" destination="ZOU-ec-rUc" id="umA-Sc-aA9"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="urr-fq-JvJ" id="bPz-yV-WwY"/>
+                                    <outlet property="delegate" destination="urr-fq-JvJ" id="rXv-th-T2c"/>
+                                </connections>
+                            </tableView>
                             <view opaque="NO" alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hzL-Ey-SLU">
                                 <rect key="frame" x="10" y="64" width="748" height="233"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -367,9 +401,9 @@
                                             <constraint firstAttribute="height" constant="44" id="2Bf-az-ndV"/>
                                             <constraint firstAttribute="width" constant="728" id="I22-HL-iJq"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                         <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Account Number:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jSA-az-XP6">
                                         <rect key="frame" x="10" y="79" width="135" height="21"/>
@@ -519,62 +553,16 @@
                                     <constraint firstItem="4nz-yZ-XCL" firstAttribute="top" secondItem="9MA-TI-eNg" secondAttribute="bottom" constant="25" id="zsU-MN-TR7"/>
                                 </constraints>
                             </view>
-                            <view opaque="NO" alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zaf-c0-K43">
-                                <rect key="frame" x="20" y="372" width="728" height="160"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ePU-Jo-qFQ">
-                                        <rect key="frame" x="0.0" y="0.0" width="354" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.99215686270000003" green="0.72156862749999995" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                        <state key="normal" title="Orders">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cGL-Dp-2G8">
-                                        <rect key="frame" x="374" y="0.0" width="354" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.99215686270000003" green="0.72156862749999995" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                        <state key="normal" title="Balance">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aR5-TZ-Mxe">
-                                        <rect key="frame" x="0.0" y="90" width="354" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.99215686270000003" green="0.72156862749999995" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                        <state key="normal" title="Customers">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TSd-FW-IZS">
-                                        <rect key="frame" x="374" y="90" width="354" height="70"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.99215686270000003" green="0.72156862749999995" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                        <state key="normal" title="Part Lookup">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="728" id="90d-vy-lro"/>
-                                    <constraint firstAttribute="height" constant="160" id="OBq-C2-uKO"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Ji6-SB-lFS" firstAttribute="leading" secondItem="cOO-Lm-kWI" secondAttribute="leading" id="749-bE-SoQ"/>
                             <constraint firstItem="Ji6-SB-lFS" firstAttribute="top" secondItem="cOO-Lm-kWI" secondAttribute="top" id="7v0-67-i04"/>
                             <constraint firstItem="hzL-Ey-SLU" firstAttribute="top" secondItem="jkN-HL-hze" secondAttribute="bottom" id="BGF-48-gSE"/>
-                            <constraint firstAttribute="centerX" secondItem="zaf-c0-K43" secondAttribute="centerX" id="Vpm-6v-6C6"/>
+                            <constraint firstItem="II2-SI-EOD" firstAttribute="top" secondItem="jkN-HL-hze" secondAttribute="bottom" constant="232" id="VfS-sQ-uYw"/>
                             <constraint firstAttribute="centerX" secondItem="hzL-Ey-SLU" secondAttribute="centerX" id="cTu-Ab-Sek"/>
-                            <constraint firstItem="zaf-c0-K43" firstAttribute="top" secondItem="hzL-Ey-SLU" secondAttribute="bottom" constant="75" id="hxL-ja-Vw0"/>
+                            <constraint firstAttribute="centerX" secondItem="II2-SI-EOD" secondAttribute="centerX" id="nED-F6-pAI"/>
+                            <constraint firstItem="VeO-ow-ESC" firstAttribute="top" secondItem="II2-SI-EOD" secondAttribute="bottom" id="pBc-RT-1Wp"/>
                             <constraint firstAttribute="trailing" secondItem="Ji6-SB-lFS" secondAttribute="trailing" id="tRI-jO-MzM"/>
                             <constraint firstAttribute="bottom" secondItem="Ji6-SB-lFS" secondAttribute="bottom" id="uBH-kW-AbN"/>
                         </constraints>
@@ -590,14 +578,10 @@
                         <outlet property="addr1Label" destination="H8O-ep-jyk" id="rCL-bE-Q6Z"/>
                         <outlet property="addr2Label" destination="CAE-0p-Brk" id="R1U-Nm-Heb"/>
                         <outlet property="addr3Label" destination="5GO-ET-Ep1" id="Nc8-Su-cd5"/>
-                        <outlet property="balanceButton" destination="cGL-Dp-2G8" id="zKn-Xl-HQJ"/>
                         <outlet property="contactLabel" destination="8BS-33-BfQ" id="OmW-wB-e9s"/>
                         <outlet property="contentView" destination="hzL-Ey-SLU" id="wCd-1d-thS"/>
-                        <outlet property="customersButton" destination="aR5-TZ-Mxe" id="Ohh-6h-sSI"/>
                         <outlet property="emailLabel" destination="Zsd-2v-cw7" id="il8-oO-5oL"/>
                         <outlet property="faxLabel" destination="SYF-QQ-uWb" id="zSj-Kr-Yqd"/>
-                        <outlet property="ordersButton" destination="ePU-Jo-qFQ" id="TCb-WB-fhw"/>
-                        <outlet property="partLookupButton" destination="TSd-FW-IZS" id="42b-GC-foY"/>
                         <outlet property="phoneLabel" destination="XTf-kI-ZFc" id="MJV-op-lGR"/>
                         <outlet property="spinner" destination="ygS-9B-1zW" id="iiK-Tf-vfC"/>
                     </connections>

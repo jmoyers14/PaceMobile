@@ -11,7 +11,8 @@
 #import "PMUser.h"
 #import "PMNetworkOperation.h"
 #import "PMXMLBuilder.h"
-@interface AccountViewController : UIViewController <PMNetworkOperationDelegate>
+#import "FuncitonCell.h"
+@interface AccountViewController : UIViewController <PMNetworkOperationDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
 
 @end
