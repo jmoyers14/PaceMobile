@@ -129,7 +129,9 @@
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%@", [_functions objectAtIndex:indexPath.row]);
+    if([[_functions objectAtIndex:indexPath.row] isEqualToString:@"Orders"]) {
+        [self performSegueWithIdentifier:@"Orders" sender:self];
+    }
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

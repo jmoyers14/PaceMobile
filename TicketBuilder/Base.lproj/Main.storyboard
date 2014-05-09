@@ -584,11 +584,41 @@
                         <outlet property="faxLabel" destination="SYF-QQ-uWb" id="zSj-Kr-Yqd"/>
                         <outlet property="phoneLabel" destination="XTf-kI-ZFc" id="MJV-op-lGR"/>
                         <outlet property="spinner" destination="ygS-9B-1zW" id="iiK-Tf-vfC"/>
+                        <segue destination="3h6-ic-aJ0" kind="push" identifier="Orders" id="Uf6-hM-96w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4CL-pH-gH0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3733" y="-1411"/>
+            <point key="canvasLocation" x="3869" y="-1402"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="HV0-1U-Xol">
+            <objects>
+                <tableViewController id="3h6-ic-aJ0" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="t8H-7c-BJj">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="vuR-r8-HG9">
+                                <rect key="frame" x="0.0" y="86" width="768" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vuR-r8-HG9" id="cN6-e8-Uur">
+                                    <rect key="frame" x="0.0" y="0.0" width="768" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="3h6-ic-aJ0" id="Sdw-yj-lsR"/>
+                            <outlet property="delegate" destination="3h6-ic-aJ0" id="7kc-ue-csh"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="Fon-C9-DWe"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="COP-d9-bjL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4954" y="-1402"/>
         </scene>
         <!--Network Test View Controller-->
         <scene sceneID="4Ix-ef-e5x">
