@@ -32,6 +32,7 @@
 		5AAD106B19086C090057BB66 /* MakeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAD106A19086C090057BB66 /* MakeTableViewController.m */; };
 		5AAD106E19086C160057BB66 /* ModelTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAD106D19086C160057BB66 /* ModelTableViewController.m */; };
 		5AAD107119086C540057BB66 /* ProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAD107019086C540057BB66 /* ProductTableViewController.m */; };
+		5ACEC5E0191C2448003D8428 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACEC5DF191C2448003D8428 /* AccountViewController.m */; };
 		5AE90E02190F18D100467F74 /* PMXMLBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E01190F18D100467F74 /* PMXMLBuilder.m */; };
 		5AE90E071910142C00467F74 /* PMXMLBuilderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E061910142C00467F74 /* PMXMLBuilderTestCase.m */; };
 		5AE90E0A19103E8500467F74 /* PMNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E0919103E8500467F74 /* PMNetwork.m */; };
@@ -97,6 +98,8 @@
 		5AAD106D19086C160057BB66 /* ModelTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelTableViewController.m; sourceTree = "<group>"; };
 		5AAD106F19086C540057BB66 /* ProductTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductTableViewController.h; sourceTree = "<group>"; };
 		5AAD107019086C540057BB66 /* ProductTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductTableViewController.m; sourceTree = "<group>"; };
+		5ACEC5DE191C2448003D8428 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
+		5ACEC5DF191C2448003D8428 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		5AE90E00190F18D100467F74 /* PMXMLBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMXMLBuilder.h; sourceTree = "<group>"; };
 		5AE90E01190F18D100467F74 /* PMXMLBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMXMLBuilder.m; sourceTree = "<group>"; };
 		5AE90E061910142C00467F74 /* PMXMLBuilderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMXMLBuilderTestCase.m; sourceTree = "<group>"; };
@@ -270,6 +273,8 @@
 				5A796FB2191AD60F00EFF0D8 /* StoreTableViewController.m */,
 				5A796FB4191AD61A00EFF0D8 /* AccountTableViewController.h */,
 				5A796FB5191AD61A00EFF0D8 /* AccountTableViewController.m */,
+				5ACEC5DE191C2448003D8428 /* AccountViewController.h */,
+				5ACEC5DF191C2448003D8428 /* AccountViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -448,6 +453,7 @@
 				5A94FC041914342700FCCACD /* NetworkViewController.m in Sources */,
 				5AAD106E19086C160057BB66 /* ModelTableViewController.m in Sources */,
 				5AE90E0D19103F0B00467F74 /* NetworkTestViewController.m in Sources */,
+				5ACEC5E0191C2448003D8428 /* AccountViewController.m in Sources */,
 				5AEF6BC0191823CF00BE766C /* XMLWriter.m in Sources */,
 				5AE90E0A19103E8500467F74 /* PMNetwork.m in Sources */,
 				5A94FC0E19144E4C00FCCACD /* PMStore.m in Sources */,

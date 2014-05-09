@@ -55,6 +55,11 @@
 
 }
 
+/*
+- (IBAction)presentAddAccountViewController:(id)sender {
+    [self performSegueWithIdentifier:@"presentAddAccount" sender:self];
+}
+*/
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -77,6 +82,11 @@
     return cell;
 }
 
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [[_user currentStore] setCurrentAccount:[[[_user currentStore] accounts] objectAtIndex:indexPath.row]];
+    NSLog(@"current account is %@", [[[_user currentStore] currentAccount] name]);
+}
+
 #pragma mark - PMNetworkOperationDelegate
 
 - (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
@@ -96,10 +106,9 @@
 
 }
 
-- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [[_user currentStore] setCurrentAccount:[[[_user currentStore] accounts] objectAtIndex:indexPath.row]];
-    NSLog(@"current account is %@", [[[_user currentStore] currentAccount] name]);
-}
+
+
+
 
 /*
 // Override to support conditional editing of the table view.

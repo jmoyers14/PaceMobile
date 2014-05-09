@@ -63,6 +63,21 @@
 
 #pragma mark - parsing
 /**************************************************************
+ *remove and replace &amp; and other html encodings from the xml
+ *
+ *params
+ *  xml - xml string to be decoded
+ *
+ *return
+ *  NSString* - decoded xml string
+ *
+ **************************************************************/
++ (NSString *) decodeXML:(NSString *)xml {
+    
+    return nil;
+}
+
+/**************************************************************
  *Check error codes of network response
  *
  *params 
