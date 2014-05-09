@@ -276,4 +276,15 @@
     XCTAssertTrue([[response objectForKey:@"email"] isEqualToString:email], @"correct email %@ should equal email %@", email, [response objectForKey:@"email"]);
 }
 
+#pragma mark - orders
+
+/*
+- (void) testParseCheckordResponse {
+    NSNumber *ordCnt;
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeEndDocument];
+}
+*/
+
 @end

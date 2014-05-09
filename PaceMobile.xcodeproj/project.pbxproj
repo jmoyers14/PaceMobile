@@ -34,6 +34,10 @@
 		5AAD107119086C540057BB66 /* ProductTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AAD107019086C540057BB66 /* ProductTableViewController.m */; };
 		5ACEC5E0191C2448003D8428 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACEC5DF191C2448003D8428 /* AccountViewController.m */; };
 		5ACEC5E3191D5FAC003D8428 /* FuncitonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACEC5E2191D5FAC003D8428 /* FuncitonCell.m */; };
+		5ACEC5E7191D65CA003D8428 /* OrdersTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACEC5E6191D65CA003D8428 /* OrdersTableViewController.m */; };
+		5ACEC5EA191D674A003D8428 /* PMOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACEC5E9191D674A003D8428 /* PMOrder.m */; };
+		5ACEC5EF191D6771003D8428 /* PMAccountTestCast.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACEC5EE191D6771003D8428 /* PMAccountTestCast.m */; };
+		5ACEC5F1191D677D003D8428 /* PMOrderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACEC5F0191D677D003D8428 /* PMOrderTestCase.m */; };
 		5AE90E02190F18D100467F74 /* PMXMLBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E01190F18D100467F74 /* PMXMLBuilder.m */; };
 		5AE90E071910142C00467F74 /* PMXMLBuilderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E061910142C00467F74 /* PMXMLBuilderTestCase.m */; };
 		5AE90E0A19103E8500467F74 /* PMNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E0919103E8500467F74 /* PMNetwork.m */; };
@@ -103,6 +107,12 @@
 		5ACEC5DF191C2448003D8428 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
 		5ACEC5E1191D5FAC003D8428 /* FuncitonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FuncitonCell.h; sourceTree = "<group>"; };
 		5ACEC5E2191D5FAC003D8428 /* FuncitonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FuncitonCell.m; sourceTree = "<group>"; };
+		5ACEC5E5191D65CA003D8428 /* OrdersTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrdersTableViewController.h; sourceTree = "<group>"; };
+		5ACEC5E6191D65CA003D8428 /* OrdersTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrdersTableViewController.m; sourceTree = "<group>"; };
+		5ACEC5E8191D674A003D8428 /* PMOrder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMOrder.h; sourceTree = "<group>"; };
+		5ACEC5E9191D674A003D8428 /* PMOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMOrder.m; sourceTree = "<group>"; };
+		5ACEC5EE191D6771003D8428 /* PMAccountTestCast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMAccountTestCast.m; sourceTree = "<group>"; };
+		5ACEC5F0191D677D003D8428 /* PMOrderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMOrderTestCase.m; sourceTree = "<group>"; };
 		5AE90E00190F18D100467F74 /* PMXMLBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMXMLBuilder.h; sourceTree = "<group>"; };
 		5AE90E01190F18D100467F74 /* PMXMLBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMXMLBuilder.m; sourceTree = "<group>"; };
 		5AE90E061910142C00467F74 /* PMXMLBuilderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMXMLBuilderTestCase.m; sourceTree = "<group>"; };
@@ -247,6 +257,8 @@
 				5AEF6BB9191615AC00BE766C /* PMNetworkTestCase.m */,
 				5A59E50D191854510058AA66 /* PMStoreTestCase.m */,
 				5A796FA0191ABD6E00EFF0D8 /* PMUserTestCase.m */,
+				5ACEC5EE191D6771003D8428 /* PMAccountTestCast.m */,
+				5ACEC5F0191D677D003D8428 /* PMOrderTestCase.m */,
 				5AAD1053190866970057BB66 /* Supporting Files */,
 			);
 			name = PaceMobileTests;
@@ -279,6 +291,8 @@
 				5A796FB5191AD61A00EFF0D8 /* AccountTableViewController.m */,
 				5ACEC5DE191C2448003D8428 /* AccountViewController.h */,
 				5ACEC5DF191C2448003D8428 /* AccountViewController.m */,
+				5ACEC5E5191D65CA003D8428 /* OrdersTableViewController.h */,
+				5ACEC5E6191D65CA003D8428 /* OrdersTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -296,6 +310,8 @@
 				5AE90E301912F33C00467F74 /* PMAccount.m */,
 				5A94FC0C19144E4C00FCCACD /* PMStore.h */,
 				5A94FC0D19144E4C00FCCACD /* PMStore.m */,
+				5ACEC5E8191D674A003D8428 /* PMOrder.h */,
+				5ACEC5E9191D674A003D8428 /* PMOrder.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -460,8 +476,10 @@
 				5A59E51219186AF00058AA66 /* PMNetworkOperation.m in Sources */,
 				5AE90E311912F33C00467F74 /* PMAccount.m in Sources */,
 				5A796FB3191AD60F00EFF0D8 /* StoreTableViewController.m in Sources */,
+				5ACEC5E7191D65CA003D8428 /* OrdersTableViewController.m in Sources */,
 				5AE90E191912CEEF00467F74 /* LoginViewController.m in Sources */,
 				5AE90E251912EC0800467F74 /* PMUser.m in Sources */,
+				5ACEC5EA191D674A003D8428 /* PMOrder.m in Sources */,
 				5AE90E02190F18D100467F74 /* PMXMLBuilder.m in Sources */,
 				5AE90E341912F6D800467F74 /* IPConfigViewController.m in Sources */,
 				5A94FC041914342700FCCACD /* NetworkViewController.m in Sources */,
@@ -481,7 +499,9 @@
 			files = (
 				5A796FA1191ABD6E00EFF0D8 /* PMUserTestCase.m in Sources */,
 				5AAD1059190866970057BB66 /* PaceMobileTests.m in Sources */,
+				5ACEC5F1191D677D003D8428 /* PMOrderTestCase.m in Sources */,
 				5AEF6BBA191615AC00BE766C /* PMNetworkTestCase.m in Sources */,
+				5ACEC5EF191D6771003D8428 /* PMAccountTestCast.m in Sources */,
 				5A59E50E191854510058AA66 /* PMStoreTestCase.m in Sources */,
 				5AE90E071910142C00467F74 /* PMXMLBuilderTestCase.m in Sources */,
 			);

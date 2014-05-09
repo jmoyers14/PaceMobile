@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "PMOrder.h"
 @interface PMAccount : NSObject
 
 
@@ -22,9 +22,10 @@
 @property (nonatomic, strong) NSString *fax;
 @property (nonatomic, strong) NSString *contact;
 @property (nonatomic, strong) NSString *email;
+@property (nonatomic, strong, readonly) NSMutableArray *orders;
 
 -(id) initWithName:(NSString *)name row:(NSUInteger)acctRow num:(NSUInteger)anum;
 -(BOOL) isEqualToAccount:(PMAccount *)account;
-
+-(void) addOrder:(PMOrder *)order;
 +(NSArray *) dictionaryKeys;
 @end

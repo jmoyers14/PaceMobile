@@ -20,6 +20,7 @@
 @synthesize fax = _fax;
 @synthesize contact = _contact;
 @synthesize email = _email;
+@synthesize orders = _orders;
 
 //Designated initializer
 - (id) initWithName:(NSString *)name row:(NSUInteger)acctRow num:(NSUInteger)anum {
@@ -28,6 +29,7 @@
         self.name = name;
         self.acctRow = acctRow;
         self.anum = anum;
+        _orders = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -49,6 +51,11 @@
     }
 }
 
+//add order to account
+- (void) addOrder:(PMOrder *)order {
+    [_orders addObject:order];
+}
+
 //returns an array of key values that will be found in dictionaries
 //containing the values used to initialize an account
 + (NSArray *) dictionaryKeys {
@@ -65,4 +72,6 @@
             @"contact",
             @"email", nil];
 }
+
+
 @end
