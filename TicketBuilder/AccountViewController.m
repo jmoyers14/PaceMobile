@@ -11,7 +11,7 @@
 @interface AccountViewController () {
     PMUser *_user;
     NSOperationQueue *_operations;
-
+    NSArray *_functions;
 }
 
 
@@ -25,13 +25,10 @@
 @property (nonatomic, strong) IBOutlet UILabel *faxLabel;
 @property (nonatomic, strong) IBOutlet UILabel *contactLabel;
 @property (nonatomic, strong) IBOutlet UILabel *emailLabel;
-//buttons
-@property (nonatomic, strong) IBOutlet UIButton *ordersButton;
-@property (nonatomic, strong) IBOutlet UIButton *balanceButton;
-@property (nonatomic, strong) IBOutlet UIButton *partLookupButton;
-@property (nonatomic, strong) IBOutlet UIButton *customersButton;
 
 @property (nonatomic, strong) IBOutlet UIView *contentView;
+
+
 
 @end
 
@@ -39,10 +36,13 @@
 
 - (void)viewDidLoad
 {
+
     [super viewDidLoad];
     
+    //Add functions to this array ot add buttons to the table view
+    _functions = [NSArray arrayWithObjects:@"Orders", @"Customers", @"Account Balances", @"Part Lookup", nil];
     
-    [self styleButtons];
+    [self styleHeader];
     
     [self setTitle:@"Account Info"];
     
@@ -67,37 +67,13 @@
     [_operations addOperation:confacct];
 }
 
-- (void) styleButtons {
-    //round corners
-    [[_ordersButton layer] setCornerRadius:15.0];
-    [[_balanceButton layer] setCornerRadius:15.0];
-    [[_customersButton layer] setCornerRadius:15.0];
-    [[_partLookupButton layer] setCornerRadius:15.0];
+- (void) styleHeader {
 
     [[_contentView layer] setShadowColor:[UIColor blackColor].CGColor];
-    [[_contentView layer] setShadowOpacity:0.8];
-    [[_contentView layer] setShadowOffset:CGSizeMake(0.0, 2.0)];
+    [[_contentView layer] setShadowOpacity:0.4];
+    [[_contentView layer] setShadowOffset:CGSizeMake(0.0, 1.0)];
     [[_contentView layer] setShadowRadius:15.0];
     
-    [[_ordersButton layer] setShadowColor:[UIColor blackColor].CGColor];
-    [[_ordersButton layer] setShadowOpacity:0.8];
-    [[_ordersButton layer] setShadowOffset:CGSizeMake(0.0, 2.0)];
-    [[_ordersButton layer] setShadowRadius:15.0];
-    
-    [[_customersButton layer] setShadowColor:[UIColor blackColor].CGColor];
-    [[_customersButton layer] setShadowOpacity:0.8];
-    [[_customersButton layer] setShadowOffset:CGSizeMake(0.0, 2.0)];
-    [[_customersButton layer] setShadowRadius:15.0];
-    
-    [[_balanceButton layer] setShadowColor:[UIColor blackColor].CGColor];
-    [[_balanceButton layer] setShadowOpacity:0.8];
-    [[_balanceButton layer] setShadowOffset:CGSizeMake(0.0, 2.0)];
-    [[_balanceButton layer] setShadowRadius:15.0];
-    
-    [[_partLookupButton layer] setShadowColor:[UIColor blackColor].CGColor];
-    [[_partLookupButton layer] setShadowOpacity:0.8];
-    [[_partLookupButton layer] setShadowOffset:CGSizeMake(0.0, 2.0)];
-    [[_partLookupButton layer] setShadowRadius:15.0];
 }
 
 - (void)didReceiveMemoryWarning
@@ -131,6 +107,35 @@
     [_contactLabel setText:[currAccount contact]];
     [_emailLabel setText:[currAccount email]];
 }
+
+#pragma mark - UITableViewDelegate
+
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+    
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [_functions count];
+}
+
+- (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    FuncitonCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FunctionCell"];
+    
+    [[cell textLabel] setText:[_functions objectAtIndex:indexPath.row]];
+    
+    return cell;
+    
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%@", [_functions objectAtIndex:indexPath.row]);
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 88;
+}
+
 
 #pragma mark - PMNetworkOperationDelegate
 -(void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
