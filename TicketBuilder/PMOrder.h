@@ -16,4 +16,7 @@
 @property (nonatomic, strong) NSString *comment;
 
 - (id) initWithRow:(NSUInteger)row Date:(NSString *)date orderNum:(NSUInteger)ordNum comment:(NSString *)ordComment;
+
+- (BOOL) isEqualToOrder:(PMOrder *)order;
++ (NSArray *) dictionaryKeys;
 @end

@@ -32,4 +32,24 @@
     return [self initWithRow:0 Date:@"" orderNum:0 comment:@""];
 }
 
+
++ (NSArray *) dictionaryKeys {
+    return [NSArray arrayWithObjects:@"ordNum", @"ordRow", @"date", @"comment", nil];
+}
+
+//WARNING equals only checks designated initializer values
+// row, num, date, comment
+- (BOOL) isEqualToOrder:(PMOrder *)order {
+    
+    if((_ordRow == [order ordRow]) &&
+       (_ordNum == [order ordNum]) &&
+       ([_date isEqualToString:[order date]]) &&
+       [_comment isEqualToString:[order comment]]) {
+        return  YES;
+    } else {
+        return NO;
+    }
+    
+}
+
 @end

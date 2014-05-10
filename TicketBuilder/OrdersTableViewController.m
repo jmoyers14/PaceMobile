@@ -8,8 +8,11 @@
 
 #import "OrdersTableViewController.h"
 
-@interface OrdersTableViewController ()
-
+@interface OrdersTableViewController () {
+    PMUser *_user;
+    PMAccount *_account;
+    NSOperationQueue *_operations;
+}
 @end
 
 @implementation OrdersTableViewController
@@ -27,11 +30,17 @@
 {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    _user = [PMUser sharedInstance];
+    _account = [[[PMUser sharedInstance] currentStore] currentAccount];
+    _operations = [[NSOperationQueue alloc] init];
+    [_operations setMaxConcurrentOperationCount:1];
+    [_operations setName:@"checkord operations"];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSString *xml = [PMXMLBuilder checkordXMLWithUsername:[_user username] password:[_user password] accountRow:[_account acctRow] customerRow:0];
+    
+    PMNetworkOperation *checkord = [[PMNetworkOperation alloc] initWithIdentifier:@"checkord" XML:xml andURL:[_user url]];
+    [checkord setDelegate:self];
+    [_operations addOperation:checkord];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,28 +53,33 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return [[_account orders] count];
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"oderCell" forIndexPath:indexPath];
     
-    // Configure the cell...
+    [[cell textLabel] setText:[[_account orders] objectAtIndex:indexPath.row]];
     
     return cell;
 }
-*/
+
+#pragma mark - PMNetworkOperationDelegate
+
+- (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
+    if (![operation failed]) {
+        NSLog(@"%@", [operation responseXML]);
+    } else {
+        NSLog(@"%@ failed", [operation identifier]);
+    }
+}
 
 /*
 // Override to support conditional editing of the table view.

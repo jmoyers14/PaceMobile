@@ -21,4 +21,5 @@
 + (NSDictionary *) parseLoginReply:(NSString *)data;
 + (NSDictionary *) parseFindacctReply:(NSString *)data;
 + (NSDictionary *) parseConfacctReply:(NSString *)xml;
++ (NSDictionary *) parseCheckordReply:(NSString *)xml;
 @end

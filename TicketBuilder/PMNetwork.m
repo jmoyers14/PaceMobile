@@ -167,23 +167,25 @@
     //Parse store count
     TBXMLElement *storeCntEle = [TBXML childElementNamed:@"storeCnt" parentElement:root];
     NSInteger storeCnt = [[TBXML textForElement:storeCntEle] integerValue];
-
-    //Parse stores
-    TBXMLElement *storeElement     = [TBXML childElementNamed:@"stores" parentElement:root];
-    TBXMLElement *storeNameElement = [TBXML childElementNamed:@"storeName" parentElement:storeElement];
-    TBXMLElement *storeIdElement   = [TBXML childElementNamed:@"storeId" parentElement:storeElement];
-    PMStore *store1 = [[PMStore alloc] initWithName:[TBXML textForElement:storeNameElement]
+    NSMutableArray *stores = [NSMutableArray arrayWithCapacity:storeCnt];
+    if (storeCnt > 0) {
+        //Parse stores
+        TBXMLElement *storeElement     = [TBXML childElementNamed:@"stores" parentElement:root];
+        TBXMLElement *storeNameElement = [TBXML childElementNamed:@"storeName" parentElement:storeElement];
+        TBXMLElement *storeIdElement   = [TBXML childElementNamed:@"storeId" parentElement:storeElement];
+        PMStore *store1 = [[PMStore alloc] initWithName:[TBXML textForElement:storeNameElement]
                                               andID:[[TBXML textForElement:storeIdElement] integerValue]];
-    NSMutableArray *stores = [[NSMutableArray alloc] initWithObjects:store1, nil];
 
-    while ((storeElement = storeElement->nextSibling)) {
-        storeNameElement = [TBXML childElementNamed:@"storeName" parentElement:storeElement];
-        storeIdElement   = [TBXML childElementNamed:@"storeId" parentElement:storeElement];
-        PMStore *store   = [[PMStore alloc] initWithName:[TBXML textForElement:storeNameElement]
+        [stores addObject:store1];
+
+        while ((storeElement = storeElement->nextSibling)) {
+            storeNameElement = [TBXML childElementNamed:@"storeName" parentElement:storeElement];
+            storeIdElement   = [TBXML childElementNamed:@"storeId" parentElement:storeElement];
+            PMStore *store   = [[PMStore alloc] initWithName:[TBXML textForElement:storeNameElement]
                                                   andID:[[TBXML textForElement:storeIdElement] integerValue]];
-        [stores addObject:store];
+            [stores addObject:store];
+        }
     }
-    
     NSDictionary *returnData = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:storeCnt],
                                                                           @"storeCnt", stores, @"stores", nil];
 
@@ -231,27 +233,29 @@
     //Parse store count
     TBXMLElement *acctCntEle = [TBXML childElementNamed:@"acctCnt" parentElement:root];
     NSInteger acctCnt = [[TBXML textForElement:acctCntEle] integerValue];
-
-    //Parse stores
-    TBXMLElement *acctElement     = [TBXML childElementNamed:@"accts" parentElement:root];
-    TBXMLElement *acctNameElement = [TBXML childElementNamed:@"name" parentElement:acctElement];
-    TBXMLElement *acctNumElement  = [TBXML childElementNamed:@"anum" parentElement:acctElement];
-    TBXMLElement *acctRowElement  = [TBXML childElementNamed:@"acctRow" parentElement:acctElement];
-    PMAccount *account1 = [[PMAccount alloc] initWithName:[TBXML textForElement:acctNameElement]
+    NSMutableArray *accounts = [NSMutableArray arrayWithCapacity:acctCnt];
+    
+    if (acctCnt > 0) {
+        //Parse stores
+        TBXMLElement *acctElement     = [TBXML childElementNamed:@"accts" parentElement:root];
+        TBXMLElement *acctNameElement = [TBXML childElementNamed:@"name" parentElement:acctElement];
+        TBXMLElement *acctNumElement  = [TBXML childElementNamed:@"anum" parentElement:acctElement];
+        TBXMLElement *acctRowElement  = [TBXML childElementNamed:@"acctRow" parentElement:acctElement];
+        PMAccount *account1 = [[PMAccount alloc] initWithName:[TBXML textForElement:acctNameElement]
                                                       row:[[TBXML textForElement:acctRowElement] integerValue]
                                                       num:[[TBXML textForElement:acctNumElement] integerValue]];
-    NSMutableArray *accounts = [[NSMutableArray alloc] initWithObjects:account1, nil];
+        [accounts addObject:account1];
     
-    while ((acctElement = acctElement->nextSibling)) {
-        acctNameElement = [TBXML childElementNamed:@"name" parentElement:acctElement];
-        acctNumElement  = [TBXML childElementNamed:@"anum" parentElement:acctElement];
-        acctRowElement  = [TBXML childElementNamed:@"acctRow" parentElement:acctElement];
-        PMAccount *account = [[PMAccount alloc] initWithName:[TBXML textForElement:acctNameElement]
+        while ((acctElement = acctElement->nextSibling)) {
+            acctNameElement = [TBXML childElementNamed:@"name" parentElement:acctElement];
+            acctNumElement  = [TBXML childElementNamed:@"anum" parentElement:acctElement];
+            acctRowElement  = [TBXML childElementNamed:@"acctRow" parentElement:acctElement];
+            PMAccount *account = [[PMAccount alloc] initWithName:[TBXML textForElement:acctNameElement]
                                                          row:[[TBXML textForElement:acctRowElement] integerValue]
                                                          num:[[TBXML textForElement:acctNumElement] integerValue]];
-        [accounts addObject:account];
+            [accounts addObject:account];
+        }
     }
-    
     NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:acctCnt], @"acctCnt", accounts, @"accounts", nil];
     
     return response;
@@ -325,4 +329,71 @@
     return response;
 }
 
+/**************************************************************
+ *parse the response from the checkord function
+ *
+ *params
+ *  data - NSString* - xml data returned from a network request
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *      error      => error code if there is an error
+ *      ordCnt    => number of orders returned
+ *      orders   => array of order objects returned
+ ***************************************************************/
++ (NSDictionary *) parseCheckordReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%d, message: %@", [rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    //Parse orders
+    TBXMLElement *ordCntEle = [TBXML childElementNamed:@"ordCnt" parentElement:root];
+    NSInteger ordCnt = [[TBXML textForElement:ordCntEle] integerValue];
+    NSMutableArray *orders = [NSMutableArray arrayWithCapacity:ordCnt];
+
+    if (ordCnt > 0) {
+        TBXMLElement *ordersElement = [TBXML childElementNamed:@"orders" parentElement:root];
+        TBXMLElement *ordRowEle = [TBXML childElementNamed:@"ordRow" parentElement:ordersElement];
+        TBXMLElement *ordDateEle = [TBXML childElementNamed:@"ordDate" parentElement:ordersElement];
+        TBXMLElement *ordNumEle = [TBXML childElementNamed:@"ordNum" parentElement:ordersElement];
+        TBXMLElement *ordComment = [TBXML childElementNamed:@"ordComment" parentElement:ordersElement];
+        [orders addObject:[[PMOrder alloc] initWithRow:[[TBXML textForElement:ordRowEle] integerValue]
+                                              Date:[TBXML textForElement:ordDateEle]
+                                          orderNum:[[TBXML textForElement:ordNumEle] integerValue]
+                                           comment:[TBXML textForElement:ordComment]]];
+    
+        while((ordersElement = ordersElement->nextSibling)) {
+            ordRowEle = [TBXML childElementNamed:@"ordRow" parentElement:ordersElement];
+            ordDateEle = [TBXML childElementNamed:@"ordDate" parentElement:ordersElement];
+            ordNumEle = [TBXML childElementNamed:@"ordNum" parentElement:ordersElement];
+            ordComment = [TBXML childElementNamed:@"ordComment" parentElement:ordersElement];
+            [orders addObject:[[PMOrder alloc] initWithRow:[[TBXML textForElement:ordRowEle] integerValue]
+                                                  Date:[TBXML textForElement:ordDateEle]
+                                              orderNum:[[TBXML textForElement:ordNumEle] integerValue]
+                                               comment:[TBXML textForElement:ordComment]]];
+        }
+    }
+    NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:ordCnt], @"ordCnt", orders, @"orders", nil];
+    
+    return  response;
+}
 @end

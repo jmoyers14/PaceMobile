@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PMUser.h"
+#import "PMNetworkOperation.h"
+#import "PMXMLBuilder.h"
+#import "NetworkViewController.h"
 
-@interface OrdersTableViewController : UITableViewController
+@interface OrdersTableViewController : UITableViewController <PMNetworkOperationDelegate>
 
 @end

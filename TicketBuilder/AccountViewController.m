@@ -104,6 +104,12 @@
     } else {
         [_faxLabel setText:@"   "];
     }
+    if ([[currAccount phone] length] > 0) {
+        [_phoneLabel setText:[currAccount phone]];
+    } else {
+        [_phoneLabel setText:@"   "];
+    }
+    
     [_contactLabel setText:[currAccount contact]];
     [_emailLabel setText:[currAccount email]];
 }
@@ -144,8 +150,6 @@
     [self hideSpinner];
     if (![operation failed]) {
         NSDictionary *response = [PMNetwork parseConfacctReply:[operation responseXML]];
-        
-        NSLog(@"%@", [operation responseXML]);
         
         [[[_user currentStore] currentAccount] setAddress: [NSArray arrayWithObjects:[response objectForKey:@"addr1"], [response objectForKey:@"addr2"], nil]];
         [[[_user currentStore] currentAccount] setCity:[response objectForKey:@"city"]];
