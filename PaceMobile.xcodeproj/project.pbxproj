@@ -12,6 +12,10 @@
 		5A796FA1191ABD6E00EFF0D8 /* PMUserTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A796FA0191ABD6E00EFF0D8 /* PMUserTestCase.m */; };
 		5A796FB3191AD60F00EFF0D8 /* StoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A796FB2191AD60F00EFF0D8 /* StoreTableViewController.m */; };
 		5A796FB6191AD61A00EFF0D8 /* AccountTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A796FB5191AD61A00EFF0D8 /* AccountTableViewController.m */; };
+		5A7FA5A61922AB5400410D1A /* PMItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7FA5A51922AB5400410D1A /* PMItem.m */; };
+		5A7FA5A91922B39F00410D1A /* PMPart.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7FA5A81922B39F00410D1A /* PMPart.m */; };
+		5A7FA5AD1922B3E100410D1A /* PMItemTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7FA5AC1922B3E100410D1A /* PMItemTestCase.m */; };
+		5A7FA5AF1922B3EF00410D1A /* PMPartTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A7FA5AE1922B3EF00410D1A /* PMPartTestCase.m */; };
 		5A94FC041914342700FCCACD /* NetworkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94FC031914342700FCCACD /* NetworkViewController.m */; };
 		5A94FC0719144B2600FCCACD /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94FC0619144B2600FCCACD /* TBXML.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5A94FC0E19144E4C00FCCACD /* PMStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A94FC0D19144E4C00FCCACD /* PMStore.m */; };
@@ -38,8 +42,8 @@
 		5ACEC5EA191D674A003D8428 /* PMOrder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACEC5E9191D674A003D8428 /* PMOrder.m */; };
 		5ACEC5EF191D6771003D8428 /* PMAccountTestCast.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACEC5EE191D6771003D8428 /* PMAccountTestCast.m */; };
 		5ACEC5F1191D677D003D8428 /* PMOrderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACEC5F0191D677D003D8428 /* PMOrderTestCase.m */; };
+		5ACEC5F819229269003D8428 /* PMXMLBuilderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ACEC5F719229269003D8428 /* PMXMLBuilderTestCase.m */; };
 		5AE90E02190F18D100467F74 /* PMXMLBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E01190F18D100467F74 /* PMXMLBuilder.m */; };
-		5AE90E071910142C00467F74 /* PMXMLBuilderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E061910142C00467F74 /* PMXMLBuilderTestCase.m */; };
 		5AE90E0A19103E8500467F74 /* PMNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E0919103E8500467F74 /* PMNetwork.m */; };
 		5AE90E0D19103F0B00467F74 /* NetworkTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E0C19103F0B00467F74 /* NetworkTestViewController.m */; };
 		5AE90E191912CEEF00467F74 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E181912CEEF00467F74 /* LoginViewController.m */; };
@@ -72,6 +76,12 @@
 		5A796FB2191AD60F00EFF0D8 /* StoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoreTableViewController.m; sourceTree = "<group>"; };
 		5A796FB4191AD61A00EFF0D8 /* AccountTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountTableViewController.h; sourceTree = "<group>"; };
 		5A796FB5191AD61A00EFF0D8 /* AccountTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountTableViewController.m; sourceTree = "<group>"; };
+		5A7FA5A41922AB5400410D1A /* PMItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMItem.h; sourceTree = "<group>"; };
+		5A7FA5A51922AB5400410D1A /* PMItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMItem.m; sourceTree = "<group>"; };
+		5A7FA5A71922B39F00410D1A /* PMPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMPart.h; sourceTree = "<group>"; };
+		5A7FA5A81922B39F00410D1A /* PMPart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMPart.m; sourceTree = "<group>"; };
+		5A7FA5AC1922B3E100410D1A /* PMItemTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMItemTestCase.m; sourceTree = "<group>"; };
+		5A7FA5AE1922B3EF00410D1A /* PMPartTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMPartTestCase.m; sourceTree = "<group>"; };
 		5A94FC021914342700FCCACD /* NetworkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkViewController.h; sourceTree = "<group>"; };
 		5A94FC031914342700FCCACD /* NetworkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkViewController.m; sourceTree = "<group>"; };
 		5A94FC0619144B2600FCCACD /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
@@ -113,9 +123,9 @@
 		5ACEC5E9191D674A003D8428 /* PMOrder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMOrder.m; sourceTree = "<group>"; };
 		5ACEC5EE191D6771003D8428 /* PMAccountTestCast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMAccountTestCast.m; sourceTree = "<group>"; };
 		5ACEC5F0191D677D003D8428 /* PMOrderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMOrderTestCase.m; sourceTree = "<group>"; };
+		5ACEC5F719229269003D8428 /* PMXMLBuilderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMXMLBuilderTestCase.m; sourceTree = "<group>"; };
 		5AE90E00190F18D100467F74 /* PMXMLBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMXMLBuilder.h; sourceTree = "<group>"; };
 		5AE90E01190F18D100467F74 /* PMXMLBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMXMLBuilder.m; sourceTree = "<group>"; };
-		5AE90E061910142C00467F74 /* PMXMLBuilderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMXMLBuilderTestCase.m; sourceTree = "<group>"; };
 		5AE90E0819103E8500467F74 /* PMNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMNetwork.h; sourceTree = "<group>"; };
 		5AE90E0919103E8500467F74 /* PMNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMNetwork.m; sourceTree = "<group>"; };
 		5AE90E0B19103F0B00467F74 /* NetworkTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkTestViewController.h; sourceTree = "<group>"; };
@@ -253,13 +263,15 @@
 			isa = PBXGroup;
 			children = (
 				5AAD1058190866970057BB66 /* PaceMobileTests.m */,
-				5AE90E061910142C00467F74 /* PMXMLBuilderTestCase.m */,
 				5AEF6BB9191615AC00BE766C /* PMNetworkTestCase.m */,
 				5A59E50D191854510058AA66 /* PMStoreTestCase.m */,
 				5A796FA0191ABD6E00EFF0D8 /* PMUserTestCase.m */,
 				5ACEC5EE191D6771003D8428 /* PMAccountTestCast.m */,
 				5ACEC5F0191D677D003D8428 /* PMOrderTestCase.m */,
 				5AAD1053190866970057BB66 /* Supporting Files */,
+				5ACEC5F719229269003D8428 /* PMXMLBuilderTestCase.m */,
+				5A7FA5AC1922B3E100410D1A /* PMItemTestCase.m */,
+				5A7FA5AE1922B3EF00410D1A /* PMPartTestCase.m */,
 			);
 			name = PaceMobileTests;
 			path = TicketBuilderTests;
@@ -312,6 +324,10 @@
 				5A94FC0D19144E4C00FCCACD /* PMStore.m */,
 				5ACEC5E8191D674A003D8428 /* PMOrder.h */,
 				5ACEC5E9191D674A003D8428 /* PMOrder.m */,
+				5A7FA5A41922AB5400410D1A /* PMItem.h */,
+				5A7FA5A51922AB5400410D1A /* PMItem.m */,
+				5A7FA5A71922B39F00410D1A /* PMPart.h */,
+				5A7FA5A81922B39F00410D1A /* PMPart.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -480,6 +496,8 @@
 				5AE90E191912CEEF00467F74 /* LoginViewController.m in Sources */,
 				5AE90E251912EC0800467F74 /* PMUser.m in Sources */,
 				5ACEC5EA191D674A003D8428 /* PMOrder.m in Sources */,
+				5A7FA5A61922AB5400410D1A /* PMItem.m in Sources */,
+				5A7FA5A91922B39F00410D1A /* PMPart.m in Sources */,
 				5AE90E02190F18D100467F74 /* PMXMLBuilder.m in Sources */,
 				5AE90E341912F6D800467F74 /* IPConfigViewController.m in Sources */,
 				5A94FC041914342700FCCACD /* NetworkViewController.m in Sources */,
@@ -498,12 +516,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A796FA1191ABD6E00EFF0D8 /* PMUserTestCase.m in Sources */,
+				5ACEC5F819229269003D8428 /* PMXMLBuilderTestCase.m in Sources */,
 				5AAD1059190866970057BB66 /* PaceMobileTests.m in Sources */,
+				5A7FA5AD1922B3E100410D1A /* PMItemTestCase.m in Sources */,
 				5ACEC5F1191D677D003D8428 /* PMOrderTestCase.m in Sources */,
 				5AEF6BBA191615AC00BE766C /* PMNetworkTestCase.m in Sources */,
 				5ACEC5EF191D6771003D8428 /* PMAccountTestCast.m in Sources */,
 				5A59E50E191854510058AA66 /* PMStoreTestCase.m in Sources */,
-				5AE90E071910142C00467F74 /* PMXMLBuilderTestCase.m in Sources */,
+				5A7FA5AF1922B3EF00410D1A /* PMPartTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

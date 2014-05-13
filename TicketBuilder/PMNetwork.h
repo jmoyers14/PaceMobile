@@ -22,4 +22,10 @@
 + (NSDictionary *) parseFindacctReply:(NSString *)data;
 + (NSDictionary *) parseConfacctReply:(NSString *)xml;
 + (NSDictionary *) parseCheckordReply:(NSString *)xml;
++ (NSDictionary *) parseCreateordReply:(NSString *)xml;
++ (NSDictionary *) parseDeleteordReply:(NSString *)xml;
++ (NSDictionary *) parseAdditemReply:(NSString *)xml;
++ (NSDictionary *) parseEdititemReply:(NSString *)xml;
++ (NSDictionary *) parseDeleteitemReply:(NSString *)xml;
++ (NSDictionary *) parseListitemsReply:(NSString *)xml;
 @end

@@ -145,7 +145,7 @@
     NSError *rootError;
     TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
     if(rootError) {
-        NSLog(@"Error value pasrsing error code:%d, message: %@", [rootError code], [rootError localizedDescription]);
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
         return nil;
     }
     
@@ -211,7 +211,7 @@
     NSError *rootError;
     TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
     if(rootError) {
-        NSLog(@"Error value pasrsing error code:%d, message: %@", [rootError code], [rootError localizedDescription]);
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
         return nil;
     }
 
@@ -256,7 +256,7 @@
             [accounts addObject:account];
         }
     }
-    NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:acctCnt], @"acctCnt", accounts, @"accounts", nil];
+    NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:acctCnt], @"acctCnt", accounts, @"accounts", nil];
     
     return response;
 }
@@ -288,7 +288,7 @@
     NSError *rootError;
     TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
     if(rootError) {
-        NSLog(@"Error value pasrsing error code:%d, message: %@", [rootError code], [rootError localizedDescription]);
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
         return nil;
     }
     
@@ -346,7 +346,7 @@
     NSError *rootError;
     TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
     if(rootError) {
-        NSLog(@"Error value pasrsing error code:%d, message: %@", [rootError code], [rootError localizedDescription]);
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
         return nil;
     }
     
@@ -396,4 +396,96 @@
     
     return  response;
 }
+
+
+/**************************************************************
+ *parse the response from the deleteord function
+ *
+ *params
+ *  data - NSString* - xml data returned from a network request
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *      error      => error code if there is an error
+ ***************************************************************/
++ (NSDictionary *) parseDeleteordReply:(NSString *)xml {
+
+    return nil;
+}
+
+
+/**************************************************************
+ *parse the response from the additem function
+ *
+ *params
+ *  data - NSString* - xml data returned from a network request
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *      error     => error code if there is an error
+ *      ordTot    => total of order without cores and tax
+ *      coreTot   => array of order objects returned
+ *      taxTot    => total tax for order
+ *      itemRow   => id of order record in database
+ ***************************************************************/
++ (NSDictionary *)parseAdditemReply:(NSString *)xml {
+    return nil;
+}
+
+
+/**************************************************************
+ *parse the response from the edititem function
+ *
+ *params
+ *  data - NSString* - xml data returned from a network request
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *      error     => error code if there is an error
+ *      ordTot    => total of order without cores and tax
+ *      coreTot   => total of core transactions
+ *      taxTot    => total tax for order
+ ***************************************************************/
++ (NSDictionary *) parseEdititemReply:(NSString *)xml {
+    return nil;
+}
+
+
+/**************************************************************
+ *parse the response from the deleteitem function
+ *
+ *params
+ *  data - NSString* - xml data returned from a network request
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *      error     => error code if there is an error
+ *      ordTot    => total of order without cores and tax
+ *      coreTot   => total of core transactions
+ *      taxTot    => total tax for order
+ ***************************************************************/
++ (NSDictionary *) parseDeleteitemReply:(NSString *)xml {
+    return nil;
+}
+
+
+/**************************************************************
+ *parse the response from the listitems function
+ *
+ *params
+ *  data - NSString* - xml data returned from a network request
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *      error     => error code if there is an error
+ *      ordTot    => total of order without cores and tax
+ *      coreTot   => total of core transactions
+ *      taxTot    => total tax for order
+ *      itemCnt   => amount of items returned
+ *      items     => Array of PMItem objects
+ ***************************************************************/
++ (NSDictionary *) parseListitemsReply:(NSString *)xml {
+    return nil;
+}
+
 @end

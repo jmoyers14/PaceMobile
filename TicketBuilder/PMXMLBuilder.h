@@ -98,7 +98,7 @@
 //add a new order item to the current order
 + (NSString *) additemXMLWithUsername:(NSString *)username
                              password:(NSString *)password
-                        accountNumber:(NSUInteger)acctNum
+                           accountRow:(NSUInteger)acctRow
                              orderRow:(NSUInteger)ordRow
                               partRow:(NSUInteger)partRow
                              quantity:(NSUInteger)qty

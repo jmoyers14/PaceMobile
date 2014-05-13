@@ -349,7 +349,7 @@
     XCTAssertTrue([[response objectForKey:@"email"] isEqualToString:email], @"correct email %@ should equal email %@", email, [response objectForKey:@"email"]);
 }
 
-#pragma mark - orders
+#pragma mark - checkord
 
 
 - (void) testParseCheckordReply {
@@ -376,13 +376,13 @@
         PMOrder *order = [correctOrders objectAtIndex:i];
         [cxmlWriter writeStartElement:@"orders"];
         [cxmlWriter writeStartElement:@"ordRow"];
-        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [order ordRow]]];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)[order ordRow]]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeStartElement:@"ordDate"];
         [cxmlWriter writeCharacters:[order date]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeStartElement:@"ordNum"];
-        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [order ordNum]]];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)[order ordNum]]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeStartElement:@"ordComment"];
         [cxmlWriter writeCharacters:[order comment]];
@@ -432,6 +432,147 @@
     XCTAssertTrue([ordCnt isEqualToNumber:rOrdCnt], @"order counts are different");
     
 }
+
+#pragma mark - createord
+
+- (void) testParseCreateordReply {
+    NSNumber *ordRow = [NSNumber numberWithInteger:1234];
+    NSNumber *ordNum = [NSNumber numberWithInteger:4321];
+    
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"createordReply"];
+    [cxmlWriter writeStartElement:@"ordRow"];
+    [cxmlWriter writeCharacters:[ordRow stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"ordNum"];
+    [cxmlWriter writeCharacters:[ordNum stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseCreateordReply:[cxmlWriter toString]];
+    
+    XCTAssertTrue([[response objectForKey:@"ordRow"] isEqualToNumber:ordRow], @"response row %@ equals %@", [response objectForKey:@"ordRow"], ordRow);
+    XCTAssertTrue([[response objectForKey:@"ordNum"] isEqualToNumber:ordNum], @"order numbers not equal");
+}
+
+#pragma mark - deleteord 
+
+- (void) testParseDeleteordReply {
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"deleteordReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseCreateordReply:[cxmlWriter toString]];
+
+    XCTAssertTrue(([response objectForKey:@"error"] == nil), @"no error key");
+    XCTAssertTrue(([response count] == 0), @"response should be empty");
+}
+
+#pragma mark - additem
+- (void) testAdditemReply {
+    NSNumber *ordTot = [NSNumber numberWithInteger:1234.56];
+    NSNumber *coreTot = [NSNumber numberWithInteger:6543.89];
+    NSNumber *taxTot = [NSNumber numberWithInteger:345.45];
+    NSNumber *itemRow = [NSNumber numberWithInteger:333];
+    
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"additemReply"];
+    [cxmlWriter writeStartElement:@"ordTot"];
+    [cxmlWriter writeCharacters:[ordTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"coreTot"];
+    [cxmlWriter writeCharacters:[coreTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"taxTot"];
+    [cxmlWriter writeCharacters:[taxTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"itemRow"];
+    [cxmlWriter writeCharacters:[itemRow stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseAdditemReply:[cxmlWriter toString]];
+    
+    XCTAssertTrue([[response objectForKey:@"ordTot"] isEqualToNumber:ordTot], @"order totals not equal");
+    XCTAssertTrue([[response objectForKey:@"coreTot"] isEqualToNumber:coreTot], @"core totals not equal");
+    XCTAssertTrue([[response objectForKey:@"taxTot"] isEqualToNumber:taxTot], @"tax totals not equal");
+    XCTAssertTrue([[response objectForKey:@"itemRow"] isEqualToNumber:itemRow], @"item rows not equal");
+    
+}
+
+#pragma mark - edititem
+- (void) testEdititemReply {
+    NSNumber *ordTot = [NSNumber numberWithInteger:1234.56];
+    NSNumber *coreTot = [NSNumber numberWithInteger:6543.89];
+    NSNumber *taxTot = [NSNumber numberWithInteger:345.45];
+    
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"edititemReply"];
+    [cxmlWriter writeStartElement:@"ordTot"];
+    [cxmlWriter writeCharacters:[ordTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"coreTot"];
+    [cxmlWriter writeCharacters:[coreTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"taxTot"];
+    [cxmlWriter writeCharacters:[taxTot stringValue]];
+    [cxmlWriter writeEndElement];
+
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseAdditemReply:[cxmlWriter toString]];
+    
+    XCTAssertTrue([[response objectForKey:@"ordTot"] isEqualToNumber:ordTot], @"order totals not equal");
+    XCTAssertTrue([[response objectForKey:@"coreTot"] isEqualToNumber:coreTot], @"core totals not equal");
+    XCTAssertTrue([[response objectForKey:@"taxTot"] isEqualToNumber:taxTot], @"tax totals not equal");
+
+}
+
+#pragma mark - deleteitem
+- (void) testDeleteitemReply {
+    NSNumber *ordTot = [NSNumber numberWithInteger:1234.56];
+    NSNumber *coreTot = [NSNumber numberWithInteger:6543.89];
+    NSNumber *taxTot = [NSNumber numberWithInteger:345.45];
+    
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"deleteitemReply"];
+    [cxmlWriter writeStartElement:@"ordTot"];
+    [cxmlWriter writeCharacters:[ordTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"coreTot"];
+    [cxmlWriter writeCharacters:[coreTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"taxTot"];
+    [cxmlWriter writeCharacters:[taxTot stringValue]];
+    [cxmlWriter writeEndElement];
+    
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseAdditemReply:[cxmlWriter toString]];
+    
+    XCTAssertTrue([[response objectForKey:@"ordTot"] isEqualToNumber:ordTot], @"order totals not equal");
+    XCTAssertTrue([[response objectForKey:@"coreTot"] isEqualToNumber:coreTot], @"core totals not equal");
+    XCTAssertTrue([[response objectForKey:@"taxTot"] isEqualToNumber:taxTot], @"tax totals not equal");
+}
+
+#pragma mark - listitems
+- (void) testListitemsReply {
+    
+}
+
 
 
 @end
