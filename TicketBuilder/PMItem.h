@@ -7,7 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PMPart.h"
+
+typedef enum {
+    SaleTrans,
+    ReturnTrans,
+    CoreTrans,
+    DefectTrans
+} PMTransactionType;
+
+
 
 @interface PMItem : NSObject
+@property (nonatomic, assign) PMTransactionType transType;
+@property (nonatomic, assign) NSUInteger qty;
+@property (nonatomic, strong) PMPart *part;
 
+- (id) initWithPart:(PMPart *)part quantity:(NSUInteger)qty transType:(PMTransactionType)transType;
+- (BOOL) isEqualToItem:(PMItem *)item;
 @end

@@ -268,10 +268,10 @@
 				5A796FA0191ABD6E00EFF0D8 /* PMUserTestCase.m */,
 				5ACEC5EE191D6771003D8428 /* PMAccountTestCast.m */,
 				5ACEC5F0191D677D003D8428 /* PMOrderTestCase.m */,
-				5AAD1053190866970057BB66 /* Supporting Files */,
 				5ACEC5F719229269003D8428 /* PMXMLBuilderTestCase.m */,
 				5A7FA5AC1922B3E100410D1A /* PMItemTestCase.m */,
 				5A7FA5AE1922B3EF00410D1A /* PMPartTestCase.m */,
+				5AAD1053190866970057BB66 /* Supporting Files */,
 			);
 			name = PaceMobileTests;
 			path = TicketBuilderTests;

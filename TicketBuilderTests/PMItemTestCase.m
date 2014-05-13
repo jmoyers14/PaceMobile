@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-
+#import "PMItem.h"
 @interface PMItemTestCase : XCTestCase
 
 @end
@@ -17,7 +17,7 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    
 }
 
 - (void)tearDown
@@ -26,9 +26,29 @@
     [super tearDown];
 }
 
-- (void)testExample
-{
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+- (void) testDesignatedInit {
+    PMPart *part = [[PMPart alloc] initWithItemRow:1234 partRow:43221 line:11 part:@"EE1146"];
+    PMItem *item = [[PMItem alloc] initWithPart:part quantity:10 transType:SaleTrans];
+    
+    XCTAssertTrue(([item transType] == SaleTrans), @"transType is sales trans");
+    XCTAssertTrue(([item qty] == 10), @"quantity is 10");
+    XCTAssertTrue(([[item part] isEqualToPart:part]), @"parts are not equal");
 }
 
+- (void) testIsItemEqual {
+    PMPart *part = [[PMPart alloc] initWithItemRow:1234 partRow:43221 line:11 part:@"EE1146"];
+    PMItem *item = [[PMItem alloc] initWithPart:part quantity:10 transType:SaleTrans];
+    
+    XCTAssertTrue([item isEqualToItem:item], @"item equals itself");
+}
+
+
+- (void) testIsItemEqualFalse {
+    PMPart *part = [[PMPart alloc] initWithItemRow:1234 partRow:43221 line:11 part:@"EE1146"];
+    PMItem *item = [[PMItem alloc] initWithPart:part quantity:10 transType:SaleTrans];
+    PMItem *item2 = [[PMItem alloc] initWithPart:part quantity:9 transType:ReturnTrans];
+    
+    
+    XCTAssertFalse([item isEqualToItem:item2], @"item equals item2");
+}
 @end
