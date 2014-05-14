@@ -245,11 +245,60 @@
         [writer writeEndDocument];
     } else {
         [self credError:@"createord"];
+        return nil;
     }
 
     return [writer toString];
 }
 
+#pragma mark - deleteord
++ (NSString *) deleteordXMLWithUsername:(NSString *)username password:(NSString *)password orderRow:(NSUInteger)ordRow {
+    
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if(TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"deleteord"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"ordRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%d", ordRow]];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"deleteord"];
+        return nil;
+    }
+    
+    return nil;
+}
+
+#pragma mark - additem
+
++ (NSString *) additemXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow orderRow:(NSUInteger)ordRow partRow:(NSUInteger)partRow quantity:(NSUInteger)qty tranType:(NSString *)tranType {
+    
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if(TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"additem"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"additem"];
+        return nil;
+    }
+    
+}
 
 
 

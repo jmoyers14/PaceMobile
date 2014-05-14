@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "XMLWriter.h"
 #import "PMNetwork.h"
-
+#import "PMItem.h"
 @interface PMNetworkTestCase : XCTestCase
 
 @end
@@ -570,7 +570,147 @@
 
 #pragma mark - listitems
 - (void) testListitemsReply {
+    NSMutableArray *items = [[NSMutableArray alloc] init];
+    NSNumber *ordTot = [NSNumber numberWithDouble:22.50];
+    NSNumber *coreTot = [NSNumber numberWithDouble:33.25];
+    NSNumber *taxTot = [NSNumber numberWithDouble:3.33];
+    NSNumber *itemCnt = [NSNumber numberWithInteger:90];
     
+    for (int i=0; i<90; i++) {
+        PMPart *part = [[PMPart alloc] initWithItemRow:i partRow:i line:i part:[NSString stringWithFormat:@"EE%dF22%d", i, i]];
+        
+        if (i < 25) {
+            [items addObject:[[PMItem alloc] initWithPart:part quantity:i transType:SaleTrans]];
+        } else if (i >= 25 && i < 50) {
+            [items addObject:[[PMItem alloc] initWithPart:part quantity:i transType:ReturnTrans]];
+        } else if (i >= 50 < 75) {
+            [items addObject:[[PMItem alloc] initWithPart:part quantity:i transType:DefectTrans]];
+        } else {
+            [items addObject:[[PMItem alloc] initWithPart:part quantity:i transType:CoreTrans]];
+        }
+    }
+    
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"listitemsReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"ordTot"];
+    [cxmlWriter writeCharacters:[ordTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"coreTot"];
+    [cxmlWriter writeCharacters:[coreTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"taxTot"];
+    [cxmlWriter writeCharacters:[taxTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"itemCnt"];
+    [cxmlWriter writeCharacters:[itemCnt stringValue]];
+    [cxmlWriter writeEndElement];
+    
+    for(int i=0; i<90; i++) {
+        PMItem *item = [items objectAtIndex:i];
+        PMPart *part = [item part];
+        [cxmlWriter writeStartElement:@"items"];
+        [cxmlWriter writeStartElement:@"itemRow"];
+        [cxmlWriter writeCharacters:];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"partRow"];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [part partRow]]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"line"];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [part line]]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"part"];
+        [cxmlWriter writeCharacters:[part part]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"qty"];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [item qty]]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"tranType"];
+        NSString *type = nil;
+        switch ([item transType]) {
+            case SaleTrans:
+                type = @"S";
+                break;
+            case ReturnTrans:
+                type = @"R";
+                break;
+            case CoreTrans:
+                type = @"C";
+                break;
+            case DefectTrans:
+                type = @"D";
+                break;
+        }
+        [cxmlWriter writeCharacters:type];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeEndElement];
+    }
+    
+    
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    
+    NSDictionary *response = [PMNetwork parseListitemsReply:[cxmlWriter toString]];
+    
+    XCTAssertTrue([[response objectForKey:@"ordTot"] isEqualToNumber:ordTot] , @"ordTot not equal");
+    XCTAssertTrue([[response objectForKey:@"coreTot"] isEqualToNumber:coreTot] , @"coreTot not Equal");
+    XCTAssertTrue([[response objectForKey:@"taxTot"] isEqualToNumber:taxTot] , @"taxTot not Equal");
+    XCTAssertTrue([[response objectForKey:@"itemCnt"] isEqualToNumber:itemCnt] , @"itemCnt not equal");
+    
+    NSArray *responseItems = [response objectForKey:@"items"];
+    
+    for(int i = 0; i < 90; i++) {
+        PMItem *item1 = [items objectAtIndex:i];
+        PMItem *item2 = [responseItems objectAtIndex:i];
+        XCTAssertTrue([item1 isEqualToItem:item2], @"item %d is not equal", i);
+    }
+}
+
+- (void) testListitemsNoItems {
+    NSNumber *ordTot = [NSNumber numberWithDouble:22.50];
+    NSNumber *coreTot = [NSNumber numberWithDouble:33.25];
+    NSNumber *taxTot = [NSNumber numberWithDouble:3.33];
+    NSNumber *itemCnt = [NSNumber numberWithInteger:00];
+    
+    
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"listitemsReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"ordTot"];
+    [cxmlWriter writeCharacters:[ordTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"coreTot"];
+    [cxmlWriter writeCharacters:[coreTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"taxTot"];
+    [cxmlWriter writeCharacters:[taxTot stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"itemCnt"];
+    [cxmlWriter writeCharacters:[itemCnt stringValue]];
+    [cxmlWriter writeEndElement];
+    
+    
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    
+    NSDictionary *response = [PMNetwork parseListitemsReply:[cxmlWriter toString]];
+    
+    XCTAssertTrue([[response objectForKey:@"ordTot"] isEqualToNumber:ordTot] , @"ordTot not equal");
+    XCTAssertTrue([[response objectForKey:@"coreTot"] isEqualToNumber:coreTot] , @"coreTot not Equal");
+    XCTAssertTrue([[response objectForKey:@"taxTot"] isEqualToNumber:taxTot] , @"taxTot not Equal");
+    XCTAssertTrue([[response objectForKey:@"itemCnt"] isEqualToNumber:itemCnt] , @"itemCnt not equal");
+    
+    NSArray *responseItems = [response objectForKey:@"items"];
+    
+    XCTAssertTrue(([responseItems count] == 0), @"return non nil empty array");
 }
 
 

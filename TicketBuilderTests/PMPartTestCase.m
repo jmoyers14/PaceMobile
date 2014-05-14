@@ -49,7 +49,7 @@
 
 - (void) testIsEqualToPart {
     XCTAssertTrue([smallPart isEqualToPart:smallPart], @"part not equal to aprt");
-    XCTAssertFalse([bigPart isEqualToPart:bigPart], @"big parts not eqaul");
+    XCTAssertTrue([bigPart isEqualToPart:bigPart], @"big parts not eqaul");
 }
 
 - (void) testIsEqualToPartFail {
