@@ -13,6 +13,10 @@
 @synthesize ordRow  = _ordRow;
 @synthesize date    = _date;
 @synthesize comment = _comment;
+@synthesize items = _items;
+@synthesize currentItem = _currentItem;
+
+NSUInteger _currentItemIndex;
 
 //designated initializer
 - (id) initWithRow:(NSUInteger)row Date:(NSString *)date orderNum:(NSUInteger)ordNum comment:(NSString *)ordComment {
@@ -22,6 +26,8 @@
         _ordRow = row;
         _ordNum = ordNum;
         _date = date;
+        _currentItemIndex = 0;
+        _items = [[NSMutableArray alloc] init];
         self.comment = ordComment;
     }
     return self;
@@ -32,6 +38,28 @@
     return [self initWithRow:0 Date:@"" orderNum:0 comment:@""];
 }
 
+
+- (void) setItems:(NSArray *)items {
+    _currentItemIndex = 0;
+    _items = items;
+}
+
+- (void) setCurrentItem:(PMItem *)currentItem {
+    if([_items containsObject:currentItem]) {
+        _currentItemIndex = [_items indexOfObject:currentItem];
+    } else {
+        NSLog(@"%i currentItemIndex out of bounds", _currentItemIndex);
+    }
+}
+
+- (PMItem *) currentItem {
+    if(_currentItemIndex < [_items count]) {
+        return [_items objectAtIndex:_currentItemIndex];
+    } else {
+        NSLog(@"%i currentItemIndex out of bounds", _currentItemIndex);
+        return nil;
+    }
+}
 
 + (NSArray *) dictionaryKeys {
     return [NSArray arrayWithObjects:@"ordNum", @"ordRow", @"date", @"comment", nil];

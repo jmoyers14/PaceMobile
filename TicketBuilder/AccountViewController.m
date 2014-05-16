@@ -45,6 +45,7 @@
     [self styleHeader];
     
     [self setTitle:@"Account Info"];
+
     
     _user = [PMUser sharedInstance];
     _operations = [[NSOperationQueue alloc] init];
@@ -138,6 +139,7 @@
     if([[_functions objectAtIndex:indexPath.row] isEqualToString:@"Orders"]) {
         [self performSegueWithIdentifier:@"Orders" sender:self];
     }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

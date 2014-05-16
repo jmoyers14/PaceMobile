@@ -427,6 +427,93 @@ NSString *password;
     XCTAssertTrue((xml == nil), @"createord out of bounds should return nil");
 }
 
+- (void) testCreateOrderXMLNoArrays {
+    NSUInteger acctRow = 1234;
+    NSUInteger custRow = 4321;
+    NSString *ordComment = @"This is a comment";
+    NSUInteger custPoNum = 8776543;
+
+    
+    
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [writer writeStartElement:@"checkord"];
+    
+    [writer writeStartElement:@"user"];
+    [writer writeCharacters:username];
+    [writer writeEndElement];
+    [writer writeStartElement:@"password"];
+    [writer writeCharacters:password];
+    [writer writeEndElement];
+    [writer writeStartElement:@"acctRow"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) acctRow]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"custRow"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) custRow]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"ordComment"];
+    [writer writeCharacters:ordComment];
+    [writer writeEndElement];
+    [writer writeStartElement:@"custPoNum"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)custPoNum]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"shipInfo"];
+    [writer writeEndElement];
+    [writer writeStartElement:@"messageInfo"];
+    [writer writeEndElement];
+    [writer writeEndElement];
+    [writer writeEndDocument];
+    
+    NSString *correctXML = [writer toString];
+    
+    NSString *xml = [PMXMLBuilder createordXMLWithUsername:username password:password accountRow:acctRow customerRow:custRow orderComment:ordComment customerPONumber:custPoNum shipText:nil messageText:nil];
+    
+    XCTAssertTrue([correctXML isEqualToString:xml], @"xml:%@ shoudl equal correctxml: %@", xml,correctXML);
+}
+
+- (void) testCreateOrderXMLNoComment {
+    NSUInteger acctRow = 1234;
+    NSUInteger custRow = 4321;
+    NSUInteger custPoNum = 8776543;
+    
+    
+    
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [writer writeStartElement:@"checkord"];
+    
+    [writer writeStartElement:@"user"];
+    [writer writeCharacters:username];
+    [writer writeEndElement];
+    [writer writeStartElement:@"password"];
+    [writer writeCharacters:password];
+    [writer writeEndElement];
+    [writer writeStartElement:@"acctRow"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) acctRow]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"custRow"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) custRow]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"ordComment"];
+    [writer writeEndElement];
+    [writer writeStartElement:@"custPoNum"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)custPoNum]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"shipInfo"];
+    [writer writeEndElement];
+    [writer writeStartElement:@"messageInfo"];
+    [writer writeEndElement];
+    [writer writeEndElement];
+    [writer writeEndDocument];
+    
+    NSString *correctXML = [writer toString];
+    
+    NSString *xml = [PMXMLBuilder createordXMLWithUsername:username password:password accountRow:acctRow customerRow:custRow orderComment:nil customerPONumber:custPoNum shipText:nil messageText:nil];
+    
+    XCTAssertTrue([correctXML isEqualToString:xml], @"xml:%@ shoudl equal correctxml: %@", xml,correctXML);
+}
+
+
 #pragma mark -delete ord
 - (void) testDeleteOrdXML {
 
@@ -458,7 +545,7 @@ NSString *password;
     NSNumber *ordRow  = [NSNumber numberWithInteger:4321];
     NSNumber *partRow = [NSNumber numberWithInteger:5678];
     NSNumber *qty     = [NSNumber numberWithInteger:876];
-    NSString *tranType = @"S";
+    
     
     id<XMLStreamWriter> cwriter = [[XMLWriter alloc] init];
     
@@ -483,12 +570,12 @@ NSString *password;
     [cwriter writeCharacters:[qty stringValue]];
     [cwriter writeEndElement];
     [cwriter writeStartElement:@"tranType"];
-    [cwriter writeCharacters:tranType];
+    [cwriter writeCharacters:@"S"];
     [cwriter writeEndElement];
     [cwriter writeEndElement];
     [cwriter writeEndDocument];
     
-    NSString *xml = [PMXMLBuilder additemXMLWithUsername:username password:password accountRow:[acctRow integerValue] orderRow:[ordRow integerValue] partRow:[partRow integerValue] quantity:[qty integerValue] tranType:tranType];
+    NSString *xml = [PMXMLBuilder additemXMLWithUsername:username password:password accountRow:[acctRow integerValue] orderRow:[ordRow integerValue] partRow:[partRow integerValue] quantity:[qty integerValue] tranType:SaleTrans];
     
     XCTAssertTrue([xml isEqualToString:[cwriter toString]], @"response xml %@ does not equal xml %@", xml, [cwriter toString]);
 }
@@ -499,7 +586,6 @@ NSString *password;
     NSNumber *ordRow  = [NSNumber numberWithInteger:4321];
     NSNumber *partRow = [NSNumber numberWithInteger:5678];
     NSNumber *qty     = [NSNumber numberWithInteger:876];
-    NSString *tranType = @"R";
     
     id<XMLStreamWriter> cwriter = [[XMLWriter alloc] init];
     
@@ -524,12 +610,12 @@ NSString *password;
     [cwriter writeCharacters:[qty stringValue]];
     [cwriter writeEndElement];
     [cwriter writeStartElement:@"tranType"];
-    [cwriter writeCharacters:tranType];
+    [cwriter writeCharacters:@"R"];
     [cwriter writeEndElement];
     [cwriter writeEndElement];
     [cwriter writeEndDocument];
     
-    NSString *xml = [PMXMLBuilder additemXMLWithUsername:username password:password accountRow:[acctRow integerValue] orderRow:[ordRow integerValue] partRow:[partRow integerValue] quantity:[qty integerValue] tranType:tranType];
+    NSString *xml = [PMXMLBuilder additemXMLWithUsername:username password:password accountRow:[acctRow integerValue] orderRow:[ordRow integerValue] partRow:[partRow integerValue] quantity:[qty integerValue] tranType:ReturnTrans];
     
     XCTAssertTrue([xml isEqualToString:[cwriter toString]], @"response xml %@ does not equal xml %@", xml, [cwriter toString]);
 }
@@ -540,7 +626,6 @@ NSString *password;
     NSNumber *ordRow  = [NSNumber numberWithInteger:4321];
     NSNumber *partRow = [NSNumber numberWithInteger:5678];
     NSNumber *qty     = [NSNumber numberWithInteger:876];
-    NSString *tranType = @"C";
     
     id<XMLStreamWriter> cwriter = [[XMLWriter alloc] init];
     
@@ -565,12 +650,12 @@ NSString *password;
     [cwriter writeCharacters:[qty stringValue]];
     [cwriter writeEndElement];
     [cwriter writeStartElement:@"tranType"];
-    [cwriter writeCharacters:tranType];
+    [cwriter writeCharacters:@"C"];
     [cwriter writeEndElement];
     [cwriter writeEndElement];
     [cwriter writeEndDocument];
     
-    NSString *xml = [PMXMLBuilder additemXMLWithUsername:username password:password accountRow:[acctRow integerValue] orderRow:[ordRow integerValue] partRow:[partRow integerValue] quantity:[qty integerValue] tranType:tranType];
+    NSString *xml = [PMXMLBuilder additemXMLWithUsername:username password:password accountRow:[acctRow integerValue] orderRow:[ordRow integerValue] partRow:[partRow integerValue] quantity:[qty integerValue] tranType:CoreTrans];
     
     XCTAssertTrue([xml isEqualToString:[cwriter toString]], @"response xml %@ does not equal xml %@", xml, [cwriter toString]);
 }
@@ -581,7 +666,6 @@ NSString *password;
     NSNumber *ordRow  = [NSNumber numberWithInteger:4321];
     NSNumber *partRow = [NSNumber numberWithInteger:5678];
     NSNumber *qty     = [NSNumber numberWithInteger:876];
-    NSString *tranType = @"D";
     
     id<XMLStreamWriter> cwriter = [[XMLWriter alloc] init];
     
@@ -606,28 +690,17 @@ NSString *password;
     [cwriter writeCharacters:[qty stringValue]];
     [cwriter writeEndElement];
     [cwriter writeStartElement:@"tranType"];
-    [cwriter writeCharacters:tranType];
+    [cwriter writeCharacters:@"D"];
     [cwriter writeEndElement];
     [cwriter writeEndElement];
     [cwriter writeEndDocument];
     
-    NSString *xml = [PMXMLBuilder additemXMLWithUsername:username password:password accountRow:[acctRow integerValue] orderRow:[ordRow integerValue] partRow:[partRow integerValue] quantity:[qty integerValue] tranType:tranType];
+    NSString *xml = [PMXMLBuilder additemXMLWithUsername:username password:password accountRow:[acctRow integerValue] orderRow:[ordRow integerValue] partRow:[partRow integerValue] quantity:[qty integerValue] tranType:DefectTrans];
     
     XCTAssertTrue([xml isEqualToString:[cwriter toString]], @"response xml %@ does not equal xml %@", xml, [cwriter toString]);
 }
 
-- (void) testAddItemInvalidTypeXML {
-    
-    NSNumber *acctRow = [NSNumber numberWithInteger:1234];
-    NSNumber *ordRow  = [NSNumber numberWithInteger:4321];
-    NSNumber *partRow = [NSNumber numberWithInteger:5678];
-    NSNumber *qty     = [NSNumber numberWithInteger:876];
-    NSString *tranType = @"K";
-    
-    NSString *xml = [PMXMLBuilder additemXMLWithUsername:username password:password accountRow:[acctRow integerValue] orderRow:[ordRow integerValue] partRow:[partRow integerValue] quantity:[qty integerValue] tranType:tranType];
-    
-    XCTAssertTrue((xml == nil), @"xml is nil");
-}
+
 
 #pragma mark - edititem
 
@@ -730,7 +803,35 @@ NSString *password;
 }
 
 
+#pragma mark - catalog tests
 
+- (void) yearsTest {
+    
+}
+
+- (void) makesTest {
+    
+}
+
+- (void) modelsTest {
+    
+}
+
+- (void) enginesTest {
+    
+}
+
+- (void) groupsTest {
+    
+}
+
+- (void) subgroupsTest {
+    
+}
+
+- (void) partsTest {
+    
+}
 
 
 

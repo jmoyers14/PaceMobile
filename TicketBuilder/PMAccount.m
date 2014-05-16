@@ -21,6 +21,9 @@
 @synthesize contact = _contact;
 @synthesize email = _email;
 @synthesize orders = _orders;
+@synthesize currentOrder = _currentOrder;
+
+NSUInteger _currentOrderIndex;
 
 //Designated initializer
 - (id) initWithName:(NSString *)name row:(NSUInteger)acctRow num:(NSUInteger)anum {
@@ -30,6 +33,7 @@
         self.acctRow = acctRow;
         self.anum = anum;
         _orders = [[NSMutableArray alloc] init];
+        _currentOrderIndex = 0;
     }
     return self;
 }
@@ -50,6 +54,29 @@
         return NO;
     }
 }
+
+- (void) setOrders:(NSMutableArray *)orders {
+    _currentOrderIndex = 0;
+    _orders = orders;
+}
+
+- (void) setCurrentOrder:(PMOrder *)currentOrder {
+    if([_orders containsObject:currentOrder]) {
+        _currentOrderIndex = [_orders indexOfObject:currentOrder];
+    } else {
+        NSLog(@"%d currentOrderIndex out of bounds", _currentOrderIndex);
+    }
+}
+
+- (PMOrder *) currentOrder {
+    if(_currentOrderIndex < [_orders count]) {
+        return [_orders objectAtIndex:_currentOrderIndex];
+    } else {
+        NSLog(@"%d currentOrderIndex out of bounds", _currentOrderIndex);
+        return nil;
+    }
+}
+
 
 //add order to account
 - (void) addOrder:(PMOrder *)order {

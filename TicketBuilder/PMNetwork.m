@@ -397,6 +397,52 @@
     return  response;
 }
 
+/**************************************************************
+ *parse the response from the createord function
+ *
+ *params
+ *  data - NSString* - xml data returned from a network request
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *      error      => error code if there is an error
+ *      ordCnt    => number of orders returned
+ *      orders   => array of order objects returned
+ ***************************************************************/
++ (NSDictionary *) parseCreateordReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+
+    TBXMLElement *ordRowElement = [TBXML childElementNamed:@"ordRow" parentElement:root];
+    TBXMLElement *ordNumElement = [TBXML childElementNamed:@"ordNum" parentElement:root];
+    
+    NSNumber *ordRow = [NSNumber numberWithInteger:[[TBXML textForElement:ordRowElement] integerValue]];
+    NSNumber *ordNum = [NSNumber numberWithInteger:[[TBXML textForElement:ordNumElement] integerValue]];
+    
+    NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:ordRow, @"ordRow", ordNum, @"ordNum", nil];
+    
+    return response;
+}
 
 /**************************************************************
  *parse the response from the deleteord function
@@ -409,8 +455,31 @@
  *      error      => error code if there is an error
  ***************************************************************/
 + (NSDictionary *) parseDeleteordReply:(NSString *)xml {
-
-    return nil;
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    
+    return [[NSDictionary alloc] init];
 }
 
 
@@ -429,7 +498,43 @@
  *      itemRow   => id of order record in database
  ***************************************************************/
 + (NSDictionary *)parseAdditemReply:(NSString *)xml {
-    return nil;
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    TBXMLElement *ordTotElement = [TBXML childElementNamed:@"ordTot" parentElement:root];
+    TBXMLElement *coreTotElement = [TBXML childElementNamed:@"coreTot" parentElement:root];
+    TBXMLElement *taxTotElement = [TBXML childElementNamed:@"taxTot" parentElement:root];
+    TBXMLElement *itemRowElement = [TBXML childElementNamed:@"itemRow" parentElement:root];
+    
+    NSNumber *ordTot = [NSNumber numberWithInteger:[[TBXML textForElement:ordTotElement] integerValue]];
+    NSNumber *coreTot = [NSNumber numberWithInteger:[[TBXML textForElement:coreTotElement] integerValue]];
+    NSNumber *taxTot = [NSNumber numberWithInteger:[[TBXML textForElement:taxTotElement] integerValue]];
+    NSNumber *itemRow = [NSNumber numberWithInteger:[[TBXML textForElement:itemRowElement] integerValue]];
+    
+    NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:ordTot, @"ordTot",
+                              coreTot, @"coreTot", taxTot, @"taxTot", itemRow, @"itemRow", nil];
+    
+    return response;
 }
 
 
@@ -447,7 +552,41 @@
  *      taxTot    => total tax for order
  ***************************************************************/
 + (NSDictionary *) parseEdititemReply:(NSString *)xml {
-    return nil;
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+  
+    TBXMLElement *ordTotElement = [TBXML childElementNamed:@"ordTot" parentElement:root];
+    TBXMLElement *coreTotElement = [TBXML childElementNamed:@"coreTot" parentElement:root];
+    TBXMLElement *taxTotElement = [TBXML childElementNamed:@"taxTot" parentElement:root];
+    
+    NSNumber *ordTot = [NSNumber numberWithInteger:[[TBXML textForElement:ordTotElement] integerValue]];
+    NSNumber *coreTot = [NSNumber numberWithInteger:[[TBXML textForElement:coreTotElement] integerValue]];
+    NSNumber *taxTot = [NSNumber numberWithInteger:[[TBXML textForElement:taxTotElement] integerValue]];
+    
+    NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:ordTot, @"ordTot",
+                              coreTot, @"coreTot", taxTot, @"taxTot", nil];
+    
+    return response;
 }
 
 
@@ -465,9 +604,25 @@
  *      taxTot    => total tax for order
  ***************************************************************/
 + (NSDictionary *) parseDeleteitemReply:(NSString *)xml {
-    return nil;
+    return [self parseEdititemReply:xml];
 }
 
+
++(PMTransactionType) transTypeForString:(NSString *)string {
+    
+    if([string isEqualToString:@"S"]) {
+        return SaleTrans;
+    } else if([string isEqualToString:@"R"]) {
+        return ReturnTrans;
+    } else if([string isEqualToString:@"D"]) {
+        return DefectTrans;
+    } else if([string isEqualToString:@"C"]) {
+        return CoreTrans;
+    } else {
+        NSLog(@"Type %@ does not exist", string);
+    }
+    return -1;
+}
 
 /**************************************************************
  *parse the response from the listitems function
@@ -485,6 +640,325 @@
  *      items     => Array of PMItem objects
  ***************************************************************/
 + (NSDictionary *) parseListitemsReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    TBXMLElement *ordTotElement = [TBXML childElementNamed:@"ordTot" parentElement:root];
+    TBXMLElement *coreTotElement = [TBXML childElementNamed:@"coreTot" parentElement:root];
+    TBXMLElement *taxTotElement = [TBXML childElementNamed:@"taxTot" parentElement:root];
+    TBXMLElement *itemCntElement = [TBXML childElementNamed:@"itemCnt" parentElement:root];
+    
+    NSNumber *ordTot = [NSNumber numberWithDouble:[[TBXML textForElement:ordTotElement] doubleValue]];
+    NSNumber *coreTot = [NSNumber numberWithDouble:[[TBXML textForElement:coreTotElement] doubleValue]];
+    NSNumber *taxTot = [NSNumber numberWithDouble:[[TBXML textForElement:taxTotElement] doubleValue]];
+    NSNumber *itemCnt = [NSNumber numberWithInteger:[[TBXML textForElement:itemCntElement] integerValue]];
+    NSMutableArray *items = [[NSMutableArray alloc] init];
+    if([itemCnt integerValue] > 0) {
+        TBXMLElement *itemElement = [TBXML childElementNamed:@"items" parentElement:root];
+        TBXMLElement *itemRowElement = [TBXML childElementNamed:@"itemRow" parentElement:itemElement];
+        TBXMLElement *partRowElement = [TBXML childElementNamed:@"partRow" parentElement:itemElement];
+        TBXMLElement *lineElement = [TBXML childElementNamed:@"line" parentElement:itemElement];
+        TBXMLElement *partElement = [TBXML childElementNamed:@"part" parentElement:itemElement];
+        TBXMLElement *qtyElement = [TBXML childElementNamed:@"qty" parentElement:itemElement];
+        TBXMLElement *tranTypeElement = [TBXML childElementNamed:@"tranType" parentElement:itemElement];
+        
+        PMPart *part = [[PMPart alloc] initWithItemRow:[[TBXML textForElement:itemRowElement] integerValue]
+                                               partRow:[[TBXML textForElement:partRowElement] integerValue]
+                                                  line:[[TBXML textForElement:lineElement] integerValue]
+                                                  part:[TBXML textForElement:partElement]];
+        
+        PMItem *item = [[PMItem alloc] initWithPart:part
+                                           quantity:[[TBXML textForElement:qtyElement] integerValue]
+                                          transType:[self transTypeForString:[TBXML textForElement:tranTypeElement]]];
+        [items addObject:item];
+        
+        while ((itemElement = itemElement->nextSibling)) {
+            itemRowElement  = [TBXML childElementNamed:@"itemRow" parentElement:itemElement];
+            partRowElement  = [TBXML childElementNamed:@"partRow" parentElement:itemElement];
+            lineElement     = [TBXML childElementNamed:@"line" parentElement:itemElement];
+            partElement     = [TBXML childElementNamed:@"part" parentElement:itemElement];
+            qtyElement      = [TBXML childElementNamed:@"qty" parentElement:itemElement];
+            tranTypeElement = [TBXML childElementNamed:@"tranType" parentElement:itemElement];
+            
+            PMPart *part = [[PMPart alloc] initWithItemRow:[[TBXML textForElement:itemRowElement] integerValue]
+                                                   partRow:[[TBXML textForElement:partRowElement] integerValue]
+                                                      line:[[TBXML textForElement:lineElement] integerValue]
+                                                      part:[TBXML textForElement:partElement]];
+            
+            PMItem *item = [[PMItem alloc] initWithPart:part
+                                               quantity:[[TBXML textForElement:qtyElement] integerValue]
+                                              transType:[self transTypeForString:[TBXML textForElement:tranTypeElement]]];
+            
+            [items addObject:item];
+        }
+        
+        
+        
+    }
+    
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:ordTot, @"ordTot", coreTot, @"coreTot", taxTot, @"taxTot", itemCnt, @"itemCnt", items, @"items", nil];
+
+    return dictionary;
+}
+
+/**************************************************************
+ *parse the response from the years
+ *
+ *params
+ *  xml - NSString* - xml data returned from a network request
+ *  type - PMCatalogReply - flag to tell the type of function
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *  error - error message, nil if no error
+ *  years - array of strings for years
+ ***************************************************************/
++ (NSDictionary *) parseYearsReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+
+    return nil;
+    
+    
+    
+    
+}
+
+/**************************************************************
+ *parse the response from the makes
+ *
+ *params
+ *  xml - NSString* - xml data returned from a network request
+ *  type - PMCatalogReply - flag to tell the type of function
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *  error - error message, nil if no error
+ *  makes - array of strings for years
+ ***************************************************************/
+
++ (NSDictionary *) parseMakesReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    return nil;
+}
+
+/**************************************************************
+ *parse the response from the models
+ *
+ *params
+ *  xml - NSString* - xml data returned from a network request
+ *  type - PMCatalogReply - flag to tell the type of function
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *  error - error message, nil if no error
+ *  years - array of strings for years
+ ***************************************************************/
++ (NSDictionary *) parseModelsReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    return nil;
+}
+
+/**************************************************************
+ *parse the response from the engines
+ *
+ *params
+ *  xml - NSString* - xml data returned from a network request
+ *  type - PMCatalogReply - flag to tell the type of function
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *  error - error message, nil if no error
+ *  years - array of strings for years
+ ***************************************************************/
+
++ (NSDictionary *) parseEnginesReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    return nil;
+}
+
+/**************************************************************
+ *parse the response from the groups
+ *
+ *params
+ *  xml - NSString* - xml data returned from a network request
+ *  type - PMCatalogReply - flag to tell the type of function
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *  error - error message, nil if no error
+ *  years - array of strings for years
+ ***************************************************************/
+
++ (NSDictionary *) parseGroupsReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    return nil;
+}
+
+/**************************************************************
+ *parse the response from the subgroups
+ *
+ *params
+ *  xml - NSString* - xml data returned from a network request
+ *  type - PMCatalogReply - flag to tell the type of function
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *  error - error message, nil if no error
+ *  years - array of strings for years
+ ***************************************************************/
++ (NSDictionary *) parseSubgroupsReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
     return nil;
 }
 

@@ -442,6 +442,9 @@
     id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
     [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
     [cxmlWriter writeStartElement:@"createordReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
     [cxmlWriter writeStartElement:@"ordRow"];
     [cxmlWriter writeCharacters:[ordRow stringValue]];
     [cxmlWriter writeEndElement];
@@ -469,7 +472,7 @@
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
     
-    NSDictionary *response = [PMNetwork parseCreateordReply:[cxmlWriter toString]];
+    NSDictionary *response = [PMNetwork parseDeleteordReply:[cxmlWriter toString]];
 
     XCTAssertTrue(([response objectForKey:@"error"] == nil), @"no error key");
     XCTAssertTrue(([response count] == 0), @"response should be empty");
@@ -485,6 +488,9 @@
     id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
     [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
     [cxmlWriter writeStartElement:@"additemReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
     [cxmlWriter writeStartElement:@"ordTot"];
     [cxmlWriter writeCharacters:[ordTot stringValue]];
     [cxmlWriter writeEndElement];
@@ -518,6 +524,9 @@
     id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
     [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
     [cxmlWriter writeStartElement:@"edititemReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
     [cxmlWriter writeStartElement:@"ordTot"];
     [cxmlWriter writeCharacters:[ordTot stringValue]];
     [cxmlWriter writeEndElement];
@@ -531,7 +540,7 @@
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
     
-    NSDictionary *response = [PMNetwork parseAdditemReply:[cxmlWriter toString]];
+    NSDictionary *response = [PMNetwork parseEdititemReply:[cxmlWriter toString]];
     
     XCTAssertTrue([[response objectForKey:@"ordTot"] isEqualToNumber:ordTot], @"order totals not equal");
     XCTAssertTrue([[response objectForKey:@"coreTot"] isEqualToNumber:coreTot], @"core totals not equal");
@@ -548,6 +557,9 @@
     id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
     [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
     [cxmlWriter writeStartElement:@"deleteitemReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
     [cxmlWriter writeStartElement:@"ordTot"];
     [cxmlWriter writeCharacters:[ordTot stringValue]];
     [cxmlWriter writeEndElement];
@@ -561,7 +573,7 @@
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
     
-    NSDictionary *response = [PMNetwork parseAdditemReply:[cxmlWriter toString]];
+    NSDictionary *response = [PMNetwork parseDeleteitemReply:[cxmlWriter toString]];
     
     XCTAssertTrue([[response objectForKey:@"ordTot"] isEqualToNumber:ordTot], @"order totals not equal");
     XCTAssertTrue([[response objectForKey:@"coreTot"] isEqualToNumber:coreTot], @"core totals not equal");
@@ -614,19 +626,19 @@
         PMPart *part = [item part];
         [cxmlWriter writeStartElement:@"items"];
         [cxmlWriter writeStartElement:@"itemRow"];
-        [cxmlWriter writeCharacters:];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)[part itemRow]]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeStartElement:@"partRow"];
-        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [part partRow]]];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)[part partRow]]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeStartElement:@"line"];
-        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [part line]]];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)[part line]]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeStartElement:@"part"];
         [cxmlWriter writeCharacters:[part part]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeStartElement:@"qty"];
-        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [item qty]]];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)[item qty]]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeStartElement:@"tranType"];
         NSString *type = nil;
@@ -713,6 +725,227 @@
     XCTAssertTrue(([responseItems count] == 0), @"return non nil empty array");
 }
 
+#pragma mark - year test
+
+- (void) testParseYears {
+ 
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"yearsReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    for(int i = 1970; i < 2014; i++) {
+        NSString *year = [NSString stringWithFormat:@"%d", i];
+        [cxmlWriter writeStartElement:@"year"];
+        [cxmlWriter writeCharacters:year];
+        [cxmlWriter writeEndElement];
+    }
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseYearsReply:[cxmlWriter toString]];
+    
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0) , @"error should be nil");
+
+    NSArray *years = [response objectForKey:@"years"];
+    
+    for(int i = 1970; i < 2014; i++) {
+        NSString *year = [NSString stringWithFormat:@"%d", i];
+        XCTAssertTrue([years containsObject:year], @"%@ year not in years", year);
+    }
+
+}
+
+- (void) testParseYearsNoYears {
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"yearsReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseYearsReply:[cxmlWriter toString]];
+    
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0) , @"error should be nil");
+    XCTAssertTrue(([[response objectForKey:@"years"] count] == 0), @"shoud return empty array of years");
+}
+
+#pragma mark - makes 
+
+- (void) testParseMakes {
+    
+    
+    
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"makesReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    for(int i = 0; i < 500; i++) {
+        NSString *make = [NSString stringWithFormat:@"Make%d", i];
+        [cxmlWriter writeStartElement:@"makes"];
+        [cxmlWriter writeStartElement:@"make"];
+        [cxmlWriter writeCharacters:make];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"makeDesc"];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%@, description", make]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeEndElement];
+    }
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+}
+
+- (void) testParseNoMakes {
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"makesReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+}
+#pragma mark - models
+- (void) testParseModels {
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"modelsReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    for(int i = 0; i < 500; i++) {
+        NSString *model = [NSString stringWithFormat:@"Model%d", i];
+        [cxmlWriter writeStartElement:@"models"];
+        [cxmlWriter writeStartElement:@"model"];
+        [cxmlWriter writeCharacters:model];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"modelDesc"];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%@, description", model]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeEndElement];
+    }
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+}
+
+- (void) testParseNoModels {
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"modelsReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+}
+#pragma mark - engines
+- (void) testParseEngines {
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"enginesReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    for(int i = 0; i < 500; i++) {
+        NSString *vid = [NSString stringWithFormat:@"Make%d", i];
+        [cxmlWriter writeStartElement:@"engines"];
+        [cxmlWriter writeStartElement:@"vid"];
+        [cxmlWriter writeCharacters:vid];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"engineDesc"];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%@, description", vid]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeEndElement];
+    }
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+}
+
+- (void) testParseEnginesNoEngines {
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"enginesReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+}
+
+#pragma mark - groups
+
+- (void) testParseGroups {
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"groupsReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    for(int i = 0; i < 500; i++) {
+        NSString *group = [NSString stringWithFormat:@"group%d", i];
+        [cxmlWriter writeStartElement:@"groups"];
+        [cxmlWriter writeStartElement:@"group"];
+        [cxmlWriter writeCharacters:group];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"groupDesc"];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%@, description", group]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeEndElement];
+    }
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+}
+
+- (void) testParseNoGroups {
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"groupsReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+}
+
+#pragma mark - subgroups
+- (void) testParseSubGroups {
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"subgroupsReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    for(int i = 0; i < 500; i++) {
+        NSString *group = [NSString stringWithFormat:@"subgroup%d", i];
+        [cxmlWriter writeStartElement:@"subgroups"];
+        [cxmlWriter writeStartElement:@"subgroup"];
+        [cxmlWriter writeCharacters:group];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"subgroupDesc"];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%@, description", group]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeEndElement];
+    }
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+}
+
+- (void) testParseNoSubGroups {
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"subgroupsReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+}
+#pragma mark - parts
 
 
 @end

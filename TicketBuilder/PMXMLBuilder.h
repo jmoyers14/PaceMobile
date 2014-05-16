@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "XMLWriter.h"
-
+#import "PMItem.h"
 @interface PMXMLBuilder : NSObject
 //xml to log user into MOE
 + (NSString *) loginXMLWithUsername:(NSString *)username
@@ -102,7 +102,7 @@
                              orderRow:(NSUInteger)ordRow
                               partRow:(NSUInteger)partRow
                              quantity:(NSUInteger)qty
-                             tranType:(NSString *)tranType;
+                             tranType:(PMTransactionType)tranType;
 
 //XML to change the qty value of items from the current order
 + (NSString *) edititemXMLWithUsername:(NSString *)username
@@ -130,6 +130,43 @@
                                password:(NSString *)password
                                orderRow:(NSUInteger)ordRow;
 
+//get a list of years from the catalog
++ (NSString *) yearsXMLWithUsername:(NSString *)username
+                           password:(NSString *)password;
+
+//get a list of makes from the catalog
++ (NSString *) makesXMLWithUsername:(NSString *)username
+                           password:(NSString *)password
+                              years:(NSString *)years;
+
+//get list of models from the catalog
++ (NSString *) modelsXMLWithUsername:(NSString *)username
+                            password:(NSString *)password
+                                year:(NSString *)year
+                               make:(NSString *)make;
+
+//get engine list from catalog
++ (NSString *) enginesXMLWithUsername:(NSString *)username
+                             password:(NSString *)password
+                                 year:(NSString *)year
+                                 make:(NSString *)make
+                                model:(NSString *)model;
+
+//get list of groups from the catalog
++ (NSString *) groupsXMLWithUsername:(NSString *)username
+                            password:(NSString *)password;
+
+//get the second level of part groups that are desired
++ (NSString *) subgroupsXMLWithUsername:(NSString *)username
+                               password:(NSString *)password
+                                  group:(NSString *)group;
+
+//get list of available parts for desired subgroup
++ (NSString *) partsWithUsername:(NSString *)username
+                        password:(NSString *)password
+                         acctRow:(NSUInteger)acctRow
+                        subgroup:(NSString *)subgroup
+                             vid:(NSString *)vid;
 
 //XML to get account aged balances and sales for 2 history periods
 /*

@@ -12,6 +12,17 @@
 #import <Foundation/Foundation.h>
 #import "PMStore.h"
 #import "TBXML.h"
+#import "PMItem.h"
+
+typedef enum {
+    PMCatalogReplyYears,
+    PMCatalogReplyMakes,
+    PMCatalogReplyModels,
+    PMCatalogReplyEngines,
+    PMCatalogReplyGroups,
+    PMCatalogReplySubgroups
+} PMCatalogReply;
+
 @interface PMNetwork : NSObject
 
 //Request building/sending
@@ -28,4 +39,14 @@
 + (NSDictionary *) parseEdititemReply:(NSString *)xml;
 + (NSDictionary *) parseDeleteitemReply:(NSString *)xml;
 + (NSDictionary *) parseListitemsReply:(NSString *)xml;
+//catalog
++ (NSDictionary *) parseYearsReply:(NSString *)xml;
++ (NSDictionary *) parseMakesReply:(NSString *)xml;
++ (NSDictionary *) parseModelsReply:(NSString *)xml;
++ (NSDictionary *) parseEnginesReply:(NSString *)xml;
++ (NSDictionary *) parseGroupsReply:(NSString *)xml;
++ (NSDictionary *) parseSubgroupsReply:(NSString *)xml;
++ (NSDictionary *) parsePartsReply:(NSString *)xml;
+
++ (NSDictionary *) parseCatalogReply:(NSString *)xml type:(PMCatalogReply)type;
 @end

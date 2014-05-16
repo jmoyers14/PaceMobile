@@ -207,7 +207,7 @@
     }
     if(TB_isValidCreds(username, password)) {
         [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
-        [writer writeStartElement:@"checkord"];
+        [writer writeStartElement:@"createord"];
         
         [writer writeStartElement:@"user"];
         [writer writeCharacters:username];
@@ -222,7 +222,9 @@
         [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) custRow]];
         [writer writeEndElement];
         [writer writeStartElement:@"ordComment"];
-        [writer writeCharacters:ordComment];
+        if (ordComment) {
+            [writer writeCharacters:ordComment];
+        }
         [writer writeEndElement];
         [writer writeStartElement:@"custPoNum"];
         [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)custPoNum]];
@@ -265,7 +267,7 @@
         [writer writeCharacters:password];
         [writer writeEndElement];
         [writer writeStartElement:@"ordRow"];
-        [writer writeCharacters:[NSString stringWithFormat:@"%d", ordRow]];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)ordRow]];
         [writer writeEndElement];
         [writer writeEndElement];
         [writer writeEndDocument];
@@ -274,12 +276,12 @@
         return nil;
     }
     
-    return nil;
+    return [writer toString];
 }
 
 #pragma mark - additem
 
-+ (NSString *) additemXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow orderRow:(NSUInteger)ordRow partRow:(NSUInteger)partRow quantity:(NSUInteger)qty tranType:(NSString *)tranType {
++ (NSString *) additemXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow orderRow:(NSUInteger)ordRow partRow:(NSUInteger)partRow quantity:(NSUInteger)qty tranType:(PMTransactionType)tranType {
     
     id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
     if(TB_isValidCreds(username, password)) {
@@ -291,6 +293,34 @@
         [writer writeStartElement:@"password"];
         [writer writeCharacters:password];
         [writer writeEndElement];
+        [writer writeStartElement:@"acctRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)acctRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"ordRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)ordRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"partRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)partRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"qty"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)qty]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"tranType"];
+        switch (tranType) {
+            case SaleTrans:
+                [writer writeCharacters:@"S"];
+                break;
+            case ReturnTrans:
+                [writer writeCharacters:@"R"];
+                break;
+            case CoreTrans:
+                [writer writeCharacters:@"C"];
+                break;
+            case DefectTrans:
+                [writer writeCharacters:@"D"];
+                break;
+        }
+        [writer writeEndElement];
         [writer writeEndElement];
         [writer writeEndDocument];
     } else {
@@ -298,8 +328,329 @@
         return nil;
     }
     
+    return [writer toString];
+}
+
+#pragma mark - edititem
+
++ (NSString *) edititemXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow orderRow:(NSUInteger)ordRow itemRow:(NSUInteger)itemRow quantity:(NSUInteger)qty {
+    
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if(TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"edititem"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"acctRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) acctRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"ordRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) ordRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"itemRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) itemRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"qty"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) qty]];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"edititem"];
+        return nil;
+    }
+    return [writer toString];
+}
+
+#pragma mark - deleteitem
++ (NSString *) deleteitemXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow orderRow:(NSUInteger)ordRow itemRow:(NSUInteger)itemRow {
+    
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if (TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"deleteitem"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"acctRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)acctRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"ordRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)ordRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"itemRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)itemRow]];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"deleteitem"];
+        return nil;
+    }
+    
+    return [writer toString];
 }
 
 
+#pragma mark - listitems
++ (NSString *) listitemsXMLWithUsername:(NSString *)username password:(NSString *)password orderRow:(NSUInteger)ordRow {
+    
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if (TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"listitems"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"ordRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)ordRow]];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"listitems"];
+        return nil;
+    }
+    
+    return [writer toString];
+}
 
+#pragma mark - catalog
+
++ (NSString *) yearsXMLWithUsername:(NSString *)username password:(NSString *)password {
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if (TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"years"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"years"];
+        return nil;
+    }
+    
+    return [writer toString];
+}
+
++ (NSString *) makesXMLWithUsername:(NSString *)username password:(NSString *)password years:(NSString *)years {
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if (TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"makes"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"year"];
+        [writer writeCharacters:years];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"makes"];
+        return nil;
+    }
+    
+    return [writer toString];
+}
+
++ (NSString *) modelsXMLWithUsername:(NSString *)username password:(NSString *)password year:(NSString *)year make:(NSString *)make {
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if (TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"models"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"year"];
+        [writer writeCharacters:year];
+        [writer writeEndElement];
+        [writer writeStartElement:@"make"];
+        [writer writeCharacters:make];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"models"];
+        return nil;
+    }
+    
+    return [writer toString];
+}
+
++ (NSString *) enginesXMLWithUsername:(NSString *)username password:(NSString *)password year:(NSString *)year make:(NSString *)make model:(NSString *)model {
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if (TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"engines"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"year"];
+        [writer writeCharacters:year];
+        [writer writeEndElement];
+        [writer writeStartElement:@"make"];
+        [writer writeCharacters:make];
+        [writer writeEndElement];
+        [writer writeStartElement:@"model"];
+        [writer writeCharacters:model];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"engines"];
+        return nil;
+    }
+    
+    return [writer toString];
+}
+
++ (NSString *) groupsXMLWithUsername:(NSString *)username password:(NSString *)password {
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if (TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"groups"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"groups"];
+        return nil;
+    }
+    
+    return [writer toString];
+}
+
++ (NSString *) subgroupsXMLWithUsername:(NSString *)username password:(NSString *)password group:(NSString *)group {
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if (TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"subgroups"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"group"];
+        [writer writeCharacters:group];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"subgroups"];
+        return nil;
+    }
+    
+    return [writer toString];
+}
+
++ (NSString *) partsWithUsername:(NSString *)username password:(NSString *)password acctRow:(NSUInteger)acctRow subgroup:(NSString *)subgroup vid:(NSString *)vid {
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if (TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"parts"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"acctRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)acctRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"subgroup"];
+        [writer writeCharacters:subgroup];
+        [writer writeEndElement];
+        [writer writeStartElement:@"vid"];
+        [writer writeCharacters:vid];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+    } else {
+        [self credError:@"parts"];
+        return nil;
+    }
+    
+    return [writer toString];
+}
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -22,8 +22,8 @@
 @property (nonatomic, strong) NSString *fax;
 @property (nonatomic, strong) NSString *contact;
 @property (nonatomic, strong) NSString *email;
-@property (nonatomic, strong, readonly) NSMutableArray *orders;
-
+@property (nonatomic, strong) NSMutableArray *orders;
+@property (nonatomic, strong) PMOrder *currentOrder;
 -(id) initWithName:(NSString *)name row:(NSUInteger)acctRow num:(NSUInteger)anum;
 -(BOOL) isEqualToAccount:(PMAccount *)account;
 -(void) addOrder:(PMOrder *)order;
