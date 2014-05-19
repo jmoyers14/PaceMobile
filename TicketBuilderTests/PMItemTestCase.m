@@ -27,8 +27,8 @@
 }
 
 - (void) testDesignatedInit {
-    PMPart *part = [[PMPart alloc] initWithItemRow:1234 partRow:43221 line:11 part:@"EE1146"];
-    PMItem *item = [[PMItem alloc] initWithPart:part quantity:10 transType:SaleTrans];
+    PMPart *part = [[PMPart alloc] initWithPartRow:43221 line:@"DUP" part:@"EE1146"];
+    PMItem *item = [[PMItem alloc] initWithItemRow:1234 part:part quantity:10 transType:SaleTrans];
     
     XCTAssertTrue(([item transType] == SaleTrans), @"transType is sales trans");
     XCTAssertTrue(([item qty] == 10), @"quantity is 10");
@@ -36,17 +36,17 @@
 }
 
 - (void) testIsItemEqual {
-    PMPart *part = [[PMPart alloc] initWithItemRow:1234 partRow:43221 line:11 part:@"EE1146"];
-    PMItem *item = [[PMItem alloc] initWithPart:part quantity:10 transType:SaleTrans];
+    PMPart *part = [[PMPart alloc] initWithPartRow:43221 line:@"DUP" part:@"EE1146"];
+    PMItem *item = [[PMItem alloc] initWithItemRow:1234 part:part quantity:10 transType:SaleTrans];
     
     XCTAssertTrue([item isEqualToItem:item], @"item equals itself");
 }
 
 
 - (void) testIsItemEqualFalse {
-    PMPart *part = [[PMPart alloc] initWithItemRow:1234 partRow:43221 line:11 part:@"EE1146"];
-    PMItem *item = [[PMItem alloc] initWithPart:part quantity:10 transType:SaleTrans];
-    PMItem *item2 = [[PMItem alloc] initWithPart:part quantity:9 transType:ReturnTrans];
+    PMPart *part = [[PMPart alloc] initWithPartRow:43221 line:@"DUP" part:@"EE1146"];
+    PMItem *item = [[PMItem alloc] initWithItemRow:1234 part:part quantity:10 transType:SaleTrans];
+    PMItem *item2 = [[PMItem alloc] initWithItemRow:333 part:part quantity:9 transType:ReturnTrans];
     
     
     XCTAssertFalse([item isEqualToItem:item2], @"item equals item2");

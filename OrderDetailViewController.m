@@ -13,6 +13,8 @@
     PMAccount *_account;
     PMOrder *_order;
     NSOperationQueue *_operations;
+    FindPartViewControllerTableViewController *_findPartViewController;
+    UIPopoverController *_findPartPopover;
 }
 
 @end
@@ -45,8 +47,10 @@
     [self.accountNumLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[_account anum]]];
     
     _operations = [[NSOperationQueue alloc] init];
-    [_operations setMaxConcurrentOperationCount:1];
+    [_operations setMaxConcurrentOperationCount:2];
     [_operations setName:@"listitems queue"];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedAddItemNotification:) name:@"AddItemNotification" object:nil];
 }
 
 - (void) refreshItems {
@@ -67,11 +71,31 @@
     // Dispose of any resources that can be recreated.
 }
 
+/*
+- (IBAction)addItem:(id)sender {
+    if(_findPartViewController == nil) {
+        //create IPConfigurationViewController
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        _findPartViewController = [storyboard instantiateViewControllerWithIdentifier:@"FindPartViewController"];
+    }
+    
+    if (_findPartPopover == nil) {
+        //Show the ipConfig view
+        
+        _findPartPopover = [[UIPopoverController alloc] initWithContentViewController:_findPartViewController];
+        [_findPartPopover setDelegate:self];
+        
+        [_findPartPopover presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
+        
+    }
+}
+*/
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -96,20 +120,55 @@
 - (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
     if(![operation failed]) {
         if ([[operation identifier] isEqualToString:@"listitems"]) {
+            //list item response
             NSDictionary *response = [PMNetwork parseListitemsReply:[operation responseXML]];
             if([[response objectForKey:@"error"] length] > 0) {
                 [self displayErrorMessage:[response objectForKey:@"error"]];
             } else {
                 [_order setItems:[response objectForKey:@"items"]];
-                [self.partTotalLabel setText:[[response objectForKey:@"ordTot"] stringValue]];
-                [self.coreTotalLabel setText:[[response objectForKey:@"coreTot"] stringValue]];
-                [self.taxTotalLabel setText:[[response objectForKey:@"taxTot"] stringValue]];
+                [self.totalLabel setText:[NSString stringWithFormat:@"$%@", [response objectForKey:@"ordTot"]]];
+                [self.coreTotalLabel setText:[NSString stringWithFormat:@"$%@", [response objectForKey:@"coreTot"]]];
+                [self.taxTotalLabel setText:[NSString stringWithFormat:@"$%@", [response objectForKey:@"taxTot"]]];
                 [self.tableView reloadData];
+            }
+        } else if([[operation identifier] isEqualToString:@"additem"]) {
+            //add item response
+            NSDictionary *response = [PMNetwork parseAdditemReply:[operation responseXML]];
+            if ([[response objectForKey:@"error"] length] > 0) {
+                [self displayErrorMessage:[response objectForKey:@"eror"]];
+            } else {
+                [self refreshItems];
             }
         }
     } else {
         NSLog(@"%@ failed", [operation identifier]);
     }
 }
+
+
+
+#pragma mark - UIPopoverViewControllerDelegate
+
+- (void) popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    _findPartPopover = nil;
+}
+
+#pragma mark - notifications
+
+- (void) receivedAddItemNotification:(NSNotification *)notification {
+    if ([[notification name] isEqualToString:@"AddItemNotification"]) {
+        PMItem *item = [[notification userInfo] objectForKey:@"item"];
+        
+        if (item) {
+            NSString *xml = [PMXMLBuilder additemXMLWithUsername:[_user username] password:[_user password] accountRow:[_account acctRow] orderRow:[_order ordRow] partRow:[[item part] partRow] quantity:[item qty] tranType:[item transType]];
+            
+            PMNetworkOperation *additem = [[PMNetworkOperation alloc] initWithIdentifier:@"additem" XML:xml andURL:[_user url]];
+            [additem setDelegate:self];
+            [_operations addOperation:additem];
+        }
+    }
+}
+
+
 
 @end

@@ -10,6 +10,15 @@
 #import "XMLWriter.h"
 #import "PMNetwork.h"
 #import "PMItem.h"
+#import "PMItem.h"
+#import "PMMake.h"
+#import "PMModel.h"
+#import "PMEngine.h"
+#import "PMGroup.h"
+#import "PMSubGroup.h"
+#import "PMPartType.h"
+#import "PMPart.h"
+
 @interface PMNetworkTestCase : XCTestCase
 
 @end
@@ -589,16 +598,16 @@
     NSNumber *itemCnt = [NSNumber numberWithInteger:90];
     
     for (int i=0; i<90; i++) {
-        PMPart *part = [[PMPart alloc] initWithItemRow:i partRow:i line:i part:[NSString stringWithFormat:@"EE%dF22%d", i, i]];
+        PMPart *part = [[PMPart alloc] initWithPartRow:i line:@"DUP" part:[NSString stringWithFormat:@"EE%dF22%d", i, i]];
         
         if (i < 25) {
-            [items addObject:[[PMItem alloc] initWithPart:part quantity:i transType:SaleTrans]];
+            [items addObject:[[PMItem alloc] initWithItemRow:i part:part quantity:i transType:SaleTrans]];
         } else if (i >= 25 && i < 50) {
-            [items addObject:[[PMItem alloc] initWithPart:part quantity:i transType:ReturnTrans]];
+            [items addObject:[[PMItem alloc] initWithItemRow:i part:part quantity:i transType:ReturnTrans]];
         } else if (i >= 50 < 75) {
-            [items addObject:[[PMItem alloc] initWithPart:part quantity:i transType:DefectTrans]];
+            [items addObject:[[PMItem alloc] initWithItemRow:i part:part quantity:i transType:DefectTrans]];
         } else {
-            [items addObject:[[PMItem alloc] initWithPart:part quantity:i transType:CoreTrans]];
+            [items addObject:[[PMItem alloc] initWithItemRow:i part:part quantity:i transType:CoreTrans]];
         }
     }
     
@@ -626,13 +635,13 @@
         PMPart *part = [item part];
         [cxmlWriter writeStartElement:@"items"];
         [cxmlWriter writeStartElement:@"itemRow"];
-        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)[part itemRow]]];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)[item itemRow]]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeStartElement:@"partRow"];
         [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)[part partRow]]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeStartElement:@"line"];
-        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)[part line]]];
+        [cxmlWriter writeCharacters:[part line]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeStartElement:@"part"];
         [cxmlWriter writeCharacters:[part part]];
@@ -728,7 +737,7 @@
 #pragma mark - year test
 
 - (void) testParseYears {
- 
+
     id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
     [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
     [cxmlWriter writeStartElement:@"yearsReply"];
@@ -750,11 +759,7 @@
 
     NSArray *years = [response objectForKey:@"years"];
     
-    for(int i = 1970; i < 2014; i++) {
-        NSString *year = [NSString stringWithFormat:@"%d", i];
-        XCTAssertTrue([years containsObject:year], @"%@ year not in years", year);
-    }
-
+    XCTAssertTrue([years isEqualToArray:[response objectForKey:@"years"]], @"");
 }
 
 - (void) testParseYearsNoYears {
@@ -777,7 +782,12 @@
 
 - (void) testParseMakes {
     
-    
+    NSMutableArray *makes = [[NSMutableArray alloc] init];
+    for (int i=0; i<500; i++) {
+        NSString *make = [NSString stringWithFormat:@"Make%d", i];
+        NSString *makeDesc = [NSString stringWithFormat:@"%@, description", make];
+        [makes addObject:[[PMMake alloc] initWithMake:make makeDesc:makeDesc]];
+    }
     
     id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
     [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
@@ -786,18 +796,26 @@
     [cxmlWriter writeCharacters:@"00"];
     [cxmlWriter writeEndElement];
     for(int i = 0; i < 500; i++) {
-        NSString *make = [NSString stringWithFormat:@"Make%d", i];
+        PMMake *make = [makes objectAtIndex:i];
         [cxmlWriter writeStartElement:@"makes"];
         [cxmlWriter writeStartElement:@"make"];
-        [cxmlWriter writeCharacters:make];
+        [cxmlWriter writeCharacters:[make make]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeStartElement:@"makeDesc"];
-        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%@, description", make]];
+        [cxmlWriter writeCharacters:[make makeDesc]];
         [cxmlWriter writeEndElement];
         [cxmlWriter writeEndElement];
     }
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
+    
+    
+    NSDictionary *response = [PMNetwork parseMakesReply:[cxmlWriter toString]];
+    
+    XCTAssertTrue(([[response objectForKey:@"makes"] count] == 500), @"500 makes in count");
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error returned");
+
+    
 }
 
 - (void) testParseNoMakes {
@@ -809,6 +827,11 @@
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseMakesReply:[cxmlWriter toString]];
+    
+    XCTAssertTrue(([[response objectForKey:@"makes"] count] == 0), @"0 makes in count");
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error returned");
 }
 #pragma mark - models
 - (void) testParseModels {
@@ -831,6 +854,10 @@
     }
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseModelsReply:[cxmlWriter toString]];
+    XCTAssertTrue(([[response objectForKey:@"models"] count] == 500), @"500 models in count");
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error returned");
 }
 
 - (void) testParseNoModels {
@@ -842,6 +869,10 @@
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseModelsReply:[cxmlWriter toString]];
+    XCTAssertTrue(([[response objectForKey:@"models"] count] == 0), @"0 models in count");
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error returned");
 }
 #pragma mark - engines
 - (void) testParseEngines {
@@ -864,6 +895,10 @@
     }
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseEnginesReply:[cxmlWriter toString]];
+    XCTAssertTrue(([[response objectForKey:@"engines"] count] == 500), @"500 models in count");
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error returned");
 }
 
 - (void) testParseEnginesNoEngines {
@@ -875,6 +910,10 @@
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseEnginesReply:[cxmlWriter toString]];
+    XCTAssertTrue(([[response objectForKey:@"engines"] count] == 0), @"0 engines in count");
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error returned");
 }
 
 #pragma mark - groups
@@ -899,6 +938,10 @@
     }
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseGroupsReply:[cxmlWriter toString]];
+    XCTAssertTrue(([[response objectForKey:@"groups"] count] == 500), @"500 groupss in count");
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error returned");
 }
 
 - (void) testParseNoGroups {
@@ -910,6 +953,10 @@
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseGroupsReply:[cxmlWriter toString]];
+    XCTAssertTrue(([[response objectForKey:@"groups"] count] == 0), @"0 groupss in count");
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error returned");
 }
 
 #pragma mark - subgroups
@@ -933,6 +980,11 @@
     }
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseSubgroupsReply:[cxmlWriter toString]];
+    
+    XCTAssertTrue(([[response objectForKey:@"subgroups"] count] == 500), @"500 subgroups in array");
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error returned");
 }
 
 - (void) testParseNoSubGroups {
@@ -944,8 +996,222 @@
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndElement];
     [cxmlWriter writeEndDocument];
+
+    NSDictionary *response = [PMNetwork parseSubgroupsReply:[cxmlWriter toString]];
+    
+    XCTAssertTrue(([[response objectForKey:@"subgroups"] count] == 0), @"0 subgroups in array");
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error returned");
 }
+
 #pragma mark - parts
 
+- (void) testParsePartsReply {
+    NSMutableArray *partTypes = [[NSMutableArray alloc] init];
+    for (int i = 0; i<50; i++) {
+        NSMutableArray *parts = [[NSMutableArray alloc] init];
+        for (int i = 0; i < 25; i++) {
+            PMPart *part = [[PMPart alloc] initWithPartRow:i
+                                                      line:@"DUP"
+                                                      part:[NSString stringWithFormat:@"EFT%d", i]
+                                               description:[NSString stringWithFormat:@"Desc%d", i]
+                                            longDesciption:[NSString stringWithFormat:@"longDesc%d", i]
+                                                     manuf:[NSString stringWithFormat:@"manuf%d", i]
+                                                      list:i
+                                                     price:[NSDecimalNumber decimalNumberWithString:@"3.3"]
+                                                      core:[NSDecimalNumber decimalNumberWithString:@"4.4"]
+                                                   instock:i];
+            
+            [parts addObject:part];
+        }
+        PMPartType *partType = [[PMPartType alloc] initWithCode:[NSString stringWithFormat:@"%d", i]
+                                                    description:[NSString stringWithFormat:@"%d", i]
+                                                          parts:parts];
+        
+        [partTypes addObject:partType];
+    }
+    
+    
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"subgroupsReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    
+    for (int i = 0; i < 50; i++) {
+        PMPartType *partType = [partTypes objectAtIndex:i];
+        [cxmlWriter writeStartElement:@"partTypes"];
+        [cxmlWriter writeStartElement:@"partType"];
+        [cxmlWriter writeCharacters:[partType typeCode]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"partTypeDesc"];
+        [cxmlWriter writeCharacters:[partType description]];
+        [cxmlWriter writeEndElement];
+        
+        for (PMPart *p in [partType parts]) {
+            [cxmlWriter writeStartElement:@"parts"];
+            [cxmlWriter writeStartElement:@"partRow"];
+            [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [p partRow]]];
+            [cxmlWriter writeEndElement];
+            [cxmlWriter writeStartElement:@"line"];
+            [cxmlWriter writeCharacters:@"DUP"];
+            [cxmlWriter writeEndElement];
+            [cxmlWriter writeStartElement:@"part"];
+            [cxmlWriter writeCharacters:[p part]];
+            [cxmlWriter writeEndElement];
+            [cxmlWriter writeStartElement:@"partDesc"];
+            [cxmlWriter writeCharacters:[p partDesc]];
+            [cxmlWriter writeEndElement];
+            [cxmlWriter writeStartElement:@"longDesc"];
+            [cxmlWriter writeCharacters:[p longDesc]];
+            [cxmlWriter writeEndElement];
+            [cxmlWriter writeStartElement:@"manuf"];
+            [cxmlWriter writeCharacters:[p manuf]];
+            [cxmlWriter writeEndElement];
+            [cxmlWriter writeStartElement:@"list"];
+            [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [p list]]];
+            [cxmlWriter writeEndElement];
+            [cxmlWriter writeStartElement:@"price"];
+            [cxmlWriter writeCharacters:[[p price] stringValue]];
+            [cxmlWriter writeEndElement];
+            [cxmlWriter writeStartElement:@"core"];
+            [cxmlWriter writeCharacters:[[p core] stringValue]];
+            [cxmlWriter writeEndElement];
+            [cxmlWriter writeStartElement:@"instock"];
+            [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [p instock]]];
+            [cxmlWriter writeEndElement];
+            [cxmlWriter writeEndElement];
+        }
+        
+        [cxmlWriter writeEndElement];
+    }
+    
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parsePartsReply:[cxmlWriter toString]];
+    
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error message");
+    NSArray *types = [response objectForKey:@"partTypes"];
+    
+    XCTAssertTrue(([types count] == 50), @"50 types");
+    for (PMPartType *pt in types) {
+        XCTAssertTrue(([[pt parts] count] == 25), @"25 parts in each category");
+    }
+}
+
+- (void) testParsePartsReplyNoPartTypes {
+
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"subgroupsReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parsePartsReply:[cxmlWriter toString]];
+    
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error message");
+    NSArray *types = [response objectForKey:@"partTypes"];
+    XCTAssertTrue(([types count] == 0), @"50 types");
+
+}
+
+- (void) testParseFindPartReply {
+    
+    NSMutableArray *parts = [[NSMutableArray alloc] init];
+    for (int i = 0; i < 50; i++) {
+        
+        PMPart *part = [[PMPart alloc] initWithPartRow:i line:@"dup" part:[NSString stringWithFormat:@"%d", i]];
+        [part setPartDesc:@"This is a part"];
+        [part setPartType:PMTypeMain];
+        [part setInstock:5];
+        [part setInstockAll:100];
+        [part setPrice:[NSDecimalNumber decimalNumberWithString:@"9.22"]];
+        [part setCore:[NSDecimalNumber decimalNumberWithString:@"4.22"]];
+        [part setWeight:[NSDecimalNumber decimalNumberWithString:@"14.0"]];
+        [part setTaxpart:NO];
+        [part setTaxcore:NO];
+        [part setStateTaxPart:NO];
+        [part setLocalTaxCore:NO];
+        [part setLocalTaxPart:NO];
+
+        [parts addObject:part];
+    }
+    
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"findpartReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"partCnt"];
+    [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [parts count]]];
+    [cxmlWriter writeEndElement];
+    for (PMPart *p in parts) {
+        [cxmlWriter writeStartElement:@"parts"];
+        [cxmlWriter writeStartElement:@"partRow"];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [p partRow]]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"line"];
+        [cxmlWriter writeCharacters:[p line]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"part"];
+        [cxmlWriter writeCharacters:[p part]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"partDesc"];
+        [cxmlWriter writeCharacters:[p partDesc]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"partType"];
+        [cxmlWriter writeCharacters:@"M"];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"instock"];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [p instock]]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"instockAll"];
+        [cxmlWriter writeCharacters:[NSString stringWithFormat:@"%d", [p instockAll]]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"price"];
+        [cxmlWriter writeCharacters:[[p price] stringValue]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"core"];
+        [cxmlWriter writeCharacters:[[p core] stringValue]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"weight"];
+        [cxmlWriter writeCharacters:[[p weight] stringValue]];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"taxpart"];
+        [cxmlWriter writeCharacters:@"N"];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"taxcore"];
+        [cxmlWriter writeCharacters:@"N"];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"stateTaxPart"];
+        [cxmlWriter writeCharacters:@"N"];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"stateTaxCore"];
+        [cxmlWriter writeCharacters:@"N"];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"localTaxPart"];
+        [cxmlWriter writeCharacters:@"N"];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeStartElement:@"localTaxCore"];
+        [cxmlWriter writeCharacters:@"N"];
+        [cxmlWriter writeEndElement];
+        [cxmlWriter writeEndElement];
+    }
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseFindPartReply:[cxmlWriter toString]];
+    
+    XCTAssertFalse(([[response objectForKey:@"error"] length] > 0), @"no error message");
+    XCTAssertTrue(([[response objectForKey:@"parts"] count] == 50), @"50 parts in resposne");
+    
+
+}
 
 @end

@@ -36,11 +36,12 @@
 }
 
 - (void) setItem:(PMItem *)item {
+    _item = item;
     [self.lineLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[[item part] line]]];
     [self.partLabel setText:[[item part] part]];
     [self.qtyLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[item qty]]];
     NSString *type;
-    switch ([_item transType]) {
+    switch ([item transType]) {
         case SaleTrans:
             type = @"S";
             break;

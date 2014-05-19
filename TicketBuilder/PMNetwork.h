@@ -13,15 +13,12 @@
 #import "PMStore.h"
 #import "TBXML.h"
 #import "PMItem.h"
-
-typedef enum {
-    PMCatalogReplyYears,
-    PMCatalogReplyMakes,
-    PMCatalogReplyModels,
-    PMCatalogReplyEngines,
-    PMCatalogReplyGroups,
-    PMCatalogReplySubgroups
-} PMCatalogReply;
+#import "PMMake.h"
+#import "PMModel.h"
+#import "PMEngine.h"
+#import "PMGroup.h"
+#import "PMSubGroup.h"
+#import "PMPartType.h"
 
 @interface PMNetwork : NSObject
 
@@ -48,5 +45,6 @@ typedef enum {
 + (NSDictionary *) parseSubgroupsReply:(NSString *)xml;
 + (NSDictionary *) parsePartsReply:(NSString *)xml;
 
-+ (NSDictionary *) parseCatalogReply:(NSString *)xml type:(PMCatalogReply)type;
++ (NSDictionary *) parseFindPartReply:(NSString *)xml;
+
 @end

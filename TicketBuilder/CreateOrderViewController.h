@@ -12,9 +12,12 @@
 #import "PMNetwork.h"
 #import "PMXMLBuilder.h"
 #import "PMNetworkOperation.h"
-@interface CreateOrderViewController : UIViewController <PMNetworkOperationDelegate>
-@property (nonatomic, strong) IBOutlet UITextView *commentView;
+@interface CreateOrderViewController : UIViewController <PMNetworkOperationDelegate, UITextFieldDelegate>
+@property (nonatomic, strong) IBOutlet UITextField *commentView;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;
+@property (nonatomic, strong) IBOutlet UILabel *dateLabel;
+@property (nonatomic, strong) IBOutlet UILabel *storeLabel;
+@property (nonatomic, strong) IBOutlet UILabel *accountLabel;
 
-- (IBAction)create:(id)sender;
 - (IBAction)cancel:(id)sender;
 @end

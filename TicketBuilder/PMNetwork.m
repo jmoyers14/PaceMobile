@@ -526,9 +526,9 @@
     TBXMLElement *taxTotElement = [TBXML childElementNamed:@"taxTot" parentElement:root];
     TBXMLElement *itemRowElement = [TBXML childElementNamed:@"itemRow" parentElement:root];
     
-    NSNumber *ordTot = [NSNumber numberWithInteger:[[TBXML textForElement:ordTotElement] integerValue]];
-    NSNumber *coreTot = [NSNumber numberWithInteger:[[TBXML textForElement:coreTotElement] integerValue]];
-    NSNumber *taxTot = [NSNumber numberWithInteger:[[TBXML textForElement:taxTotElement] integerValue]];
+    NSDecimalNumber *ordTot = [NSDecimalNumber decimalNumberWithString:[TBXML textForElement:ordTotElement]];
+    NSDecimalNumber *coreTot = [NSDecimalNumber decimalNumberWithString:[TBXML textForElement:coreTotElement]];
+    NSDecimalNumber *taxTot = [NSDecimalNumber decimalNumberWithString:[TBXML textForElement:taxTotElement]];
     NSNumber *itemRow = [NSNumber numberWithInteger:[[TBXML textForElement:itemRowElement] integerValue]];
     
     NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:ordTot, @"ordTot",
@@ -682,14 +682,14 @@
         TBXMLElement *qtyElement = [TBXML childElementNamed:@"qty" parentElement:itemElement];
         TBXMLElement *tranTypeElement = [TBXML childElementNamed:@"tranType" parentElement:itemElement];
         
-        PMPart *part = [[PMPart alloc] initWithItemRow:[[TBXML textForElement:itemRowElement] integerValue]
-                                               partRow:[[TBXML textForElement:partRowElement] integerValue]
-                                                  line:[[TBXML textForElement:lineElement] integerValue]
+        PMPart *part = [[PMPart alloc] initWithPartRow:[[TBXML textForElement:partRowElement] integerValue]
+                                                  line:[TBXML textForElement:lineElement]
                                                   part:[TBXML textForElement:partElement]];
         
-        PMItem *item = [[PMItem alloc] initWithPart:part
-                                           quantity:[[TBXML textForElement:qtyElement] integerValue]
-                                          transType:[self transTypeForString:[TBXML textForElement:tranTypeElement]]];
+        PMItem *item = [[PMItem alloc] initWithItemRow:[[TBXML textForElement:itemRowElement] integerValue]
+                                                  part:part
+                                              quantity:[[TBXML textForElement:qtyElement] integerValue]
+                                             transType:[PMNetwork transTypeForString:[TBXML textForElement:tranTypeElement]]];
         [items addObject:item];
         
         while ((itemElement = itemElement->nextSibling)) {
@@ -700,14 +700,16 @@
             qtyElement      = [TBXML childElementNamed:@"qty" parentElement:itemElement];
             tranTypeElement = [TBXML childElementNamed:@"tranType" parentElement:itemElement];
             
-            PMPart *part = [[PMPart alloc] initWithItemRow:[[TBXML textForElement:itemRowElement] integerValue]
-                                                   partRow:[[TBXML textForElement:partRowElement] integerValue]
-                                                      line:[[TBXML textForElement:lineElement] integerValue]
+            PMPart *part = [[PMPart alloc] initWithPartRow:[[TBXML textForElement:partRowElement] integerValue]
+                                                      line:[TBXML textForElement:lineElement]
                                                       part:[TBXML textForElement:partElement]];
+
             
-            PMItem *item = [[PMItem alloc] initWithPart:part
-                                               quantity:[[TBXML textForElement:qtyElement] integerValue]
-                                              transType:[self transTypeForString:[TBXML textForElement:tranTypeElement]]];
+            PMItem *item = [[PMItem alloc] initWithItemRow:[[TBXML textForElement:itemRowElement] integerValue]
+                                                      part:part
+                                                  quantity:[[TBXML textForElement:qtyElement] integerValue]
+                                                 transType:[PMNetwork transTypeForString:[TBXML textForElement:tranTypeElement]]];
+            
             
             [items addObject:item];
         }
@@ -720,6 +722,8 @@
 
     return dictionary;
 }
+
+#pragma mark - catalog parsing
 
 /**************************************************************
  *parse the response from the years
@@ -757,11 +761,16 @@
         return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
     }
 
-    return nil;
+    NSMutableArray *years = [[NSMutableArray alloc] init];
+    TBXMLElement *yearElement = [TBXML childElementNamed:@"year" parentElement:root];
+    if (yearElement) {
+        [years addObject:[TBXML textForElement:yearElement]];
     
-    
-    
-    
+        while ((yearElement = yearElement->nextSibling)) {
+            [years addObject:[TBXML textForElement:yearElement]];
+        }
+    }
+    return [NSDictionary dictionaryWithObjectsAndKeys:years, @"years", nil];
 }
 
 /**************************************************************
@@ -801,11 +810,32 @@
         return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
     }
     
+    NSMutableArray *makes = [[NSMutableArray alloc] init];
+    TBXMLElement *makesElement = [TBXML childElementNamed:@"makes" parentElement:root];
+    if (makesElement) {
+        TBXMLElement *makeElement = [TBXML childElementNamed:@"make" parentElement:makesElement];
+        TBXMLElement *makeDescElement = [TBXML childElementNamed:@"makeDesc" parentElement:makesElement];
+        PMMake *make = [[PMMake alloc] initWithMake:[TBXML textForElement:makeElement]
+                                           makeDesc:[TBXML textForElement:makeDescElement]];
+        [makes addObject:make];
+        
+        while ((makesElement = makesElement->nextSibling)) {
+            makeElement = [TBXML childElementNamed:@"make" parentElement:makesElement];
+            makeDescElement = [TBXML childElementNamed:@"makeDesc" parentElement:makesElement];
+            PMMake *make = [[PMMake alloc] initWithMake:[TBXML textForElement:makeElement]
+                                               makeDesc:[TBXML textForElement:makeDescElement]];
+            [makes addObject:make];
+        }
+    }
+    
+    
+    return [NSDictionary dictionaryWithObjectsAndKeys:makes, @"makes", nil];
+    
     return nil;
 }
 
 /**************************************************************
- *parse the response from the models
+ *parse the response from the models call
  *
  *params
  *  xml - NSString* - xml data returned from a network request
@@ -840,7 +870,25 @@
         return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
     }
     
-    return nil;
+    NSMutableArray *models = [[NSMutableArray alloc] init];
+    TBXMLElement *modelsElement = [TBXML childElementNamed:@"models" parentElement:root];
+    if (modelsElement) {
+        TBXMLElement *modelElement = [TBXML childElementNamed:@"model" parentElement:modelsElement];
+        TBXMLElement *descElement = [TBXML childElementNamed:@"modelDesc" parentElement:modelsElement];
+        PMModel *model = [[PMModel alloc] initWithModel:[TBXML textForElement:modelElement]
+                                              modelDesc:[TBXML textForElement:descElement]];
+        [models addObject:model];
+        while ((modelsElement = modelsElement->nextSibling)) {
+            modelElement = [TBXML childElementNamed:@"model" parentElement:modelsElement];
+            descElement = [TBXML childElementNamed:@"modelDesc" parentElement:modelsElement];
+            PMModel *model = [[PMModel alloc] initWithModel:[TBXML textForElement:modelElement]
+                                                  modelDesc:[TBXML textForElement:descElement]];
+            [models addObject:model];
+            
+        }
+    }
+    
+    return [NSDictionary dictionaryWithObjectsAndKeys:models, @"models", nil];
 }
 
 /**************************************************************
@@ -880,7 +928,27 @@
         return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
     }
     
-    return nil;
+    NSMutableArray *engines = [[NSMutableArray alloc] init];
+    
+    TBXMLElement *enginesElement = [TBXML childElementNamed:@"engines" parentElement:root];
+    if (enginesElement) {
+        TBXMLElement *vidElement = [TBXML childElementNamed:@"vid" parentElement:enginesElement];
+        TBXMLElement *descElement = [TBXML childElementNamed:@"engineDesc" parentElement:enginesElement];
+        PMEngine *engine = [[PMEngine alloc] initWithVid:[TBXML textForElement:vidElement]
+                                              engineDesc:[TBXML textForElement:descElement]];
+        [engines addObject:engine];
+        
+        while ((enginesElement = enginesElement->nextSibling)) {
+            vidElement = [TBXML childElementNamed:@"vid" parentElement:enginesElement];
+            descElement = [TBXML childElementNamed:@"engineDesc" parentElement:enginesElement];
+            PMEngine *engine = [[PMEngine alloc] initWithVid:[TBXML textForElement:vidElement]
+                                                  engineDesc:[TBXML textForElement:descElement]];
+            [engines addObject:engine];
+        }
+    }
+    
+    
+    return [NSDictionary dictionaryWithObjectsAndKeys:engines, @"engines", nil];
 }
 
 /**************************************************************
@@ -920,7 +988,23 @@
         return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
     }
     
-    return nil;
+    NSMutableArray *groups = [[NSMutableArray alloc] init];
+    TBXMLElement *groupsElement = [TBXML childElementNamed:@"groups" parentElement:root];
+    if (groupsElement) {
+        TBXMLElement *groupElement = [TBXML childElementNamed:@"group" parentElement:groupsElement];
+        TBXMLElement *descElement = [TBXML childElementNamed:@"groupDesc" parentElement:groupsElement];
+        PMGroup *group = [[PMGroup alloc] initWithGroup:[TBXML textForElement:groupsElement]
+                                              groupDesc:[TBXML textForElement:groupsElement]];
+        [groups addObject:group];
+        while ((groupsElement = groupsElement->nextSibling)) {
+            groupElement = [TBXML childElementNamed:@"group" parentElement:groupsElement];
+            descElement = [TBXML childElementNamed:@"groupDesc" parentElement:groupsElement];
+            PMGroup *group = [[PMGroup alloc] initWithGroup:[TBXML textForElement:groupsElement]
+                                                  groupDesc:[TBXML textForElement:groupsElement]];
+            [groups addObject:group];
+        }
+    }
+    return [NSDictionary dictionaryWithObjectsAndKeys:groups, @"groups", nil];
 }
 
 /**************************************************************
@@ -933,7 +1017,7 @@
  *return
  *  NSDictionary with the following keys value pairs:
  *  error - error message, nil if no error
- *  years - array of strings for years
+ *  subgroupss - array of strings for subgroups
  ***************************************************************/
 + (NSDictionary *) parseSubgroupsReply:(NSString *)xml {
     //Extract root element
@@ -959,7 +1043,217 @@
         return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
     }
     
-    return nil;
+    NSMutableArray *subGroups = [[NSMutableArray alloc] init];
+    TBXMLElement *subGroupsElement = [TBXML childElementNamed:@"subgroups" parentElement:root];
+    if (subGroupsElement) {
+        TBXMLElement *subGroupElement = [TBXML childElementNamed:@"subgroup" parentElement:subGroupsElement];
+        TBXMLElement *descElement = [TBXML childElementNamed:@"subgroupDesc" parentElement:subGroupsElement];
+        PMSubGroup *subGroup = [[PMSubGroup alloc] initWithSubGroup:[TBXML textForElement:subGroupElement]
+                                                       subGroupDesc:[TBXML textForElement:descElement]];
+        [subGroups addObject:subGroup];
+        while ((subGroupsElement = subGroupsElement->nextSibling)) {
+            subGroupElement = [TBXML childElementNamed:@"subgroup" parentElement:subGroupsElement];
+            descElement = [TBXML childElementNamed:@"subgroupDesc" parentElement:subGroupsElement];
+            PMSubGroup *subGroup = [[PMSubGroup alloc] initWithSubGroup:[TBXML textForElement:subGroupElement]
+                                                           subGroupDesc:[TBXML textForElement:descElement]];
+            [subGroups addObject:subGroup];
+        }
+    }
+    
+    
+    
+    
+    return [NSDictionary dictionaryWithObjectsAndKeys:subGroups, @"subgroups", nil];
+}
+
+/**************************************************************
+ *parse the response from the parts call
+ *
+ *params
+ *  xml - NSString* - xml data returned from a network request
+ *  type - PMCatalogReply - flag to tell the type of function
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *  error - error message, nil if no error
+ *  partTypes - array of PMPartType objects
+ ***************************************************************/
+
++ (NSDictionary *) parsePartsReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    NSMutableArray *partTypes = [[NSMutableArray alloc] init];
+    TBXMLElement *partTypesElement = [TBXML childElementNamed:@"partTypes" parentElement:root];
+    if (partTypesElement) {
+        do {
+            TBXMLElement *typeCodeElement = [TBXML childElementNamed:@"partType" parentElement:partTypesElement];
+            TBXMLElement *descElement = [TBXML childElementNamed:@"partTypeDesc" parentElement:partTypesElement];
+            TBXMLElement *partsElement = [TBXML childElementNamed:@"parts" parentElement:partTypesElement];
+            NSMutableArray *parts = [[NSMutableArray alloc] init];
+            if (partsElement) {                                
+                do{
+                    TBXMLElement *partRowElement  = [TBXML childElementNamed:@"partRow" parentElement:partsElement];
+                    TBXMLElement *lineElement     = [TBXML childElementNamed:@"line" parentElement:partsElement];
+                    TBXMLElement *partElement     = [TBXML childElementNamed:@"part" parentElement:partsElement];
+                    TBXMLElement *partDescElement = [TBXML childElementNamed:@"partDesc" parentElement:partsElement];
+                    TBXMLElement *longDescElement = [TBXML childElementNamed:@"longDesc" parentElement:partsElement];
+                    TBXMLElement *manufElement    = [TBXML childElementNamed:@"manuf" parentElement:partsElement];
+                    TBXMLElement *listElement     = [TBXML childElementNamed:@"list" parentElement:partsElement];
+                    TBXMLElement *priceElement    = [TBXML childElementNamed:@"price" parentElement:partsElement];
+                    TBXMLElement *coreElement     = [TBXML childElementNamed:@"core" parentElement:partsElement];
+                    TBXMLElement *instockElement  = [TBXML childElementNamed:@"instock" parentElement:partsElement];
+                    PMPart *part = [[PMPart alloc] initWithPartRow:[[TBXML textForElement:partRowElement] integerValue]
+                                                              line:[TBXML textForElement:lineElement]
+                                                              part:[TBXML textForElement:partElement]
+                                                       description:[TBXML textForElement:partDescElement]
+                                                    longDesciption:[TBXML textForElement:longDescElement]
+                                                             manuf:[TBXML textForElement:manufElement]
+                                                              list:[[TBXML textForElement:listElement] integerValue]
+                                                             price:[NSDecimalNumber decimalNumberWithString:[TBXML textForElement:priceElement]]
+                                                              core:[NSDecimalNumber decimalNumberWithString:[TBXML textForElement:coreElement]]
+                                                           instock:[[TBXML textForElement:instockElement] integerValue]];
+                    
+                    [parts addObject:part];
+                } while ((partsElement = partsElement->nextSibling));
+            }
+            PMPartType *partType = [[PMPartType alloc] initWithCode:[TBXML textForElement:typeCodeElement] description:[TBXML textForElement:descElement] parts:parts];
+            [partTypes addObject:partType];
+            
+        } while ((partTypesElement = partTypesElement->nextSibling));
+    }
+    return [NSDictionary dictionaryWithObjectsAndKeys:partTypes, @"partTypes", nil];
+}
+
++ (PMType) parsePMType:(NSString*)t {
+    if ([t isEqualToString:@"M"]) {
+        return PMTypeMain;
+    } else if([t isEqualToString:@"S"]) {
+        return PMTypeSupresed;
+    } else if([t isEqualToString:@"A"]) {
+        return PMTypeAlternate;
+    } else if([t isEqualToString:@"X"]) {
+        return PMTypeXref;
+    } else {
+        NSLog(@"type %@ could not be parsed", t);
+        return 0;
+    }
+}
+
++ (BOOL) parseTaxString:(NSString *)s {
+    if ([s isEqualToString:@"Y"]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+/**************************************************************
+ *parse the response from the findpart call
+ *
+ *params
+ *  xml - NSString* - xml data returned from a network request
+ *  type - PMCatalogReply - flag to tell the type of function
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *  error - error message, nil if no error
+ *  parts - array of PMPartType objects
+ ***************************************************************/
++ (NSDictionary *) parseFindPartReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    NSMutableArray *parts = [[NSMutableArray alloc] init];
+    
+    TBXMLElement *partCountElement = [TBXML childElementNamed:@"partCnt" parentElement:root];
+    NSNumber *partCnt = [NSNumber numberWithInt:[[TBXML textForElement:partCountElement] integerValue]];
+    if ([partCnt integerValue] > 0) {
+        TBXMLElement *partsElement = [TBXML childElementNamed:@"parts" parentElement:root];
+        do {
+            TBXMLElement *partRowEle = [TBXML childElementNamed:@"partRow" parentElement:partsElement];
+            TBXMLElement *lineEle = [TBXML childElementNamed:@"line" parentElement:partsElement];
+            TBXMLElement *partEle = [TBXML childElementNamed:@"part" parentElement:partsElement];
+            TBXMLElement *partDescEle = [TBXML childElementNamed:@"partDesc" parentElement:partsElement];
+            TBXMLElement *partTypeEle = [TBXML childElementNamed:@"partType" parentElement:partsElement];
+            TBXMLElement *instockEle = [TBXML childElementNamed:@"instock" parentElement:partsElement];
+            TBXMLElement *instockAllEle = [TBXML childElementNamed:@"instockAll" parentElement:partsElement];
+            TBXMLElement *priceEle = [TBXML childElementNamed:@"price" parentElement:partsElement];
+            TBXMLElement *coreEle = [TBXML childElementNamed:@"core" parentElement:partsElement];
+            TBXMLElement *weightEle = [TBXML childElementNamed:@"weight" parentElement:partsElement];
+            TBXMLElement *taxpartEle = [TBXML childElementNamed:@"taxpart" parentElement:partsElement];
+            TBXMLElement *taxcoreEle = [TBXML childElementNamed:@"taxpart" parentElement:partsElement];
+            TBXMLElement *stateTaxPartEle = [TBXML childElementNamed:@"stateTaxPart" parentElement:partsElement];
+            TBXMLElement *stateTaxCoreEle = [TBXML childElementNamed:@"stateTaxCore" parentElement:partsElement];
+            TBXMLElement *localTaxPartEle = [TBXML childElementNamed:@"localTaxPart" parentElement:partsElement];
+            TBXMLElement *localTaxCoreEle = [TBXML childElementNamed:@"localTaxCore" parentElement:partsElement];
+            
+            PMPart *part = [[PMPart alloc] initWithPartRow:[[TBXML textForElement:partRowEle] integerValue]
+                                                      line:[TBXML textForElement:lineEle]
+                                                      part:[TBXML textForElement:partEle]];
+            [part setPartDesc:[TBXML textForElement:partDescEle]];
+            [part setPartType:[PMNetwork parsePMType:[TBXML textForElement:partTypeEle]]];
+            [part setInstock:[[TBXML textForElement:instockEle] integerValue]];
+            [part setInstockAll:[[TBXML textForElement:instockAllEle] integerValue]];
+            [part setPrice:[NSDecimalNumber decimalNumberWithString:[TBXML textForElement:priceEle]]];
+            [part setCore:[NSDecimalNumber decimalNumberWithString:[TBXML textForElement:coreEle]]];
+            [part setWeight:[NSDecimalNumber decimalNumberWithString:[TBXML textForElement:weightEle]]];
+            [part setTaxpart:[PMNetwork parseTaxString:[TBXML textForElement:taxpartEle]]];
+            [part setTaxcore:[PMNetwork parseTaxString:[TBXML textForElement:taxcoreEle]]];
+            [part setStateTaxPart:[PMNetwork parseTaxString:[TBXML textForElement:stateTaxPartEle]]];
+            [part setStateTaxCore:[PMNetwork parseTaxString:[TBXML textForElement:stateTaxCoreEle]]];
+            [part setLocalTaxPart:[PMNetwork parseTaxString:[TBXML textForElement:localTaxPartEle]]];
+            [part setLocalTaxCore:[PMNetwork parseTaxString:[TBXML textForElement:localTaxCoreEle]]];
+            
+            [parts addObject:part];
+            
+        } while ((partsElement = partsElement->nextSibling));
+    }
+                         
+    NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:partCnt, @"partCnt", parts, @"parts", nil];
+    
+    return response;
 }
 
 @end
+

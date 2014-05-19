@@ -7,6 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PMNetworkOperation.h"
+#import "PMNetwork.h"
+#import "PMXMLBuilder.h"
 
 @interface UIViewController (NetworkViewController)
 - (void) showSpinner;

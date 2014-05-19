@@ -22,7 +22,8 @@ typedef enum {
 @property (nonatomic, assign, readonly) PMTransactionType transType;
 @property (nonatomic, assign, readonly) NSUInteger qty;
 @property (nonatomic, strong, readonly) PMPart *part;
+@property (nonatomic, assign, readonly) NSUInteger itemRow;
 
-- (id) initWithPart:(PMPart *)part quantity:(NSUInteger)qty transType:(PMTransactionType)transType;
+- (id) initWithItemRow:(NSUInteger)itemRow part:(PMPart *)part quantity:(NSUInteger)qty transType:(PMTransactionType)transType;
 - (BOOL) isEqualToItem:(PMItem *)item;
 @end

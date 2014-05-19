@@ -50,8 +50,8 @@
 + (NSString *) findpartXMLWithUsername:(NSString *)username
                               password:(NSString *)password
                             accountRow:(NSUInteger)acctRow
-                            lineNumber:(NSUInteger)line
-                            partNumber:(NSUInteger)part;
+                            lineNumber:(NSString *)line
+                            partNumber:(NSString *)part;
 
 //XML to get information about the part
 + (NSString *) inqpartXMLWithUsername:(NSString *)username

@@ -138,6 +138,7 @@
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if([[_functions objectAtIndex:indexPath.row] isEqualToString:@"Orders"]) {
         [self performSegueWithIdentifier:@"Orders" sender:self];
+    } else if ([[_functions objectAtIndex:indexPath.row] isEqualToString:@"Part Lookup"]) {
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

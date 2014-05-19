@@ -51,6 +51,13 @@
 		5AD493C0192596B10030E599 /* PMEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493BF192596B10030E599 /* PMEngine.m */; };
 		5AD493C3192596C00030E599 /* PMGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493C2192596C00030E599 /* PMGroup.m */; };
 		5AD493C6192596CD0030E599 /* PMSubGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493C5192596CD0030E599 /* PMSubGroup.m */; };
+		5AD493CA1926B6F30030E599 /* PMPartType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493C91926B6F30030E599 /* PMPartType.m */; };
+		5AD493CC1926E15E0030E599 /* NewPartCatalogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AD493CB1926E15E0030E599 /* NewPartCatalogView.xib */; };
+		5AD493CF192930C10030E599 /* FindPartViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493CE192930C10030E599 /* FindPartViewControllerTableViewController.m */; };
+		5AD493D519294FA50030E599 /* PartTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493D419294FA50030E599 /* PartTableViewController.m */; };
+		5AD493D8192951C60030E599 /* PartDescCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493D7192951C60030E599 /* PartDescCell.m */; };
+		5AD493DE19296AF20030E599 /* AddItemTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493DD19296AF20030E599 /* AddItemTableViewController.m */; };
+		5AD493E11929939E0030E599 /* OrderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493E01929939E0030E599 /* OrderTableViewCell.m */; };
 		5AE90E02190F18D100467F74 /* PMXMLBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E01190F18D100467F74 /* PMXMLBuilder.m */; };
 		5AE90E0A19103E8500467F74 /* PMNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E0919103E8500467F74 /* PMNetwork.m */; };
 		5AE90E0D19103F0B00467F74 /* NetworkTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AE90E0C19103F0B00467F74 /* NetworkTestViewController.m */; };
@@ -148,6 +155,19 @@
 		5AD493C2192596C00030E599 /* PMGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMGroup.m; sourceTree = "<group>"; };
 		5AD493C4192596CD0030E599 /* PMSubGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMSubGroup.h; sourceTree = "<group>"; };
 		5AD493C5192596CD0030E599 /* PMSubGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMSubGroup.m; sourceTree = "<group>"; };
+		5AD493C81926B6F30030E599 /* PMPartType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMPartType.h; sourceTree = "<group>"; };
+		5AD493C91926B6F30030E599 /* PMPartType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMPartType.m; sourceTree = "<group>"; };
+		5AD493CB1926E15E0030E599 /* NewPartCatalogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewPartCatalogView.xib; sourceTree = "<group>"; };
+		5AD493CD192930C10030E599 /* FindPartViewControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindPartViewControllerTableViewController.h; sourceTree = "<group>"; };
+		5AD493CE192930C10030E599 /* FindPartViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindPartViewControllerTableViewController.m; sourceTree = "<group>"; };
+		5AD493D319294FA50030E599 /* PartTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartTableViewController.h; sourceTree = "<group>"; };
+		5AD493D419294FA50030E599 /* PartTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PartTableViewController.m; sourceTree = "<group>"; };
+		5AD493D6192951C60030E599 /* PartDescCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartDescCell.h; sourceTree = "<group>"; };
+		5AD493D7192951C60030E599 /* PartDescCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PartDescCell.m; sourceTree = "<group>"; };
+		5AD493DC19296AF20030E599 /* AddItemTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddItemTableViewController.h; sourceTree = "<group>"; };
+		5AD493DD19296AF20030E599 /* AddItemTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddItemTableViewController.m; sourceTree = "<group>"; };
+		5AD493DF1929939E0030E599 /* OrderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderTableViewCell.h; sourceTree = "<group>"; };
+		5AD493E01929939E0030E599 /* OrderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderTableViewCell.m; sourceTree = "<group>"; };
 		5AE90E00190F18D100467F74 /* PMXMLBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMXMLBuilder.h; sourceTree = "<group>"; };
 		5AE90E01190F18D100467F74 /* PMXMLBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMXMLBuilder.m; sourceTree = "<group>"; };
 		5AE90E0819103E8500467F74 /* PMNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMNetwork.h; sourceTree = "<group>"; };
@@ -266,6 +286,7 @@
 				5AAD1045190866970057BB66 /* Images.xcassets */,
 				5AAD1034190866970057BB66 /* Supporting Files */,
 				5AE90E351912FC2900467F74 /* IPConfigView.xib */,
+				5AD493CB1926E15E0030E599 /* NewPartCatalogView.xib */,
 			);
 			name = PaceMobile;
 			path = TicketBuilder;
@@ -333,6 +354,12 @@
 				5AD493AC192539740030E599 /* CreateOrderViewController.m */,
 				5AD493B119254D620030E599 /* OrderDetailViewController.h */,
 				5AD493B219254D620030E599 /* OrderDetailViewController.m */,
+				5AD493CD192930C10030E599 /* FindPartViewControllerTableViewController.h */,
+				5AD493CE192930C10030E599 /* FindPartViewControllerTableViewController.m */,
+				5AD493D319294FA50030E599 /* PartTableViewController.h */,
+				5AD493D419294FA50030E599 /* PartTableViewController.m */,
+				5AD493DC19296AF20030E599 /* AddItemTableViewController.h */,
+				5AD493DD19296AF20030E599 /* AddItemTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -383,6 +410,10 @@
 				5ACEC5E2191D5FAC003D8428 /* FuncitonCell.m */,
 				5AD493B419255DF10030E599 /* ItemCell.h */,
 				5AD493B519255DF10030E599 /* ItemCell.m */,
+				5AD493D6192951C60030E599 /* PartDescCell.h */,
+				5AD493D7192951C60030E599 /* PartDescCell.m */,
+				5AD493DF1929939E0030E599 /* OrderTableViewCell.h */,
+				5AD493E01929939E0030E599 /* OrderTableViewCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -400,6 +431,8 @@
 				5AD493C2192596C00030E599 /* PMGroup.m */,
 				5AD493C4192596CD0030E599 /* PMSubGroup.h */,
 				5AD493C5192596CD0030E599 /* PMSubGroup.m */,
+				5AD493C81926B6F30030E599 /* PMPartType.h */,
+				5AD493C91926B6F30030E599 /* PMPartType.m */,
 			);
 			name = CatalogModels;
 			sourceTree = "<group>";
@@ -512,6 +545,7 @@
 				5AAD1041190866970057BB66 /* Main.storyboard in Resources */,
 				5AE90E1F1912D50C00467F74 /* BlueSage_BG.jpg in Resources */,
 				5AE90E1D1912D1FD00467F74 /* BlueSage_BG@2x.jpg in Resources */,
+				5AD493CC1926E15E0030E599 /* NewPartCatalogView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,6 +564,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AD493CF192930C10030E599 /* FindPartViewControllerTableViewController.m in Sources */,
 				5AAD1068190867860057BB66 /* YearTableViewController.m in Sources */,
 				5AD493C3192596C00030E599 /* PMGroup.m in Sources */,
 				5ACEC5E3191D5FAC003D8428 /* FuncitonCell.m in Sources */,
@@ -538,11 +573,13 @@
 				5AAD103E190866970057BB66 /* AppDelegate.m in Sources */,
 				5A796FB6191AD61A00EFF0D8 /* AccountTableViewController.m in Sources */,
 				5A94FC0719144B2600FCCACD /* TBXML.m in Sources */,
+				5AD493D8192951C60030E599 /* PartDescCell.m in Sources */,
 				5AAD103A190866970057BB66 /* main.m in Sources */,
 				5A59E51219186AF00058AA66 /* PMNetworkOperation.m in Sources */,
 				5AE90E311912F33C00467F74 /* PMAccount.m in Sources */,
 				5AD493C6192596CD0030E599 /* PMSubGroup.m in Sources */,
 				5A796FB3191AD60F00EFF0D8 /* StoreTableViewController.m in Sources */,
+				5AD493DE19296AF20030E599 /* AddItemTableViewController.m in Sources */,
 				5ACEC5E7191D65CA003D8428 /* OrdersTableViewController.m in Sources */,
 				5AE90E191912CEEF00467F74 /* LoginViewController.m in Sources */,
 				5AE90E251912EC0800467F74 /* PMUser.m in Sources */,
@@ -551,6 +588,7 @@
 				5A7FA5A61922AB5400410D1A /* PMItem.m in Sources */,
 				5AD493B319254D620030E599 /* OrderDetailViewController.m in Sources */,
 				5A7FA5A91922B39F00410D1A /* PMPart.m in Sources */,
+				5AD493D519294FA50030E599 /* PartTableViewController.m in Sources */,
 				5AE90E02190F18D100467F74 /* PMXMLBuilder.m in Sources */,
 				5AE90E341912F6D800467F74 /* IPConfigViewController.m in Sources */,
 				5AD493BD192596A70030E599 /* PMModel.m in Sources */,
@@ -561,8 +599,10 @@
 				5ACEC5E0191C2448003D8428 /* AccountViewController.m in Sources */,
 				5AEF6BC0191823CF00BE766C /* XMLWriter.m in Sources */,
 				5AD493BA1925969A0030E599 /* PMMake.m in Sources */,
+				5AD493CA1926B6F30030E599 /* PMPartType.m in Sources */,
 				5AE90E0A19103E8500467F74 /* PMNetwork.m in Sources */,
 				5A94FC0E19144E4C00FCCACD /* PMStore.m in Sources */,
+				5AD493E11929939E0030E599 /* OrderTableViewCell.m in Sources */,
 				5AAD107119086C540057BB66 /* ProductTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

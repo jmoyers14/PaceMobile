@@ -367,7 +367,7 @@ NSString *password;
     
     id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
     [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
-    [writer writeStartElement:@"checkord"];
+    [writer writeStartElement:@"createord"];
     
     [writer writeStartElement:@"user"];
     [writer writeCharacters:username];
@@ -437,7 +437,7 @@ NSString *password;
     
     id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
     [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
-    [writer writeStartElement:@"checkord"];
+    [writer writeStartElement:@"createord"];
     
     [writer writeStartElement:@"user"];
     [writer writeCharacters:username];
@@ -480,7 +480,7 @@ NSString *password;
     
     id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
     [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
-    [writer writeStartElement:@"checkord"];
+    [writer writeStartElement:@"createord"];
     
     [writer writeStartElement:@"user"];
     [writer writeCharacters:username];

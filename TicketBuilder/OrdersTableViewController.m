@@ -7,7 +7,7 @@
 //
 
 #import "OrdersTableViewController.h"
-
+#import "OrderTableViewCell.h"
 @interface OrdersTableViewController () {
     PMUser *_user;
     PMAccount *_account;
@@ -79,12 +79,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orderCell"];
+    OrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orderCell"];
     
     PMOrder *order = [[_account orders] objectAtIndex:[indexPath row]];
-    NSString *titleString = [NSString stringWithFormat:@"%d, %@ - %@", [order ordNum], [order date], [order comment]];
     
-    [[cell textLabel] setText:titleString];
+    [cell setOrder:order];
     return cell;
 }
 

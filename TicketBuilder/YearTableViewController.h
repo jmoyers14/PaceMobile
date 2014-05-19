@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NetworkViewController.h"
 
-@interface YearTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate>
+
+
+@interface YearTableViewController : UITableViewController <UISearchBarDelegate, UISearchDisplayDelegate, PMNetworkOperationDelegate>
 @property IBOutlet UISearchBar *yearSearchBar;
 @end

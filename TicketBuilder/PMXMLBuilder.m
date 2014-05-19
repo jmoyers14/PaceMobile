@@ -101,9 +101,10 @@
     return xml;
 }
 
+#pragma mark - parts
 //acctRow 0 == blank acctRow tag
 //line 0 == blank line tag
-+ (NSString *) findpartXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow lineNumber:(NSUInteger)line partNumber:(NSUInteger)part {
++ (NSString *) findpartXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow lineNumber:(NSString *)line partNumber:(NSString *)part {
 
     id<XMLStreamWriter> xmlWriter = [[XMLWriter alloc] init];
     if(TB_isValidCreds(username, password)) {
@@ -121,12 +122,12 @@
         }
         [xmlWriter writeEndElement];
         [xmlWriter writeStartElement:@"line"];
-        if (line > 0) {
-            [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)line]];
+        if (!([line length] > 0)) {
+            [xmlWriter writeCharacters:line];
         }
         [xmlWriter writeEndElement];
         [xmlWriter writeStartElement:@"part"];
-        [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)part]];
+        [xmlWriter writeCharacters:part];
         [xmlWriter writeEndElement];
         [xmlWriter writeEndElement];
         [xmlWriter writeEndDocument];
@@ -137,7 +138,6 @@
     return [xmlWriter toString];
 }
 
-#pragma mark inqpart
 + (NSString *) inqpartXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow partRow:(NSUInteger)partRow {
     
     id<XMLStreamWriter> writer = [[XMLWriter alloc] init];

@@ -17,6 +17,9 @@
 
 @implementation CreateOrderViewController
 @synthesize commentView = _commentView;
+@synthesize spinner = _spinner;
+@synthesize storeLabel = _storeLabel;
+@synthesize accountLabel = _accountLabel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,7 +37,15 @@
     _operations = [[NSOperationQueue alloc] init];
     [_operations setMaxConcurrentOperationCount:1];
     [_operations setName:@"createord operations"];
-
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MM/dd//yyyy"];
+    
+    [self.dateLabel setText:[formatter stringFromDate:[NSDate date]]];
+    [self.storeLabel setText:[[_user currentStore] name]];
+    [self.accountLabel setText:[[[_user currentStore] currentAccount] name]];
+    [self hideSpinner];
+    
+    [self.commentView becomeFirstResponder];
     
 }
 
@@ -44,7 +55,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)create:(id)sender {
+- (void)create {
     
     PMAccount *account = [[_user currentStore] currentAccount];
     NSString* xml = [PMXMLBuilder createordXMLWithUsername:[_user username] password:[_user password] accountRow:[account acctRow] customerRow:0 orderComment:[_commentView text] customerPONumber:0 shipText:nil messageText:nil];
@@ -74,6 +85,19 @@
     } else {
         NSLog(@"%@ failed", [operation identifier]);
     }
+    [self hideSpinner];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField {
+    
+    if (textField == self.commentView) {
+        [self create];
+        [self showSpinner];
+        [textField resignFirstResponder];
+    }
+    return YES;
 }
 
 @end

@@ -7,10 +7,12 @@
 //
 
 #import "YearTableViewController.h"
-
+#import "PMUser.h"
 @interface YearTableViewController () {
     NSMutableArray *_years;
     NSMutableArray *_filteredYears;
+    NSOperationQueue *_operations;
+    PMUser *_user;
 }
 @end
 
@@ -34,11 +36,22 @@
     
     _filteredYears = [[NSMutableArray alloc] init];
     _years = [[NSMutableArray alloc] init];
+    /*
     NSInteger baseYear = 2014;
     for(int i=0; i < 115;i++) {
         [_years addObject:[NSString stringWithFormat:@"%ld", (long)baseYear]];
         baseYear--;
     }
+    */
+    _operations = [[NSOperationQueue alloc] init];
+    [_operations setMaxConcurrentOperationCount:1];
+    [_operations setName:@"years operations"];
+    _user = [PMUser sharedInstance];
+    
+    NSString *xml = [PMXMLBuilder yearsXMLWithUsername:[_user username] password:[_user password]];
+    PMNetworkOperation *years = [[PMNetworkOperation alloc] initWithIdentifier:@"years" XML:xml andURL:[_user url]];
+    [years setDelegate:self];
+    [_operations addOperation:years];
 
 }
 
@@ -108,6 +121,23 @@
     return YES;
 }
 
+#pragma mark - PMNetworkOperationDelegate
+
+- (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
+    if (![operation failed]) {
+        if ([[operation identifier] isEqualToString:@"years"]) {
+            NSDictionary *response = [PMNetwork parseYearsReply:[operation responseXML]];
+            if ([[response objectForKey:@"error"] length] > 0) {
+                [self displayErrorMessage:[response objectForKey:@"error"]];
+            } else {
+                _years = [response objectForKey:@"years"];
+                [self.tableView reloadData];
+            }
+        }
+    } else {
+        NSLog(@"%@ operation failed", [operation identifier]);
+    }
+}
 
 /*
 // Override to support conditional editing of the table view.
