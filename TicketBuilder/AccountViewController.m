@@ -40,7 +40,7 @@
     [super viewDidLoad];
     
     //Add functions to this array ot add buttons to the table view
-    _functions = [NSArray arrayWithObjects:@"Orders", @"Customers", @"Account Balances", @"Part Lookup", nil];
+    _functions = [NSArray arrayWithObjects:@"Orders", @"Account Balances", @"Part Lookup", nil];
     
     [self styleHeader];
     
@@ -139,6 +139,8 @@
     if([[_functions objectAtIndex:indexPath.row] isEqualToString:@"Orders"]) {
         [self performSegueWithIdentifier:@"Orders" sender:self];
     } else if ([[_functions objectAtIndex:indexPath.row] isEqualToString:@"Part Lookup"]) {
+    } else if ([[_functions objectAtIndex:indexPath.row] isEqualToString:@"Account Balances"]) {
+        [self performSegueWithIdentifier:@"AccountBalances" sender:self];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }

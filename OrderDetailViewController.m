@@ -105,32 +105,26 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0) {
-        return [[_order items] count];
-    } else {
-        return 2;
-    }
+
+    return [[_order items] count];
+
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([indexPath section] == 0) {
-        ItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"itemCell"];
+   
+    ItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"itemCell"];
         
-        [cell setItem:[[_order items] objectAtIndex:[indexPath row]]];
+    [cell setItem:[[_order items] objectAtIndex:[indexPath row]]];
         
-        return cell;
-    } else {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"actionCell"];
-        [[cell textLabel] setText:@"Finalize"];
-        return cell;
-    }
+    return cell;
+
 }
 
 - (void) finalize {
@@ -192,9 +186,17 @@
                 [self displayErrorMessage:[response objectForKey:@"error"]];
             } else {
                 [_order setItems:[response objectForKey:@"items"]];
-                [self.totalLabel setText:[NSString stringWithFormat:@"$%@", [response objectForKey:@"ordTot"]]];
-                [self.coreTotalLabel setText:[NSString stringWithFormat:@"$%@", [response objectForKey:@"coreTot"]]];
-                [self.taxTotalLabel setText:[NSString stringWithFormat:@"$%@", [response objectForKey:@"taxTot"]]];
+                NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
+                [nf setNumberStyle:NSNumberFormatterCurrencyStyle];
+                [nf setMinimumIntegerDigits:1];
+                [nf setMinimumFractionDigits:2];
+                [nf setCurrencySymbol:@"$"];
+                NSDecimalNumber *ordTot = [response objectForKey:@"ordTot"];
+                [self.totalLabel setText:[nf stringFromNumber:ordTot]];
+                NSDecimalNumber *coreTot = [response objectForKey:@"coreTot"];
+                [self.coreTotalLabel setText:[nf stringFromNumber:coreTot]];
+                NSDecimalNumber *taxTot = [response objectForKey:@"taxTot"];
+                [self.taxTotalLabel setText:[nf stringFromNumber:taxTot]];
                 [self.tableView reloadData];
             }
         } else if([[operation identifier] isEqualToString:@"additem"]) {

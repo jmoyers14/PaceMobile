@@ -64,8 +64,16 @@
     [self.weightLabel setText:[[_currentPart weight] stringValue]];
     [self.stockLabel setText: [NSString stringWithFormat:@"%lu", (unsigned long)[_currentPart instock]]];
     [self.allStockLabel setText: [NSString stringWithFormat:@"%lu", (unsigned long)[_currentPart instockAll]]];
-    [self.pricePartLabel setText:[[_currentPart price] stringValue]];
-    [self.priceCoreLabel setText:[[_currentPart core] stringValue]];
+    
+    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
+    [nf setNumberStyle:NSNumberFormatterCurrencyStyle];
+    [nf setMinimumFractionDigits:2];
+    [nf setMinimumIntegerDigits:1];
+    [nf setCurrencySymbol:@"$"];
+    
+    
+    [self.pricePartLabel setText:[nf stringFromNumber:[_currentPart price]]];
+    [self.priceCoreLabel setText:[nf stringFromNumber:[_currentPart core]]];
 }
 
 - (void)didReceiveMemoryWarning
