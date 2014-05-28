@@ -56,7 +56,6 @@
 		5AD493C3192596C00030E599 /* PMGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493C2192596C00030E599 /* PMGroup.m */; };
 		5AD493C6192596CD0030E599 /* PMSubGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493C5192596CD0030E599 /* PMSubGroup.m */; };
 		5AD493CA1926B6F30030E599 /* PMPartType.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493C91926B6F30030E599 /* PMPartType.m */; };
-		5AD493CC1926E15E0030E599 /* NewPartCatalogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AD493CB1926E15E0030E599 /* NewPartCatalogView.xib */; };
 		5AD493CF192930C10030E599 /* FindPartViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493CE192930C10030E599 /* FindPartViewControllerTableViewController.m */; };
 		5AD493D519294FA50030E599 /* PartTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493D419294FA50030E599 /* PartTableViewController.m */; };
 		5AD493D8192951C60030E599 /* PartDescCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AD493D7192951C60030E599 /* PartDescCell.m */; };
@@ -169,7 +168,6 @@
 		5AD493C5192596CD0030E599 /* PMSubGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMSubGroup.m; sourceTree = "<group>"; };
 		5AD493C81926B6F30030E599 /* PMPartType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMPartType.h; sourceTree = "<group>"; };
 		5AD493C91926B6F30030E599 /* PMPartType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMPartType.m; sourceTree = "<group>"; };
-		5AD493CB1926E15E0030E599 /* NewPartCatalogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewPartCatalogView.xib; sourceTree = "<group>"; };
 		5AD493CD192930C10030E599 /* FindPartViewControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindPartViewControllerTableViewController.h; sourceTree = "<group>"; };
 		5AD493CE192930C10030E599 /* FindPartViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindPartViewControllerTableViewController.m; sourceTree = "<group>"; };
 		5AD493D319294FA50030E599 /* PartTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartTableViewController.h; sourceTree = "<group>"; };
@@ -298,7 +296,6 @@
 				5AAD1045190866970057BB66 /* Images.xcassets */,
 				5AAD1034190866970057BB66 /* Supporting Files */,
 				5AE90E351912FC2900467F74 /* IPConfigView.xib */,
-				5AD493CB1926E15E0030E599 /* NewPartCatalogView.xib */,
 			);
 			name = PaceMobile;
 			path = TicketBuilder;
@@ -565,7 +562,6 @@
 				5AAD1041190866970057BB66 /* Main.storyboard in Resources */,
 				5AE90E1F1912D50C00467F74 /* BlueSage_BG.jpg in Resources */,
 				5AE90E1D1912D1FD00467F74 /* BlueSage_BG@2x.jpg in Resources */,
-				5AD493CC1926E15E0030E599 /* NewPartCatalogView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
