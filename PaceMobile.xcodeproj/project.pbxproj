@@ -10,6 +10,7 @@
 		5A5833181933CC6900B3A1F2 /* EditItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5833171933CC6900B3A1F2 /* EditItemViewController.m */; };
 		5A58331B1933E15B00B3A1F2 /* QuantityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A58331A1933E15B00B3A1F2 /* QuantityViewController.m */; };
 		5A58331E193682BE00B3A1F2 /* BalancesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A58331D193682BE00B3A1F2 /* BalancesTableViewController.m */; };
+		5A58332119369C2000B3A1F2 /* EditAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A58332019369C2000B3A1F2 /* EditAccountViewController.m */; };
 		5A59E50E191854510058AA66 /* PMStoreTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A59E50D191854510058AA66 /* PMStoreTestCase.m */; };
 		5A59E51219186AF00058AA66 /* PMNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A59E51119186AF00058AA66 /* PMNetworkOperation.m */; };
 		5A796FA1191ABD6E00EFF0D8 /* PMUserTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A796FA0191ABD6E00EFF0D8 /* PMUserTestCase.m */; };
@@ -92,6 +93,8 @@
 		5A58331A1933E15B00B3A1F2 /* QuantityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuantityViewController.m; sourceTree = "<group>"; };
 		5A58331C193682BE00B3A1F2 /* BalancesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalancesTableViewController.h; sourceTree = "<group>"; };
 		5A58331D193682BE00B3A1F2 /* BalancesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BalancesTableViewController.m; sourceTree = "<group>"; };
+		5A58331F19369C2000B3A1F2 /* EditAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditAccountViewController.h; sourceTree = "<group>"; };
+		5A58332019369C2000B3A1F2 /* EditAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditAccountViewController.m; sourceTree = "<group>"; };
 		5A59E50D191854510058AA66 /* PMStoreTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMStoreTestCase.m; sourceTree = "<group>"; };
 		5A59E51019186AF00058AA66 /* PMNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMNetworkOperation.h; sourceTree = "<group>"; };
 		5A59E51119186AF00058AA66 /* PMNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMNetworkOperation.m; sourceTree = "<group>"; };
@@ -375,6 +378,8 @@
 				5A58331A1933E15B00B3A1F2 /* QuantityViewController.m */,
 				5A58331C193682BE00B3A1F2 /* BalancesTableViewController.h */,
 				5A58331D193682BE00B3A1F2 /* BalancesTableViewController.m */,
+				5A58331F19369C2000B3A1F2 /* EditAccountViewController.h */,
+				5A58332019369C2000B3A1F2 /* EditAccountViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -583,6 +588,7 @@
 				5AAD1068190867860057BB66 /* YearTableViewController.m in Sources */,
 				5AD493C3192596C00030E599 /* PMGroup.m in Sources */,
 				5ACEC5E3191D5FAC003D8428 /* FuncitonCell.m in Sources */,
+				5A58332119369C2000B3A1F2 /* EditAccountViewController.m in Sources */,
 				5AD493B619255DF10030E599 /* ItemCell.m in Sources */,
 				5AAD106B19086C090057BB66 /* MakeTableViewController.m in Sources */,
 				5AAD103E190866970057BB66 /* AppDelegate.m in Sources */,
