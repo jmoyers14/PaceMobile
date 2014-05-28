@@ -1214,4 +1214,94 @@
 
 }
 
+- (void) testParseInqacct {
+    
+    NSDecimalNumber *currBal = [NSDecimalNumber decimalNumberWithString:@"25000.5"];
+    NSDecimalNumber *bal1 = [NSDecimalNumber decimalNumberWithString:@"3200.23"];
+    NSDecimalNumber *bal2 = [NSDecimalNumber decimalNumberWithString:@"4567"];
+    NSDecimalNumber *bal3 = [NSDecimalNumber decimalNumberWithString:@"3234"];
+    NSDecimalNumber *bal4 = [NSDecimalNumber decimalNumberWithString:@"334.6"];
+    NSString *des1 = @"age 1 description";
+    NSString *des2 = @"age 2 description";
+    NSString *des3 = @"age 3 description";
+    NSString *des4 = @"age 4 description";
+    NSDecimalNumber *sales1 = [NSDecimalNumber decimalNumberWithString:@"45000"];
+    NSDecimalNumber *profit1 = [NSDecimalNumber decimalNumberWithString:@"320"];
+    NSString *hist1 = @"history for sales 1";
+    NSDecimalNumber *sales2 = [NSDecimalNumber decimalNumberWithString:@"33.33"];
+    NSDecimalNumber *profit2 = [NSDecimalNumber decimalNumberWithString:@"55.56"];
+    NSString *hist2 = @"history for sales 2";
+    
+    NSArray *keys = [NSArray arrayWithObjects:@"currBal", @"age1Bal", @"age2Bal", @"age3Bal", @"age4Bal", @"age1Des", @"age2Des", @"age3Des", @"age4Des", @"hist1Sales", @"hist1Profit", @"hist1Des", @"hist2Sales", @"hist2Profit", @"hist2Des", nil];
+    NSArray *objects = [NSArray arrayWithObjects:currBal, bal1, bal2, bal3, bal4, des1, des2, des3, des4, sales1, profit1, hist1, sales2, profit2, hist2, nil];
+    NSDictionary *correctResponse = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
+    
+    id<XMLStreamWriter> cxmlWriter = [[XMLWriter alloc] init];
+    [cxmlWriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cxmlWriter writeStartElement:@"inqacctReply"];
+    [cxmlWriter writeStartElement:@"error"];
+    [cxmlWriter writeCharacters:@"00"];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"currBal"];
+    [cxmlWriter writeCharacters:[currBal stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"age1Bal"];
+    [cxmlWriter writeCharacters:[bal1 stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"age2Bal"];
+    [cxmlWriter writeCharacters:[bal2 stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"age3Bal"];
+    [cxmlWriter writeCharacters:[bal3 stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"age4Bal"];
+    [cxmlWriter writeCharacters:[bal4 stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"age1Des"];
+    [cxmlWriter writeCharacters:des1];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"age2Des"];
+    [cxmlWriter writeCharacters:des2];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"age3Des"];
+    [cxmlWriter writeCharacters:des3];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"age4Des"];
+    [cxmlWriter writeCharacters:des4];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"hist1Sales"];
+    [cxmlWriter writeCharacters:[sales1 stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"hist1Profit"];
+    [cxmlWriter writeCharacters:[profit1 stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"hist1Des"];
+    [cxmlWriter writeCharacters:hist1];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"hist2Sales"];
+    [cxmlWriter writeCharacters:[sales2 stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"hist2Profit"];
+    [cxmlWriter writeCharacters:[profit2 stringValue]];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeStartElement:@"hist2Des"];
+    [cxmlWriter writeCharacters:hist2];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndElement];
+    [cxmlWriter writeEndDocument];
+    
+    NSDictionary *response = [PMNetwork parseInqacctReply:[cxmlWriter toString]];
+    
+    XCTAssertTrue(([response objectForKey:@"error"] == nil), @"no error key");
+    for (NSString *key in keys) {
+        if ([[response objectForKey:key] isKindOfClass:[NSString class]]) {
+            NSString *obj = [response objectForKey:key];
+            XCTAssertTrue([obj isEqualToString:[correctResponse objectForKey:key]], @"objects should match");
+        } else {
+            NSDecimalNumber *num = [response objectForKey:key];
+            XCTAssertTrue(([num floatValue] == [[correctResponse objectForKey:key] floatValue]), @"nums should be qual");
+        }
+    }
+}
+
 @end

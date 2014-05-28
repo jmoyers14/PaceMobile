@@ -74,6 +74,34 @@
     
     return xml;
 }
+
++ (NSString *) inqacctXMLWithUsername:(NSString *)username password:(NSString *)password acctRow:(NSUInteger)acctRow {
+    
+    NSString *xml;
+    if(TB_isValidCreds(username, password)) {
+        id<XMLStreamWriter> cwriter = [[XMLWriter alloc] init];
+        
+        [cwriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [cwriter writeStartElement:@"inqacct"];
+        [cwriter writeStartElement:@"user"];
+        [cwriter writeCharacters:username];
+        [cwriter writeEndElement];
+        [cwriter writeStartElement:@"password"];
+        [cwriter writeCharacters:password];
+        [cwriter writeEndElement];
+        [cwriter writeStartElement:@"acctRow"];
+        [cwriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long) acctRow]];
+        [cwriter writeEndElement];
+        [cwriter writeEndElement];
+        [cwriter writeEndDocument];
+        
+        xml = [cwriter toString];
+    } else {
+        xml = nil;
+    }
+    return xml;
+}
+
 #pragma mark - confacct
 + (NSString *) confacctXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow {
     
@@ -122,7 +150,7 @@
         }
         [xmlWriter writeEndElement];
         [xmlWriter writeStartElement:@"line"];
-        if (!([line length] > 0)) {
+        if (([line length] > 0)) {
             [xmlWriter writeCharacters:line];
         }
         [xmlWriter writeEndElement];

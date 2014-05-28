@@ -166,8 +166,8 @@ NSString *password;
 #pragma mark - findpart
 - (void) testFindPartXML {
     NSUInteger acctRow = 1243;
-    NSUInteger line = 134;
-    NSUInteger part = 88765;
+    NSString *line = @"DOW";
+    NSString *part = @"44532";
     
     id<XMLStreamWriter> xmlWriter = [[XMLWriter alloc] init];
     
@@ -183,10 +183,10 @@ NSString *password;
     [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)acctRow]];
     [xmlWriter writeEndElement];
     [xmlWriter writeStartElement:@"line"];
-    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)line]];
+    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%@", line]];
     [xmlWriter writeEndElement];
     [xmlWriter writeStartElement:@"part"];
-    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)part]];
+    [xmlWriter writeCharacters:@"44532"];
     [xmlWriter writeEndElement];
     [xmlWriter writeEndElement];
     [xmlWriter writeEndDocument];
@@ -202,8 +202,8 @@ NSString *password;
 
 - (void) testFindPartXMLBlankAccount {
     NSUInteger acctRow = 0;
-    NSUInteger line = 134;
-    NSUInteger part = 88765;
+    NSString *line = @"ROW";
+    NSString *part = @"55e5";
     
     id<XMLStreamWriter> xmlWriter = [[XMLWriter alloc] init];
     
@@ -218,10 +218,10 @@ NSString *password;
     [xmlWriter writeStartElement:@"acctRow"];
     [xmlWriter writeEndElement];
     [xmlWriter writeStartElement:@"line"];
-    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)line]];
+    [xmlWriter writeCharacters:line];
     [xmlWriter writeEndElement];
     [xmlWriter writeStartElement:@"part"];
-    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)part]];
+    [xmlWriter writeCharacters:part];
     [xmlWriter writeEndElement];
     [xmlWriter writeEndElement];
     [xmlWriter writeEndDocument];
@@ -235,8 +235,8 @@ NSString *password;
 
 - (void) testFindPartXMLBlankLine {
     NSUInteger acctRow = 1243;
-    NSUInteger line = 0;
-    NSUInteger part = 88765;
+    //NSString *line = @"ROW";
+    NSString *part = @"55e5";
     
     id<XMLStreamWriter> xmlWriter = [[XMLWriter alloc] init];
     
@@ -254,14 +254,14 @@ NSString *password;
     [xmlWriter writeStartElement:@"line"];
     [xmlWriter writeEndElement];
     [xmlWriter writeStartElement:@"part"];
-    [xmlWriter writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)part]];
+    [xmlWriter writeCharacters:part];
     [xmlWriter writeEndElement];
     [xmlWriter writeEndElement];
     [xmlWriter writeEndDocument];
     
     NSString *correctXML = [xmlWriter toString];
     
-    NSString *xml = [PMXMLBuilder findpartXMLWithUsername:username password:password accountRow:acctRow lineNumber:line partNumber:part];
+    NSString *xml = [PMXMLBuilder findpartXMLWithUsername:username password:password accountRow:acctRow lineNumber:nil partNumber:part];
     
     XCTAssertTrue([correctXML isEqualToString:xml], @"xml:%@ shoudl equal correctxml: %@", xml,correctXML);
 }
@@ -800,6 +800,33 @@ NSString *password;
     NSString *xml = [PMXMLBuilder listitemsXMLWithUsername:username password:password orderRow:[ordRow integerValue]];
     
     XCTAssertTrue([xml isEqualToString:[cwriter toString]], @"response xml %@ does not equal xml %@", xml, [cwriter toString]);
+}
+
+#pragma mark - inqacct
+
+- (void) testInqAcct {
+    NSNumber *acctRow = [NSNumber numberWithInteger:10];
+    
+    id<XMLStreamWriter> cwriter = [[XMLWriter alloc] init];
+    
+    [cwriter writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [cwriter writeStartElement:@"inqacct"];
+    [cwriter writeStartElement:@"user"];
+    [cwriter writeCharacters:username];
+    [cwriter writeEndElement];
+    [cwriter writeStartElement:@"password"];
+    [cwriter writeCharacters:password];
+    [cwriter writeEndElement];
+    [cwriter writeStartElement:@"acctRow"];
+    [cwriter writeCharacters:[acctRow stringValue]];
+    [cwriter writeEndElement];
+    [cwriter writeEndElement];
+    [cwriter writeEndDocument];
+    
+    NSString *xml = [PMXMLBuilder inqacctXMLWithUsername:username password:password acctRow:[acctRow integerValue]];
+    
+    XCTAssertTrue([xml isEqualToString:[cwriter toString]], @"response xml %@ does not equal xml %@", xml, [cwriter toString]);
+
 }
 
 

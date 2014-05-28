@@ -723,6 +723,72 @@
     return dictionary;
 }
 
+
+/**************************************************************
+ *parse the response from the inqacct function
+ *
+ *params
+ *  data - NSString* - xml data returned from a network request
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *      error       => error code if there is an error
+ *      currBal     => current balance
+ *      age1Bal     => age period 1 balance
+ *      age2Bal     => age period 2 balance
+ *      age3Bal     => age period 3 balance
+ *      age4Bal     => age period 4 balance
+ *      age1Des     => age period 1 description
+ *      age2Des     => age period 2 description
+ *      age3Des     => age period 3 description
+ *      age4Des     => age period 4 description
+ *      hist1Sales  => history period 1 sales
+ *      hist1Profit => history period 1 profit
+ *      hist1Des    => history period 1 desctiption
+ *      hist2Sales  => history period 2 sales
+ *      hist2Profit => history period 2 profit
+ *      hist2Des    => history period 2 desctiption
+ ***************************************************************/
++ (NSDictionary *) parseInqacctReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    NSMutableDictionary *response = [[NSMutableDictionary alloc] init];
+    NSArray *stringKeys = [NSArray arrayWithObjects:@"age1Des", @"age2Des", @"age3Des", @"age4Des", @"hist1Des", @"hist2Des", nil];
+    NSArray *decKeys = [NSArray arrayWithObjects:@"currBal", @"age1Bal", @"age2Bal", @"age3Bal", @"age4Bal", @"hist1Sales", @"hist2Sales", @"hist1Profit", @"hist2Profit", nil];
+    
+    for (NSString *key in stringKeys) {
+        TBXMLElement *element = [TBXML childElementNamed:key parentElement:root];
+        [response setObject:[TBXML textForElement:element] forKey:key];
+    }
+    for (NSString *key in decKeys) {
+        TBXMLElement *element = [TBXML childElementNamed:key parentElement:root];
+        [response setObject:[NSDecimalNumber decimalNumberWithString:[TBXML textForElement:element]] forKey:key];
+    }
+    
+    return response;
+}
+
+
 #pragma mark - catalog parsing
 
 /**************************************************************

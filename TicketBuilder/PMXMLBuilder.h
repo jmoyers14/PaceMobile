@@ -41,6 +41,10 @@
                               password:(NSString *)password
                            customerRow:(NSUInteger)custRow;
 
+//XML to get account aged balances for user's account
++ (NSString *) inqacctXMLWithUsername:(NSString *)username
+                             password:(NSString *)password
+                              acctRow:(NSUInteger)acctRow;
 
 #pragma mark - Parts
 

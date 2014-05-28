@@ -36,6 +36,7 @@
 + (NSDictionary *) parseEdititemReply:(NSString *)xml;
 + (NSDictionary *) parseDeleteitemReply:(NSString *)xml;
 + (NSDictionary *) parseListitemsReply:(NSString *)xml;
++ (NSDictionary *) parseInqacctReply:(NSString *)xml;
 //catalog
 + (NSDictionary *) parseYearsReply:(NSString *)xml;
 + (NSDictionary *) parseMakesReply:(NSString *)xml;
