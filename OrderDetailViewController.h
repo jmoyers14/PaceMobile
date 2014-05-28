@@ -14,8 +14,8 @@
 #import "ItemCell.h"
 #import "PMNetworkOperation.h"
 #import "FindPartViewControllerTableViewController.h"
-
-@interface OrderDetailViewController : UITableViewController <PMNetworkOperationDelegate, UIPopoverControllerDelegate>
+#import "EditItemViewController.h"
+@interface OrderDetailViewController : UITableViewController <PMNetworkOperationDelegate, UIPopoverControllerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic) IBOutlet UILabel *accountNameLabel;
 @property (nonatomic) IBOutlet UILabel *accountNumLabel;

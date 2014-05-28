@@ -37,7 +37,7 @@
 
 - (void) setItem:(PMItem *)item {
     _item = item;
-    [self.lineLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[[item part] line]]];
+    [self.lineLabel setText:[[item part] line]];
     [self.partLabel setText:[[item part] part]];
     [self.qtyLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[item qty]]];
     NSString *type;
@@ -58,5 +58,10 @@
     
     [self.tranTypeLabel setText:type];
 }
+
+
+
+
+
 
 @end

@@ -47,8 +47,8 @@
     [self.accountNumLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[_account anum]]];
     
     _operations = [[NSOperationQueue alloc] init];
-    [_operations setMaxConcurrentOperationCount:2];
-    [_operations setName:@"listitems queue"];
+    [_operations setMaxConcurrentOperationCount:3];
+    [_operations setName:@"items queue"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedAddItemNotification:) name:@"AddItemNotification" object:nil];
 }
@@ -91,30 +91,96 @@
 }
 */
 
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    
+    if ([sender isKindOfClass:[ItemCell class]]) {
+        EditItemViewController *destVC = [segue destinationViewController];
+        ItemCell *ic = (ItemCell*)sender;
+        [destVC setItem:[ic item]];
+    }
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[_order items] count];
+    if (section == 0) {
+        return [[_order items] count];
+    } else {
+        return 2;
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"itemCell"];
+    if ([indexPath section] == 0) {
+        ItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"itemCell"];
+        
+        [cell setItem:[[_order items] objectAtIndex:[indexPath row]]];
+        
+        return cell;
+    } else {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"actionCell"];
+        [[cell textLabel] setText:@"Finalize"];
+        return cell;
+    }
+}
+
+- (void) finalize {
+    NSLog(@"Finalize order -- not implemented");
+}
+
+- (void) showDeleteAlert {
+    NSString *message =[NSString stringWithFormat:@"Are you sure you want to delete order created on %@", [_order date]];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Alert!" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    [av show];
+}
+
+#pragma mark - UITableViewDelegate
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [cell setItem:[[_order items] objectAtIndex:[indexPath row]]];
+    if (indexPath.section == 1) {
+        //action buttons
+        switch (indexPath.row) {
+            case 0:
+                [self finalize];
+                break;
+            case 1:
+                [self showDeleteAlert];
+                break;
+        }
+    }
     
-    return cell;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
-#pragma mark - UITableViewDelegate
+
+#pragma mark - UIAlertViewDelegate
+- (void) performDeleteOperation {
+    NSString *xml = [PMXMLBuilder deleteordXMLWithUsername:[_user username] password:[_user password] orderRow:[_order ordRow]];
+    PMNetworkOperation *deleteord = [[PMNetworkOperation alloc] initWithIdentifier:@"deleteord" XML:xml andURL:[_user url]];
+    [deleteord setDelegate:self];
+    [_operations addOperation:deleteord];
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            NSLog(@"Cancel");
+            break;
+        case 1:
+            [self performDeleteOperation];
+            break;
+    }
+}
 
 #pragma mark - NetworkOperationDelegate
 - (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
@@ -138,6 +204,13 @@
                 [self displayErrorMessage:[response objectForKey:@"eror"]];
             } else {
                 [self refreshItems];
+            }
+        } else if([[operation identifier] isEqualToString:@"deleteord"]) {
+            NSDictionary *response = [PMNetwork parseDeleteordReply:[operation responseXML]];
+            if ([[response objectForKey:@"error"] length] > 0) {
+                [self displayErrorMessage:[response objectForKey:@"error"]];
+            } else {
+                [self.navigationController popViewControllerAnimated:YES];
             }
         }
     } else {

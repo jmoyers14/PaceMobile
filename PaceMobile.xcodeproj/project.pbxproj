@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A5833181933CC6900B3A1F2 /* EditItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5833171933CC6900B3A1F2 /* EditItemViewController.m */; };
+		5A58331B1933E15B00B3A1F2 /* QuantityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A58331A1933E15B00B3A1F2 /* QuantityViewController.m */; };
 		5A59E50E191854510058AA66 /* PMStoreTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A59E50D191854510058AA66 /* PMStoreTestCase.m */; };
 		5A59E51219186AF00058AA66 /* PMNetworkOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A59E51119186AF00058AA66 /* PMNetworkOperation.m */; };
 		5A796FA1191ABD6E00EFF0D8 /* PMUserTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A796FA0191ABD6E00EFF0D8 /* PMUserTestCase.m */; };
@@ -83,6 +85,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A5833161933CC6900B3A1F2 /* EditItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditItemViewController.h; sourceTree = "<group>"; };
+		5A5833171933CC6900B3A1F2 /* EditItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditItemViewController.m; sourceTree = "<group>"; };
+		5A5833191933E15B00B3A1F2 /* QuantityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuantityViewController.h; sourceTree = "<group>"; };
+		5A58331A1933E15B00B3A1F2 /* QuantityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuantityViewController.m; sourceTree = "<group>"; };
 		5A59E50D191854510058AA66 /* PMStoreTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMStoreTestCase.m; sourceTree = "<group>"; };
 		5A59E51019186AF00058AA66 /* PMNetworkOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMNetworkOperation.h; sourceTree = "<group>"; };
 		5A59E51119186AF00058AA66 /* PMNetworkOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMNetworkOperation.m; sourceTree = "<group>"; };
@@ -360,6 +366,10 @@
 				5AD493D419294FA50030E599 /* PartTableViewController.m */,
 				5AD493DC19296AF20030E599 /* AddItemTableViewController.h */,
 				5AD493DD19296AF20030E599 /* AddItemTableViewController.m */,
+				5A5833161933CC6900B3A1F2 /* EditItemViewController.h */,
+				5A5833171933CC6900B3A1F2 /* EditItemViewController.m */,
+				5A5833191933E15B00B3A1F2 /* QuantityViewController.h */,
+				5A58331A1933E15B00B3A1F2 /* QuantityViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -583,6 +593,7 @@
 				5ACEC5E7191D65CA003D8428 /* OrdersTableViewController.m in Sources */,
 				5AE90E191912CEEF00467F74 /* LoginViewController.m in Sources */,
 				5AE90E251912EC0800467F74 /* PMUser.m in Sources */,
+				5A5833181933CC6900B3A1F2 /* EditItemViewController.m in Sources */,
 				5AD493AD192539740030E599 /* CreateOrderViewController.m in Sources */,
 				5ACEC5EA191D674A003D8428 /* PMOrder.m in Sources */,
 				5A7FA5A61922AB5400410D1A /* PMItem.m in Sources */,
@@ -596,6 +607,7 @@
 				5AAD106E19086C160057BB66 /* ModelTableViewController.m in Sources */,
 				5AD493C0192596B10030E599 /* PMEngine.m in Sources */,
 				5AE90E0D19103F0B00467F74 /* NetworkTestViewController.m in Sources */,
+				5A58331B1933E15B00B3A1F2 /* QuantityViewController.m in Sources */,
 				5ACEC5E0191C2448003D8428 /* AccountViewController.m in Sources */,
 				5AEF6BC0191823CF00BE766C /* XMLWriter.m in Sources */,
 				5AD493BA1925969A0030E599 /* PMMake.m in Sources */,
