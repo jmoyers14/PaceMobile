@@ -30,7 +30,7 @@
     [self.quantityLabel setText:[NSString stringWithFormat:@"/%lu", (unsigned long)[_currentPart instockAll]]];
 }
 
-- (IBAction)add:(id)sender {
+- (void)addItem {
     
     PMTransactionType transType = SaleTrans;
     NSUInteger qnty = [[self.quantityField text] integerValue];
@@ -61,6 +61,13 @@
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AddItemNotification" object:nil userInfo:userInfo];
     }
+}
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 2) {
+        [self addItem];
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)didReceiveMemoryWarning

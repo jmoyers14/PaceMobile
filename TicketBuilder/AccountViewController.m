@@ -42,7 +42,7 @@
     //Add functions to this array ot add buttons to the table view
     _functions = [NSArray arrayWithObjects:@"Orders", @"Account Balances", @"Part Lookup", nil];
     
-    [self styleHeader];
+    //[self styleHeader];
     
     [self setTitle:@"Account Info"];
 

@@ -235,27 +235,20 @@
     NSInteger acctCnt = [[TBXML textForElement:acctCntEle] integerValue];
     NSMutableArray *accounts = [NSMutableArray arrayWithCapacity:acctCnt];
     
-    if (acctCnt > 0) {
-        //Parse stores
-        TBXMLElement *acctElement     = [TBXML childElementNamed:@"accts" parentElement:root];
-        TBXMLElement *acctNameElement = [TBXML childElementNamed:@"name" parentElement:acctElement];
-        TBXMLElement *acctNumElement  = [TBXML childElementNamed:@"anum" parentElement:acctElement];
-        TBXMLElement *acctRowElement  = [TBXML childElementNamed:@"acctRow" parentElement:acctElement];
-        PMAccount *account1 = [[PMAccount alloc] initWithName:[TBXML textForElement:acctNameElement]
-                                                      row:[[TBXML textForElement:acctRowElement] integerValue]
-                                                      num:[[TBXML textForElement:acctNumElement] integerValue]];
-        [accounts addObject:account1];
-    
-        while ((acctElement = acctElement->nextSibling)) {
-            acctNameElement = [TBXML childElementNamed:@"name" parentElement:acctElement];
-            acctNumElement  = [TBXML childElementNamed:@"anum" parentElement:acctElement];
-            acctRowElement  = [TBXML childElementNamed:@"acctRow" parentElement:acctElement];
-            PMAccount *account = [[PMAccount alloc] initWithName:[TBXML textForElement:acctNameElement]
-                                                         row:[[TBXML textForElement:acctRowElement] integerValue]
-                                                         num:[[TBXML textForElement:acctNumElement] integerValue]];
-            [accounts addObject:account];
-        }
+
+    TBXMLElement *acctElement     = [TBXML childElementNamed:@"accts" parentElement:root];
+    if (acctElement) {
+        do {
+            TBXMLElement *acctNameElement = [TBXML childElementNamed:@"name" parentElement:acctElement];
+            TBXMLElement *acctNumElement  = [TBXML childElementNamed:@"anum" parentElement:acctElement];
+            TBXMLElement *acctRowElement  = [TBXML childElementNamed:@"acctRow" parentElement:acctElement];
+            PMAccount *account1 = [[PMAccount alloc] initWithName:[TBXML textForElement:acctNameElement]
+                                                              row:[[TBXML textForElement:acctRowElement] integerValue]
+                                                              num:[[TBXML textForElement:acctNumElement] integerValue]];
+            [accounts addObject:account1];
+        } while((acctElement = acctElement->nextSibling));
     }
+
     NSDictionary *response = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:acctCnt], @"acctCnt", accounts, @"accounts", nil];
     
     return response;

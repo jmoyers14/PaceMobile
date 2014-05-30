@@ -15,6 +15,5 @@
 @property (nonatomic, strong) IBOutlet UITextField *quantityField;
 @property (nonatomic, strong) PMPart *currentPart;
 @property (nonatomic, strong) IBOutlet UILabel *quantityLabel;
-- (IBAction)add:(id)sender;
 
 @end

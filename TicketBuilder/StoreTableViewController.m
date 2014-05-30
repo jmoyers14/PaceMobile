@@ -10,12 +10,13 @@
 #import "PMUser.h"
 @interface StoreTableViewController () {
     PMUser *_user;
+    NSMutableArray *_filteredStores;
 }
 
 @end
 
 @implementation StoreTableViewController
-
+@synthesize storeSearchBar = _storeSearchBar;
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];

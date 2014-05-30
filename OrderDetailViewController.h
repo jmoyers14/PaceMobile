@@ -24,4 +24,7 @@
 @property (nonatomic) IBOutlet UILabel *taxTotalLabel;
 @property (nonatomic) IBOutlet UILabel *totalLabel;
 
+- (IBAction)deleteOrder:(id)sender;
+- (IBAction)finalize:(id)sender;
+
 @end

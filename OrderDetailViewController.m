@@ -127,11 +127,13 @@
 
 }
 
-- (void) finalize {
-    NSLog(@"Finalize order -- not implemented");
+- (IBAction) finalize:(id) sender {
+    NSString *message =[NSString stringWithFormat:@"Once finalized the order can no longer be edited."];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Finalize Order?" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    [av show];
 }
 
-- (void) showDeleteAlert {
+- (IBAction)deleteOrder:(id)sender {
     NSString *message =[NSString stringWithFormat:@"Are you sure you want to delete order created on %@", [_order date]];
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Alert!" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
     [av show];
@@ -139,19 +141,6 @@
 
 #pragma mark - UITableViewDelegate
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (indexPath.section == 1) {
-        //action buttons
-        switch (indexPath.row) {
-            case 0:
-                [self finalize];
-                break;
-            case 1:
-                [self showDeleteAlert];
-                break;
-        }
-    }
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -166,13 +155,23 @@
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:
-            NSLog(@"Cancel");
-            break;
-        case 1:
-            [self performDeleteOperation];
-            break;
+    if ([[alertView title] isEqualToString:@"Alert!"]) {
+        switch (buttonIndex) {
+            case 0:
+                NSLog(@"Cancel");
+                break;
+            case 1:
+                [self performDeleteOperation];
+                break;
+        }
+    } else {
+        switch (buttonIndex) {
+            case 0:
+                NSLog(@"Cancel");
+                break;
+            case 1:
+                break;
+        }
     }
 }
 
