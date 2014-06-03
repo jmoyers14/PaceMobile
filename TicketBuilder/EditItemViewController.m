@@ -164,24 +164,28 @@
 - (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
     [self hideSpinner];
     if (![operation failed]) {
-        if ([[operation identifier] isEqualToString:@"edititem"]) {
-            //respond to edit item call
-            NSDictionary *response = [PMNetwork parseEdititemReply:[operation responseXML]];
-            if ([[response objectForKey:@"error"] length] > 0) {
-                [self displayErrorMessage:[response objectForKey:@"error"]];
-            } else {
-                [_qtyLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)_tempQuantity]];
-            }
-        } else if ([[operation identifier] isEqualToString:@"deleteitem"]) {
-            //respond to delete item call
-            NSDictionary *response = [PMNetwork parseDeleteitemReply:[operation responseXML]];
-            if ([response objectForKey:@"error"] > 0) {
-                [self displayErrorMessage:[response objectForKey:@"error"]];
-            } else {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
+        if ([operation timedOut]) {
+            [self displayErrorMessage:@"Network Operation timed out: check netowrk connection"];
         } else {
-            NSLog(@"unknown operaiton %@ in edit item view controller", [operation identifier]);
+            if ([[operation identifier] isEqualToString:@"edititem"]) {
+                //respond to edit item call
+                NSDictionary *response = [PMNetwork parseEdititemReply:[operation responseXML]];
+                if ([[response objectForKey:@"error"] length] > 0) {
+                    [self displayErrorMessage:[response objectForKey:@"error"]];
+                } else {
+                    [_qtyLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)_tempQuantity]];
+                }
+            } else if ([[operation identifier] isEqualToString:@"deleteitem"]) {
+                //respond to delete item call
+                NSDictionary *response = [PMNetwork parseDeleteitemReply:[operation responseXML]];
+                if ([response objectForKey:@"error"] > 0) {
+                    [self displayErrorMessage:[response objectForKey:@"error"]];
+                } else {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
+            } else {
+                NSLog(@"unknown operaiton %@ in edit item view controller", [operation identifier]);
+            }
         }
     } else {
         NSLog(@"%@ operation failed", [operation identifier]);

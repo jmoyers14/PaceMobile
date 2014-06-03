@@ -15,6 +15,9 @@
 //Show the activity spinner
 - (void) showSpinner {
 
+    UIApplication *app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = YES;
+    
     SEL selector = NSSelectorFromString(@"spinner");
     if([self respondsToSelector:selector]) {
         IMP imp = [self methodForSelector:selector];
@@ -34,6 +37,10 @@
 
 //Hide the activity spinner
 - (void) hideSpinner {
+    
+    UIApplication *app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = NO;
+    
     SEL selector = NSSelectorFromString(@"spinner");
     if([self respondsToSelector:selector]) {
         IMP imp = [self methodForSelector:selector];

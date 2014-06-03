@@ -75,15 +75,19 @@
     if (![operation failed]) {
         if ([[operation identifier] isEqualToString:@"findpart"]) {
             NSDictionary *response = [PMNetwork parseFindPartReply:[operation responseXML]];
-            if ([[response objectForKey:@"error"] length] > 0) {
-                [self displayErrorMessage:[response objectForKey:@"error"]];
-            } else {
-                
-                if (!([[response objectForKey:@"partCnt"] integerValue] > 0)) {
-                    [self displayErrorMessage:@"Not parts found"];
+            if (response) {
+                if ([[response objectForKey:@"error"] length] > 0) {
+                    [self displayErrorMessage:[response objectForKey:@"error"]];
+                } else {
+                    
+                    if (!([[response objectForKey:@"partCnt"] integerValue] > 0)) {
+                        [self displayErrorMessage:@"Not parts found"];
+                    }
+                    _parts = [response objectForKey:@"parts"];
+                    [self.tableView reloadData];
                 }
-                _parts = [response objectForKey:@"parts"];
-                [self.tableView reloadData];
+            } else {
+                [self displayErrorMessage:@"Network Error: Check connection or ip configuration"];
             }
         }
     } else {

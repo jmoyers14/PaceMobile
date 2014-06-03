@@ -107,10 +107,14 @@
     if (![operation failed]) {
         if ([[operation identifier] isEqualToString:@"inqacct"]) {
             NSDictionary *response = [PMNetwork parseInqacctReply:[operation responseXML]];
-            if ([[response objectForKey:@"error"] length] > 0) {
-                [self displayErrorMessage:[response objectForKey:@"error"]];
+            if (response) {
+                if ([[response objectForKey:@"error"] length] > 0) {
+                    [self displayErrorMessage:[response objectForKey:@"error"]];
+                } else {
+                    [self populateData:response];
+                }
             } else {
-                [self populateData:response];
+                [self displayErrorMessage:@"Network Error: Check connection or ip configuration"];
             }
         }
     } else {
