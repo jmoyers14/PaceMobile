@@ -151,15 +151,23 @@
 - (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
 
     if(![operation failed]) {
-        if([[operation identifier] isEqualToString:@"login"]) {
-            NSDictionary *data = [PMNetwork parseLoginReply:operation.responseXML];
-    
-            if([data objectForKey:@"error"] != nil) {
-                [self displayErrorMessage:[data objectForKey:@"error"]];
-            } else {
-                NSLog(@"Login success!");
-                [_user setStores:[data objectForKey:@"stores"]];
-                [self dismissViewControllerAnimated:YES completion:nil];
+        if ([operation timedOut]) {
+            [self displayErrorMessage:@"Operation timed out"];
+        } else {
+            if([[operation identifier] isEqualToString:@"login"]) {
+                NSDictionary *data = [PMNetwork parseLoginReply:operation.responseXML];
+                //check data, check fails if anything other than expected data format is returned
+                if (data) {
+                    if([data objectForKey:@"error"] != nil) {
+                        [self displayErrorMessage:[data objectForKey:@"error"]];
+                    } else {
+                        NSLog(@"Login success!");
+                        [_user setStores:[data objectForKey:@"stores"]];
+                        [self dismissViewControllerAnimated:YES completion:nil];
+                    }
+                } else {
+                    [self displayErrorMessage:@"Network error: check connection of ip configuration"];
+                }
             }
         }
     } else {

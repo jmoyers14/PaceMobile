@@ -93,11 +93,15 @@
     if(![operation failed]) {
         if([[operation identifier] isEqualToString:@"findacct"]) {
             NSDictionary *response = [PMNetwork parseFindacctReply:[operation responseXML]];
-            if([response objectForKey:@"error"] != nil) {
-                [self displayErrorMessage:[response objectForKey:@"error"]];
+            if (response) {
+                if([response objectForKey:@"error"] != nil) {
+                    [self displayErrorMessage:[response objectForKey:@"error"]];
+                } else {
+                    [[_user currentStore] setAccounts:[response objectForKey:@"accounts"]];
+                    [self.tableView reloadData];
+                }
             } else {
-                [[_user currentStore] setAccounts:[response objectForKey:@"accounts"]];
-                [self.tableView reloadData];
+                [self displayErrorMessage:@"Network Error: Check connection or ip configuration"];
             }
         }
     } else {

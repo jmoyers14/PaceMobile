@@ -22,6 +22,7 @@
 @property (nonatomic, readonly, assign) BOOL failed;
 
 - (id) initWithIdentifier:(NSString *)identifier XML:(NSString *)xml andURL:(NSString *)url;
+- (BOOL) timedOut;
 @end
 
 

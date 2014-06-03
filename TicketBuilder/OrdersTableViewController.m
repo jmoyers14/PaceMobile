@@ -93,11 +93,15 @@
 - (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
     if (![operation failed]) {
         NSDictionary *response = [PMNetwork parseCheckordReply:[operation responseXML]];
-        if([[response objectForKey:@"error"] length] > 0) {
-            [self displayErrorMessage:[response objectForKey:@"error"]];
+        if (response) {
+            if([[response objectForKey:@"error"] length] > 0) {
+                [self displayErrorMessage:[response objectForKey:@"error"]];
+            } else {
+                [_account setOrders:[response objectForKey:@"orders"]];
+                [self.tableView reloadData];
+            }
         } else {
-            [_account setOrders:[response objectForKey:@"orders"]];
-            [self.tableView reloadData];
+            [self displayErrorMessage:@"Network Error: Check connection or ip configuration"];
         }
     } else {
         NSLog(@"%@ failed", [operation identifier]);

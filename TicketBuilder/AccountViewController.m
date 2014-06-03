@@ -155,17 +155,20 @@
     [self hideSpinner];
     if (![operation failed]) {
         NSDictionary *response = [PMNetwork parseConfacctReply:[operation responseXML]];
-        
-        [[[_user currentStore] currentAccount] setAddress: [NSArray arrayWithObjects:[response objectForKey:@"addr1"], [response objectForKey:@"addr2"], nil]];
-        [[[_user currentStore] currentAccount] setCity:[response objectForKey:@"city"]];
-        [[[_user currentStore] currentAccount] setState:[response objectForKey:@"state"]];
-        [[[_user currentStore] currentAccount] setZip:[response objectForKey:@"zip"]];
-        [[[_user currentStore] currentAccount] setPhone:[response objectForKey:@"phone"]];
-        [[[_user currentStore] currentAccount] setFax:[response objectForKey:@"fax"]];
-        [[[_user currentStore] currentAccount] setContact:[response objectForKey:@"contact"]];
-        [[[_user currentStore] currentAccount] setEmail:[response objectForKey:@"email"]];
+        if (response) {
+            [[[_user currentStore] currentAccount] setAddress: [NSArray arrayWithObjects:[response objectForKey:@"addr1"], [response objectForKey:@"addr2"], nil]];
+            [[[_user currentStore] currentAccount] setCity:[response objectForKey:@"city"]];
+            [[[_user currentStore] currentAccount] setState:[response objectForKey:@"state"]];
+            [[[_user currentStore] currentAccount] setZip:[response objectForKey:@"zip"]];
+            [[[_user currentStore] currentAccount] setPhone:[response objectForKey:@"phone"]];
+            [[[_user currentStore] currentAccount] setFax:[response objectForKey:@"fax"]];
+            [[[_user currentStore] currentAccount] setContact:[response objectForKey:@"contact"]];
+            [[[_user currentStore] currentAccount] setEmail:[response objectForKey:@"email"]];
 
-        [self redisplayAccountInfo];
+            [self redisplayAccountInfo];
+        } else {
+            [self displayErrorMessage:@"Network Error: Check connection or ip configuration"];
+        }
     } else {
         NSLog(@"confacct peration failed");
     }

@@ -829,6 +829,60 @@ NSString *password;
 
 }
 
+- (void) testFinalizeOrd {
+    
+    
+    NSUInteger ordRow = 1;
+    NSDecimalNumber *ordTot = [NSDecimalNumber decimalNumberWithString:@"55.5"];
+    NSDecimalNumber *ordTax = [NSDecimalNumber decimalNumberWithString:@"33.3"];
+    NSDecimalNumber *ordShip = [NSDecimalNumber decimalNumberWithString:@"22.2"];
+    NSString *payType = @"Im a pay type!";
+    NSDecimalNumber *payAmount = [NSDecimalNumber decimalNumberWithString:@"1234.34"];
+    NSString *ordComment = @"order comment is this.";
+    NSUInteger custPoNum = 4;
+    
+    NSString *xml = [PMXMLBuilder finalordXMLWithUsername:username password:password orderRow:ordRow orderTotal:ordTot orderTax:ordTax orderShip:ordShip payType:payType payAmount:payAmount orderComment:ordComment customerPONumber:custPoNum];
+    
+    
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+    [writer writeStartElement:@"finalord"];
+    [writer writeStartElement:@"user"];
+    [writer writeCharacters:username];
+    [writer writeEndElement];
+    [writer writeStartElement:@"password"];
+    [writer writeCharacters:password];
+    [writer writeEndElement];
+    [writer writeStartElement:@"ordRow"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)ordRow]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"ordTot"];
+    [writer writeCharacters:[ordTot stringValue]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"ordTax"];
+    [writer writeCharacters:[ordTax stringValue]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"ordShip"];
+    [writer writeCharacters:[ordShip stringValue]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"payType"];
+    [writer writeCharacters:payType];
+    [writer writeEndElement];
+    [writer writeStartElement:@"payAmt"];
+    [writer writeCharacters:[payAmount stringValue]];
+    [writer writeEndElement];
+    [writer writeStartElement:@"ordComment"];
+    [writer writeCharacters:ordComment];
+    [writer writeEndElement];
+    [writer writeStartElement:@"custPoNum"];
+    [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)custPoNum]];
+    [writer writeEndElement];
+    [writer writeEndElement];
+    [writer writeEndDocument];
+        
+    XCTAssertTrue([xml isEqualToString:[writer toString]], @"xml %@ should equal writer xml %@", xml, [writer toString]);
+    
+}
 
 #pragma mark - catalog tests
 

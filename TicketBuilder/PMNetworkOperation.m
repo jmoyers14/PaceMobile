@@ -26,6 +26,14 @@
     return self;
 }
 
+- (BOOL) timedOut {
+    if ([_responseXML isEqualToString:@"Connection timed out"]) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 - (void) main {
     
     @autoreleasepool {

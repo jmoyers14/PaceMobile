@@ -194,6 +194,51 @@
     return [writer toString];
 }
 
+#pragma mark - finalord
++ (NSString *)finalordXMLWithUsername:(NSString *)username password:(NSString *)password orderRow:(NSUInteger)ordRow orderTotal:(NSDecimalNumber *)ordTot orderTax:(NSDecimalNumber *)ordTax orderShip:(NSDecimalNumber *)ordShip payType:(NSString *)payType payAmount:(NSDecimalNumber *)payAmount orderComment:(NSString *)ordComment customerPONumber:(NSInteger)custPoNum {
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if(TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"finalord"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"ordRow"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)ordRow]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"ordTot"];
+        [writer writeCharacters:[ordTot stringValue]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"ordTax"];
+        [writer writeCharacters:[ordTax stringValue]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"ordShip"];
+        [writer writeCharacters:[ordShip stringValue]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"payType"];
+        [writer writeCharacters:payType];
+        [writer writeEndElement];
+        [writer writeStartElement:@"payAmt"];
+        [writer writeCharacters:[payAmount stringValue]];
+        [writer writeEndElement];
+        [writer writeStartElement:@"ordComment"];
+        [writer writeCharacters:ordComment];
+        [writer writeEndElement];
+        [writer writeStartElement:@"custPoNum"];
+        [writer writeCharacters:[NSString stringWithFormat:@"%lu", (unsigned long)custPoNum]];
+        [writer writeEndElement];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+        
+        return [writer toString];
+    } else {
+        return nil;
+    }
+}
+
 #pragma mark - checkord
 //custRow 0 == blank customerRow tag
 + (NSString *)checkordXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow customerRow:(NSUInteger)custRow {

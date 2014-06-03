@@ -76,10 +76,14 @@
     if (![operation failed]) {
         if([[operation identifier] isEqualToString:@"createord"]) {
             NSDictionary *response = [PMNetwork parseCreateordReply:[operation responseXML]];
-            if ([[response objectForKey:@"error"] length] > 0) {
-                [self displayErrorMessage:[response objectForKey:@"error"]];
+            if (response) {
+                if ([[response objectForKey:@"error"] length] > 0) {
+                    [self displayErrorMessage:[response objectForKey:@"error"]];
+                } else {
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }
             } else {
-                [self dismissViewControllerAnimated:YES completion:nil];
+                [self displayErrorMessage:@"Network Error: Check connection or ip configuration"];
             }
         }
     } else {

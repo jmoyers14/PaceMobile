@@ -178,40 +178,44 @@
 #pragma mark - NetworkOperationDelegate
 - (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
     if(![operation failed]) {
-        if ([[operation identifier] isEqualToString:@"listitems"]) {
-            //list item response
-            NSDictionary *response = [PMNetwork parseListitemsReply:[operation responseXML]];
-            if([[response objectForKey:@"error"] length] > 0) {
-                [self displayErrorMessage:[response objectForKey:@"error"]];
-            } else {
-                [_order setItems:[response objectForKey:@"items"]];
-                NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
-                [nf setNumberStyle:NSNumberFormatterCurrencyStyle];
-                [nf setMinimumIntegerDigits:1];
-                [nf setMinimumFractionDigits:2];
-                [nf setCurrencySymbol:@"$"];
-                NSDecimalNumber *ordTot = [response objectForKey:@"ordTot"];
-                [self.totalLabel setText:[nf stringFromNumber:ordTot]];
-                NSDecimalNumber *coreTot = [response objectForKey:@"coreTot"];
-                [self.coreTotalLabel setText:[nf stringFromNumber:coreTot]];
-                NSDecimalNumber *taxTot = [response objectForKey:@"taxTot"];
-                [self.taxTotalLabel setText:[nf stringFromNumber:taxTot]];
-                [self.tableView reloadData];
-            }
-        } else if([[operation identifier] isEqualToString:@"additem"]) {
-            //add item response
-            NSDictionary *response = [PMNetwork parseAdditemReply:[operation responseXML]];
-            if ([[response objectForKey:@"error"] length] > 0) {
-                [self displayErrorMessage:[response objectForKey:@"eror"]];
-            } else {
-                [self refreshItems];
-            }
-        } else if([[operation identifier] isEqualToString:@"deleteord"]) {
-            NSDictionary *response = [PMNetwork parseDeleteordReply:[operation responseXML]];
-            if ([[response objectForKey:@"error"] length] > 0) {
-                [self displayErrorMessage:[response objectForKey:@"error"]];
-            } else {
-                [self.navigationController popViewControllerAnimated:YES];
+        if ([operation timedOut]) {
+            [self displayErrorMessage:@"Operation timed out: check network connection."];
+        } else {
+            if ([[operation identifier] isEqualToString:@"listitems"]) {
+                //list item response
+                NSDictionary *response = [PMNetwork parseListitemsReply:[operation responseXML]];
+                if([[response objectForKey:@"error"] length] > 0) {
+                    [self displayErrorMessage:[response objectForKey:@"error"]];
+                } else {
+                    [_order setItems:[response objectForKey:@"items"]];
+                    NSNumberFormatter *nf = [[NSNumberFormatter alloc] init];
+                    [nf setNumberStyle:NSNumberFormatterCurrencyStyle];
+                    [nf setMinimumIntegerDigits:1];
+                    [nf setMinimumFractionDigits:2];
+                    [nf setCurrencySymbol:@"$"];
+                    NSDecimalNumber *ordTot = [response objectForKey:@"ordTot"];
+                    [self.totalLabel setText:[nf stringFromNumber:ordTot]];
+                    NSDecimalNumber *coreTot = [response objectForKey:@"coreTot"];
+                    [self.coreTotalLabel setText:[nf stringFromNumber:coreTot]];
+                    NSDecimalNumber *taxTot = [response objectForKey:@"taxTot"];
+                    [self.taxTotalLabel setText:[nf stringFromNumber:taxTot]];
+                    [self.tableView reloadData];
+                }
+            } else if([[operation identifier] isEqualToString:@"additem"]) {
+                //add item response
+                NSDictionary *response = [PMNetwork parseAdditemReply:[operation responseXML]];
+                if ([[response objectForKey:@"error"] length] > 0) {
+                    [self displayErrorMessage:[response objectForKey:@"eror"]];
+                } else {
+                    [self refreshItems];
+                }
+            } else if([[operation identifier] isEqualToString:@"deleteord"]) {
+                NSDictionary *response = [PMNetwork parseDeleteordReply:[operation responseXML]];
+                if ([[response objectForKey:@"error"] length] > 0) {
+                    [self displayErrorMessage:[response objectForKey:@"error"]];
+                } else {
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
             }
         }
     } else {

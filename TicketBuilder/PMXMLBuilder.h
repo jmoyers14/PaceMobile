@@ -91,11 +91,11 @@
 + (NSString *) finalordXMLWithUsername:(NSString *)username
                               password:(NSString *)password
                               orderRow:(NSUInteger)ordRow
-                            orderTotal:(CGFloat)ordTot
-                              orderTax:(CGFloat)ordTax
-                             orderShip:(CGFloat)ordShip
+                            orderTotal:(NSDecimalNumber *)ordTot
+                              orderTax:(NSDecimalNumber *)ordTax
+                             orderShip:(NSDecimalNumber *)ordShip
                                payType:(NSString *)payType
-                             payAmount:(CGFloat)payAmount
+                             payAmount:(NSDecimalNumber *)payAmount
                           orderComment:(NSString *)ordComment
                       customerPONumber:(NSInteger)custPoNum;
 
