@@ -941,6 +941,8 @@
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="51" id="463-xS-Ufu"/>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="51" id="5ZF-ge-eLb"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="Wgb-Cx-MYN"/>
                                         <constraint firstAttribute="height" constant="21" id="vvS-o7-8Z5"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -976,6 +978,16 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fs0-0E-DGe">
+                                    <rect key="frame" x="79" y="11" width="276" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="276" id="eet-0e-MxY"/>
+                                        <constraint firstAttribute="height" constant="21" id="v57-Kl-zPA"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVn-T7-CFF">
                                     <rect key="frame" x="363" y="49" width="42" height="21"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -994,6 +1006,17 @@
                                         <constraint firstAttribute="width" constant="340" id="pFS-fj-En3"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Parts:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khm-Uf-Vyv">
+                                    <rect key="frame" x="26" y="11" width="45" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="45" id="4We-lS-3KI"/>
+                                        <constraint firstAttribute="height" constant="21" id="iuX-GT-Ytm"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1or-8m-r17">
@@ -1049,16 +1072,21 @@
                                 <constraint firstItem="dwt-ED-eDS" firstAttribute="leading" secondItem="NkB-2e-rWe" secondAttribute="leading" constant="20" id="6l9-Lq-vsp"/>
                                 <constraint firstAttribute="centerX" secondItem="jVn-T7-CFF" secondAttribute="centerX" id="Bbx-Wf-wBO"/>
                                 <constraint firstItem="jVn-T7-CFF" firstAttribute="top" secondItem="NkB-2e-rWe" secondAttribute="top" constant="49" id="Bq3-UC-UME"/>
+                                <constraint firstItem="dwt-ED-eDS" firstAttribute="trailing" secondItem="khm-Uf-Vyv" secondAttribute="trailing" id="DMf-q9-PAr"/>
+                                <constraint firstItem="Fs0-0E-DGe" firstAttribute="top" secondItem="NkB-2e-rWe" secondAttribute="top" constant="11" id="HIc-PY-9eZ"/>
+                                <constraint firstItem="khm-Uf-Vyv" firstAttribute="top" secondItem="NkB-2e-rWe" secondAttribute="top" constant="11" id="IKA-47-xOQ"/>
                                 <constraint firstAttribute="bottom" secondItem="1or-8m-r17" secondAttribute="bottom" constant="8" id="OOL-b4-K5W"/>
                                 <constraint firstItem="oiq-zp-ybF" firstAttribute="top" secondItem="NkB-2e-rWe" secondAttribute="top" constant="49" id="SM3-2k-6T5"/>
                                 <constraint firstItem="oiq-zp-ybF" firstAttribute="leading" secondItem="jVn-T7-CFF" secondAttribute="trailing" constant="8" id="eC2-Yi-IrW"/>
-                                <constraint firstItem="dwt-ED-eDS" firstAttribute="top" secondItem="NkB-2e-rWe" secondAttribute="top" constant="30" id="f4O-1D-lYO"/>
                                 <constraint firstItem="Vsw-fv-DWr" firstAttribute="leading" secondItem="Clh-f4-eB7" secondAttribute="trailing" constant="8" id="fUT-58-XlJ"/>
                                 <constraint firstItem="Vsw-fv-DWr" firstAttribute="top" secondItem="NkB-2e-rWe" secondAttribute="top" constant="49" id="ilf-jg-gWI"/>
                                 <constraint firstAttribute="trailing" secondItem="1or-8m-r17" secondAttribute="trailing" id="oRj-bJ-JCR"/>
+                                <constraint firstItem="dwt-ED-eDS" firstAttribute="top" secondItem="NkB-2e-rWe" secondAttribute="top" constant="30" id="oVU-UI-Tsh"/>
                                 <constraint firstItem="1or-8m-r17" firstAttribute="leading" secondItem="NkB-2e-rWe" secondAttribute="leading" id="rBs-bF-wj8"/>
                                 <constraint firstItem="9IO-Dg-ZlG" firstAttribute="top" secondItem="NkB-2e-rWe" secondAttribute="top" constant="30" id="s8U-6f-Euv"/>
                                 <constraint firstItem="9IO-Dg-ZlG" firstAttribute="leading" secondItem="dwt-ED-eDS" secondAttribute="trailing" constant="8" id="sNP-1k-4hn"/>
+                                <constraint firstItem="dwt-ED-eDS" firstAttribute="top" relation="greaterThanOrEqual" secondItem="NkB-2e-rWe" secondAttribute="top" constant="30" id="wk3-Tb-Jb0"/>
+                                <constraint firstItem="Fs0-0E-DGe" firstAttribute="leading" secondItem="khm-Uf-Vyv" secondAttribute="trailing" constant="8" id="xS6-e9-zaL"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -1141,6 +1169,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="coreTotalLabel" destination="9IO-Dg-ZlG" id="lfx-jh-r5L"/>
+                        <outlet property="partTotalLabel" destination="Fs0-0E-DGe" id="ban-pz-oVw"/>
                         <outlet property="taxTotalLabel" destination="Vsw-fv-DWr" id="TQt-Ra-eH9"/>
                         <outlet property="totalLabel" destination="oiq-zp-ybF" id="0dq-Jc-5sy"/>
                     </connections>

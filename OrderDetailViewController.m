@@ -193,13 +193,17 @@
                     [nf setMinimumIntegerDigits:1];
                     [nf setMinimumFractionDigits:2];
                     [nf setCurrencySymbol:@"$"];
-                    NSDecimalNumber *ordTot = [response objectForKey:@"ordTot"];
-                    [self.totalLabel setText:[nf stringFromNumber:ordTot]];
-                    NSDecimalNumber *coreTot = [response objectForKey:@"coreTot"];
+                    NSDecimalNumber *partTot = (NSDecimalNumber *)[response objectForKey:@"ordTot"];
+                    NSDecimalNumber *coreTot = (NSDecimalNumber *)[response objectForKey:@"coreTot"];
+                    NSDecimalNumber *taxTot = (NSDecimalNumber *)[response objectForKey:@"taxTot"];
+                    NSDecimalNumber *ordTot = [[partTot decimalNumberByAdding:coreTot] decimalNumberByAdding:taxTot];
+                    [self.partTotalLabel setText:[nf stringFromNumber:partTot]];
                     [self.coreTotalLabel setText:[nf stringFromNumber:coreTot]];
-                    NSDecimalNumber *taxTot = [response objectForKey:@"taxTot"];
                     [self.taxTotalLabel setText:[nf stringFromNumber:taxTot]];
                     [self.tableView reloadData];
+
+                    [self.totalLabel setText:[nf stringFromNumber:ordTot]];
+
                 }
             } else if([[operation identifier] isEqualToString:@"additem"]) {
                 //add item response

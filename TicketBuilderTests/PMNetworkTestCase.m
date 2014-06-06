@@ -592,10 +592,11 @@
 #pragma mark - listitems
 - (void) testListitemsReply {
     NSMutableArray *items = [[NSMutableArray alloc] init];
-    NSNumber *ordTot = [NSNumber numberWithDouble:22.50];
-    NSNumber *coreTot = [NSNumber numberWithDouble:33.25];
-    NSNumber *taxTot = [NSNumber numberWithDouble:3.33];
     NSNumber *itemCnt = [NSNumber numberWithInteger:90];
+    NSDecimalNumber *ordTot = [NSDecimalNumber decimalNumberWithString:@"22.50"];
+    NSDecimalNumber *coreTot = [NSDecimalNumber decimalNumberWithString:@"33.25"];
+    NSDecimalNumber *taxTot = [NSDecimalNumber decimalNumberWithString:@"3.33"];
+
     
     for (int i=0; i<90; i++) {
         PMPart *part = [[PMPart alloc] initWithPartRow:i line:@"DUP" part:[NSString stringWithFormat:@"EE%dF22%d", i, i]];

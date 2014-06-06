@@ -661,9 +661,9 @@
     TBXMLElement *taxTotElement = [TBXML childElementNamed:@"taxTot" parentElement:root];
     TBXMLElement *itemCntElement = [TBXML childElementNamed:@"itemCnt" parentElement:root];
     
-    NSNumber *ordTot = [NSNumber numberWithDouble:[[TBXML textForElement:ordTotElement] doubleValue]];
-    NSNumber *coreTot = [NSNumber numberWithDouble:[[TBXML textForElement:coreTotElement] doubleValue]];
-    NSNumber *taxTot = [NSNumber numberWithDouble:[[TBXML textForElement:taxTotElement] doubleValue]];
+    NSDecimalNumber *ordTot = [NSDecimalNumber decimalNumberWithString:[TBXML textForElement:ordTotElement]];
+    NSDecimalNumber *coreTot = [NSDecimalNumber decimalNumberWithString:[TBXML textForElement:coreTotElement]];
+    NSDecimalNumber *taxTot = [NSDecimalNumber decimalNumberWithString:[TBXML textForElement:taxTotElement]];
     NSNumber *itemCnt = [NSNumber numberWithInteger:[[TBXML textForElement:itemCntElement] integerValue]];
     NSMutableArray *items = [[NSMutableArray alloc] init];
     if([itemCnt integerValue] > 0) {
