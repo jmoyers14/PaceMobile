@@ -527,6 +527,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Bluesage;
 				TargetAttributes = {
+					5AAD1029190866970057BB66 = {
+						DevelopmentTeam = N2K5RDV985;
+					};
 					5AAD104A190866970057BB66 = {
 						TestTargetID = 5AAD1029190866970057BB66;
 					};
@@ -758,11 +761,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TicketBuilder/PaceMobile-Prefix.pch";
 				INFOPLIST_FILE = "TicketBuilder/PaceMobile-Info.plist";
 				PRODUCT_NAME = PaceMobile;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -772,11 +777,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TicketBuilder/PaceMobile-Prefix.pch";
 				INFOPLIST_FILE = "TicketBuilder/PaceMobile-Info.plist";
 				PRODUCT_NAME = PaceMobile;
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
