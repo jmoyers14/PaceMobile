@@ -154,6 +154,10 @@
     [_operations addOperation:deleteord];
 }
 
+- (void) performFinalizeOperation {
+    
+}
+
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if ([[alertView title] isEqualToString:@"Alert!"]) {
         switch (buttonIndex) {
