@@ -73,6 +73,7 @@
 		5AE90E361912FC2900467F74 /* IPConfigView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AE90E351912FC2900467F74 /* IPConfigView.xib */; };
 		5AEF6BBA191615AC00BE766C /* PMNetworkTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF6BB9191615AC00BE766C /* PMNetworkTestCase.m */; };
 		5AEF6BC0191823CF00BE766C /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF6BBF191823CF00BE766C /* XMLWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		99BCC5511C150E970035E745 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99BCC5501C150E970035E745 /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -198,6 +199,7 @@
 		5AEF6BB9191615AC00BE766C /* PMNetworkTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMNetworkTestCase.m; sourceTree = "<group>"; };
 		5AEF6BBE191823CF00BE766C /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
 		5AEF6BBF191823CF00BE766C /* XMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLWriter.m; sourceTree = "<group>"; };
+		99BCC5501C150E970035E745 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -296,6 +298,7 @@
 				5AAD1045190866970057BB66 /* Images.xcassets */,
 				5AAD1034190866970057BB66 /* Supporting Files */,
 				5AE90E351912FC2900467F74 /* IPConfigView.xib */,
+				99BCC5501C150E970035E745 /* Launch Screen.storyboard */,
 			);
 			name = PaceMobile;
 			path = TicketBuilder;
@@ -524,7 +527,7 @@
 		5AAD1022190866970057BB66 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Bluesage;
 				TargetAttributes = {
 					5AAD1029190866970057BB66 = {
@@ -565,6 +568,7 @@
 				5AAD1041190866970057BB66 /* Main.storyboard in Resources */,
 				5AE90E1F1912D50C00467F74 /* BlueSage_BG.jpg in Resources */,
 				5AE90E1D1912D1FD00467F74 /* BlueSage_BG@2x.jpg in Resources */,
+				99BCC5511C150E970035E745 /* Launch Screen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,6 +706,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -760,14 +765,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TicketBuilder/PaceMobile-Prefix.pch";
 				INFOPLIST_FILE = "TicketBuilder/PaceMobile-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bluesage.$(PRODUCT_NAME:rfc1034identifier)iOS";
 				PRODUCT_NAME = PaceMobile;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -776,14 +784,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TicketBuilder/PaceMobile-Prefix.pch";
 				INFOPLIST_FILE = "TicketBuilder/PaceMobile-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bluesage.$(PRODUCT_NAME:rfc1034identifier)iOS";
 				PRODUCT_NAME = PaceMobile;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -804,6 +815,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "TicketBuilderTests/PaceMobileTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bluesage.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = PaceMobileTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PaceMobile.app/PaceMobile";
 				WRAPPER_EXTENSION = xctest;
@@ -822,6 +834,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TicketBuilder/PaceMobile-Prefix.pch";
 				INFOPLIST_FILE = "TicketBuilderTests/PaceMobileTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.bluesage.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = PaceMobileTests;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PaceMobile.app/PaceMobile";
 				WRAPPER_EXTENSION = xctest;
