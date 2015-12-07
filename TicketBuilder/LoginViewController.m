@@ -126,6 +126,7 @@
 //Hide and show the ipConfiguration view
 - (IBAction)ipConfigTapped:(id)sender {
     
+    /*
     if(_ipConfViewController == nil) {
         //create IPConfigurationViewController
         _ipConfViewController = [[IPConfigViewController alloc] initWithNibName:@"IPConfigView" bundle:nil];
@@ -143,6 +144,22 @@
         [_ipConfigPopover presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionUp animated:YES];
         
     }
+     */
+    
+    [self presentIPConfigView];
+}
+
+#pragma mark - Navigation methods
+- (void) presentIPConfigView {
+    
+    IPConfigViewController *ipConfig = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"IPConfigController"];
+    
+    [ipConfig setDelegate:self];
+    [ipConfig setIp:[_user ip]];
+    [ipConfig setUrlPort:[_user urlPort]];
+    
+    [self presentViewController:ipConfig animated:YES completion:nil];
+    
 }
 
 

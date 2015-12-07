@@ -45,8 +45,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)submit:(id)sender {
-    
+- (IBAction) done:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITextFieldDelegate
