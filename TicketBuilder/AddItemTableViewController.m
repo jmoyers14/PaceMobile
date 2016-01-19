@@ -60,6 +60,11 @@
         NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:item, @"item", nil];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"AddItemNotification" object:nil userInfo:userInfo];
+        
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
+        {
+            [self dismissViewControllerAnimated:true completion:nil];
+        }
     }
 }
 

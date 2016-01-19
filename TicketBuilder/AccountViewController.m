@@ -11,7 +11,7 @@
 @interface AccountViewController () {
     PMUser *_user;
     NSOperationQueue *_operations;
-    NSArray *_functions;
+    //NSArray *_functions;
 }
 
 
@@ -40,7 +40,7 @@
     [super viewDidLoad];
     
     //Add functions to this array ot add buttons to the table view
-    _functions = [NSArray arrayWithObjects:@"Orders", @"Account Balances", @"Part Lookup", nil];
+    //_functions = [NSArray arrayWithObjects:@"Orders", @"Account Balances", @"Part Lookup", nil];
     
     //[self styleHeader];
     
@@ -89,14 +89,21 @@
     NSArray *address = [currAccount address];
     NSString *lastLine = [NSString stringWithFormat:@"%@ %@, %@", [currAccount city], [currAccount state], [currAccount zip]];
     
-    if([address count] == 2) {
+    if(([address count] == 2) && [[address objectAtIndex:1] length] > 0) {
+        /*
         [_addr1Label setText:[address objectAtIndex:0]];
         [_addr2Label setText:[address objectAtIndex:1]];
-        [_addr3Label setText:lastLine];
+        [_addr3Label setText:lastLine]; */
+        NSString *addressString = [NSString stringWithFormat:@"%@\n%@\n%@" ,[address objectAtIndex:0], [address objectAtIndex:1], lastLine];
+        [_addr1Label setText:addressString];
     } else {
+        /*
         [_addr1Label setText:[address objectAtIndex:0]];
         [_addr2Label setText:lastLine];
         [_addr3Label setHidden:YES];
+        */
+        NSString *addressString = [NSString stringWithFormat:@"%@\n%@" ,[address objectAtIndex:0], lastLine];
+        [_addr1Label setText:addressString];
     }
 
 
@@ -117,6 +124,7 @@
 
 #pragma mark - UITableViewDelegate
 
+/*
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     
     return 1;
@@ -144,10 +152,12 @@
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+ 
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 88;
 }
+ */
 
 
 #pragma mark - PMNetworkOperationDelegate

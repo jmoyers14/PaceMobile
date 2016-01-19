@@ -44,7 +44,7 @@
     _order = [_account currentOrder];
     [self setTitle:[_order date]];
     [self.accountNameLabel setText:[_account name]];
-    [self.accountNumLabel setText:[NSString stringWithFormat:@"%lu", (unsigned long)[_account anum]]];
+    [self.accountNumLabel setText:[NSString stringWithFormat:@"Account#: %lu", (unsigned long)[_account anum]]];
     
     _operations = [[NSOperationQueue alloc] init];
     [_operations setMaxConcurrentOperationCount:3];
@@ -54,6 +54,7 @@
 }
 
 - (void) refreshItems {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     NSString *xml = [PMXMLBuilder listitemsXMLWithUsername:[_user username] password:[_user password] orderRow:[_order ordRow]];
     PMNetworkOperation *listitems = [[PMNetworkOperation alloc] initWithIdentifier:@"listitems" XML:xml andURL:[_user url]];
     [listitems setDelegate:self];
@@ -181,6 +182,7 @@
 
 #pragma mark - NetworkOperationDelegate
 - (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if(![operation failed]) {
         if ([operation timedOut]) {
             [self displayErrorMessage:@"Operation timed out: check network connection."];
@@ -246,6 +248,7 @@
         PMItem *item = [[notification userInfo] objectForKey:@"item"];
         
         if (item) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
             NSString *xml = [PMXMLBuilder additemXMLWithUsername:[_user username] password:[_user password] accountRow:[_account acctRow] orderRow:[_order ordRow] partRow:[[item part] partRow] quantity:[item qty] tranType:[item transType]];
             
             PMNetworkOperation *additem = [[PMNetworkOperation alloc] initWithIdentifier:@"additem" XML:xml andURL:[_user url]];

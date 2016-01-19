@@ -127,5 +127,11 @@
     }
 }
 
+- (IBAction)cancel:(id)sender {
+    if ([sender isKindOfClass:[UIBarButtonItem class]]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
 
 @end
