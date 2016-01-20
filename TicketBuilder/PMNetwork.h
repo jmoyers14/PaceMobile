@@ -32,6 +32,7 @@
 + (NSDictionary *) parseCheckordReply:(NSString *)xml;
 + (NSDictionary *) parseCreateordReply:(NSString *)xml;
 + (NSDictionary *) parseDeleteordReply:(NSString *)xml;
++ (NSDictionary *) parseFinalizeReply:(NSString *)xml;
 + (NSDictionary *) parseAdditemReply:(NSString *)xml;
 + (NSDictionary *) parseEdititemReply:(NSString *)xml;
 + (NSDictionary *) parseDeleteitemReply:(NSString *)xml;

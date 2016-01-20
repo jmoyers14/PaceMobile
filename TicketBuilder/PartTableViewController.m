@@ -8,6 +8,14 @@
 
 #import "PartTableViewController.h"
 #import "AddItemTableViewController.h"
+#import "UIView+Theme.h"
+
+typedef NS_ENUM(NSInteger, PartSection) {
+    PartSectionInfo,
+    PartSectionStock,
+    PartSectionPrice,
+    PartSectionBlank
+};
 
 @interface PartTableViewController ()
 
@@ -84,6 +92,31 @@
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     [((AddItemTableViewController*)[segue destinationViewController]) setCurrentPart:_currentPart];
+}
+
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    
+    NSString *title = nil;
+    
+    switch ((PartSection)section) {
+        case PartSectionInfo:
+            title = @"Info";
+            break;
+        case PartSectionStock:
+            title = @"Stock";
+            break;
+        case PartSectionPrice:
+            title = @"Price";
+            break;
+        case PartSectionBlank:
+            title = nil;
+            break;
+        default:
+            title = nil;
+            break;
+    }
+    
+    return [UIView tableHeaderWithTitle:title];
 }
 
 

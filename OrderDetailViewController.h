@@ -23,6 +23,8 @@
 @property (nonatomic) IBOutlet UILabel *coreTotalLabel;
 @property (nonatomic) IBOutlet UILabel *taxTotalLabel;
 @property (nonatomic) IBOutlet UILabel *totalLabel;
+@property (nonatomic) IBOutlet UIButton *finalizeButton;
+@property (nonatomic) IBOutlet UIButton *deleteButton;
 
 - (IBAction)deleteOrder:(id)sender;
 - (IBAction)finalize:(id)sender;

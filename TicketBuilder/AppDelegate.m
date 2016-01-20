@@ -8,12 +8,22 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "PMTheme.h"
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 
+    
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
+    [[UINavigationBar appearance] setBarTintColor:[PMTheme secondaryColor]];
+    [[UINavigationBar appearance] setTintColor:[PMTheme primaryColor]];
+    
+    NSDictionary *titleTextAttributes = [NSDictionary dictionaryWithObjectsAndKeys:[PMTheme primaryColor], NSForegroundColorAttributeName, nil];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:titleTextAttributes];
+    [[UINavigationBar appearance] setTranslucent:NO];
     
     //Show the login view controller modally
     UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

@@ -239,6 +239,29 @@
     }
 }
 
++ (NSString *) taxcalcXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow taxableTotal:(CGFloat)taxableTot {
+    id<XMLStreamWriter> writer = [[XMLWriter alloc] init];
+    if(TB_isValidCreds(username, password)) {
+        [writer writeStartDocumentWithEncodingAndVersion:@"UTF-8" version:@"1.0"];
+        [writer writeStartElement:@"taxcalc"];
+        [writer writeStartElement:@"user"];
+        [writer writeCharacters:username];
+        [writer writeEndElement];
+        [writer writeStartElement:@"password"];
+        [writer writeCharacters:password];
+        [writer writeEndElement];
+        [writer writeStartElement:@"acctRow"];
+        [writer writeEndElement];
+        [writer writeCharacters:@"taxableTot"];
+        [writer writeEndElement];
+        [writer writeEndDocument];
+        
+        return [writer toString];
+    } else {
+        return nil;
+    }
+}
+
 #pragma mark - checkord
 //custRow 0 == blank customerRow tag
 + (NSString *)checkordXMLWithUsername:(NSString *)username password:(NSString *)password accountRow:(NSUInteger)acctRow customerRow:(NSUInteger)custRow {

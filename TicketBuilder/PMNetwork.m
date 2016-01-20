@@ -73,8 +73,11 @@
  *
  **************************************************************/
 + (NSString *) decodeXML:(NSString *)xml {
-    
-    return nil;
+    NSString *parsedXML = nil;
+    if ([xml length] > 0) {
+        parsedXML = [xml stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+    }
+    return parsedXML;
 }
 
 /**************************************************************
@@ -242,7 +245,10 @@
             TBXMLElement *acctNameElement = [TBXML childElementNamed:@"name" parentElement:acctElement];
             TBXMLElement *acctNumElement  = [TBXML childElementNamed:@"anum" parentElement:acctElement];
             TBXMLElement *acctRowElement  = [TBXML childElementNamed:@"acctRow" parentElement:acctElement];
-            PMAccount *account1 = [[PMAccount alloc] initWithName:[TBXML textForElement:acctNameElement]
+            
+            NSString *accountName = [PMNetwork decodeXML:[TBXML textForElement:acctNameElement]];
+            
+            PMAccount *account1 = [[PMAccount alloc] initWithName:accountName
                                                               row:[[TBXML textForElement:acctRowElement] integerValue]
                                                               num:[[TBXML textForElement:acctNumElement] integerValue]];
             [accounts addObject:account1];
@@ -462,6 +468,44 @@
     TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
     if (error == nil) {
         NSLog(@"parseFindacctReply could not find error");
+        return nil;
+    }
+    NSString *errorString = [TBXML textForElement:error];
+    
+    NSString *errorMessage = [PMNetwork checkErrors:errorString];
+    if (errorMessage != nil) {
+        return [NSDictionary dictionaryWithObject:errorMessage forKey:@"error"];
+    }
+    
+    
+    return [[NSDictionary alloc] init];
+}
+
+/**************************************************************
+ *parse the response from the finalize order function
+ *
+ *params
+ *  data - NSString* - xml data returned from a network request
+ *
+ *return
+ *  NSDictionary with the following keys value pairs:
+ *      error      => error code if there is an error
+ ***************************************************************/
++ (NSDictionary *) parseFinalizeReply:(NSString *)xml {
+    //Extract root element
+    NSError *rootError;
+    TBXML *tbxml = [[TBXML alloc] initWithXMLString:xml error:&rootError];
+    if(rootError) {
+        NSLog(@"Error value pasrsing error code:%ld, message: %@", (long)[rootError code], [rootError localizedDescription]);
+        return nil;
+    }
+    
+    TBXMLElement *root = [tbxml rootXMLElement];
+    
+    //parse errors
+    TBXMLElement *error = [TBXML childElementNamed:@"error" parentElement:root];
+    if (error == nil) {
+        NSLog(@"parseFinalOrdReply could not find error");
         return nil;
     }
     NSString *errorString = [TBXML textForElement:error];

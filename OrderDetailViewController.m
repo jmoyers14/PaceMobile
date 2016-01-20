@@ -8,6 +8,12 @@
 
 #import "OrderDetailViewController.h"
 
+typedef NS_ENUM(NSInteger, AlertTag) {
+    AlertTagDelete,
+    AlertTagFinal,
+    AlertTagSuccess
+};
+
 @interface OrderDetailViewController () {
     PMUser *_user;
     PMAccount *_account;
@@ -15,6 +21,8 @@
     NSOperationQueue *_operations;
     FindPartViewControllerTableViewController *_findPartViewController;
     UIPopoverController *_findPartPopover;
+    NSDecimalNumber *_orderTotal;
+    NSDecimalNumber *_taxTotal;
 }
 
 @end
@@ -26,6 +34,8 @@
 @synthesize coreTotalLabel = _coreTotalLabel;
 @synthesize taxTotalLabel = _taxTotalLabel;
 @synthesize totalLabel = _totalLabel;
+@synthesize deleteButton = _deleteButton;
+@synthesize finalizeButton = _finalizeButton;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -42,9 +52,12 @@
     _user = [PMUser sharedInstance];
     _account = [[_user currentStore] currentAccount];
     _order = [_account currentOrder];
+    _orderTotal = [NSDecimalNumber decimalNumberWithString:@"0.0"];
+    _taxTotal = [NSDecimalNumber decimalNumberWithString:@"0.0"];
     [self setTitle:[_order date]];
     [self.accountNameLabel setText:[_account name]];
     [self.accountNumLabel setText:[NSString stringWithFormat:@"Account#: %lu", (unsigned long)[_account anum]]];
+    
     
     _operations = [[NSOperationQueue alloc] init];
     [_operations setMaxConcurrentOperationCount:3];
@@ -131,12 +144,14 @@
 - (IBAction) finalize:(id) sender {
     NSString *message =[NSString stringWithFormat:@"Once finalized the order can no longer be edited."];
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Finalize Order?" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    av.tag = AlertTagFinal;
     [av show];
 }
 
 - (IBAction)deleteOrder:(id)sender {
     NSString *message =[NSString stringWithFormat:@"Are you sure you want to delete order created on %@", [_order date]];
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Alert!" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes", nil];
+    av.tag = AlertTagDelete;
     [av show];
 }
 
@@ -156,33 +171,41 @@
 }
 
 - (void) performFinalizeOperation {
+    NSDecimalNumber *zero = [NSDecimalNumber decimalNumberWithString:@"0.0"];
+    NSString *xml = [PMXMLBuilder finalordXMLWithUsername:[_user username] password:[_user password] orderRow:[_order ordRow] orderTotal:_orderTotal orderTax:_taxTotal orderShip:zero payType:@"" payAmount:zero orderComment:[_order comment] customerPONumber:0] ;
+    PMNetworkOperation *finalord = [[PMNetworkOperation alloc] initWithIdentifier:@"finalord" XML:xml andURL:[_user url]];
+    [finalord setDelegate:self];
     
+    [[self finalizeButton] setEnabled:NO];
+    [[self deleteButton] setEnabled:NO];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    
+    [_operations addOperation:finalord];
 }
 
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if ([[alertView title] isEqualToString:@"Alert!"]) {
-        switch (buttonIndex) {
-            case 0:
-                NSLog(@"Cancel");
-                break;
-            case 1:
-                [self performDeleteOperation];
-                break;
-        }
-    } else {
-        switch (buttonIndex) {
-            case 0:
-                NSLog(@"Cancel");
-                break;
-            case 1:
-                break;
-        }
+    
+    switch ([alertView tag]) {
+        case AlertTagFinal:
+            if (buttonIndex == 1) [self performFinalizeOperation];
+            break;
+        case AlertTagDelete:
+            if (buttonIndex == 1) [self performDeleteOperation];
+            break;
+        case AlertTagSuccess:
+            [[self navigationController] popViewControllerAnimated:YES];
+            break;
+        default:
+            NSLog(@"Alert View Not Found");
+            break;
     }
+    
 }
 
 #pragma mark - NetworkOperationDelegate
 - (void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     if(![operation failed]) {
         if ([operation timedOut]) {
             [self displayErrorMessage:@"Operation timed out: check network connection."];
@@ -203,6 +226,8 @@
                     NSDecimalNumber *coreTot = (NSDecimalNumber *)[response objectForKey:@"coreTot"];
                     NSDecimalNumber *taxTot = (NSDecimalNumber *)[response objectForKey:@"taxTot"];
                     NSDecimalNumber *ordTot = [[partTot decimalNumberByAdding:coreTot] decimalNumberByAdding:taxTot];
+                    _orderTotal = partTot;
+                    _taxTotal   = taxTot;
                     [self.partTotalLabel setText:[nf stringFromNumber:partTot]];
                     [self.coreTotalLabel setText:[nf stringFromNumber:coreTot]];
                     [self.taxTotalLabel setText:[nf stringFromNumber:taxTot]];
@@ -225,6 +250,16 @@
                     [self displayErrorMessage:[response objectForKey:@"error"]];
                 } else {
                     [self.navigationController popViewControllerAnimated:YES];
+                }
+            } else if ([[operation identifier] isEqualToString:@"finalord"]) {
+                NSDictionary *response = [PMNetwork parseFinalizeReply:[operation responseXML]];
+                if ([[response objectForKey:@"error"] length] > 0) {
+                    NSLog(@"Error  finalizing ord");
+                } else {
+                    NSLog(@"Final Ord Success!");
+                    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Youre order has been finalized." delegate:self cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+                    [av setTag:AlertTagSuccess];
+                    [av show];
                 }
             }
         }

@@ -74,6 +74,8 @@
 		5AEF6BBA191615AC00BE766C /* PMNetworkTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF6BB9191615AC00BE766C /* PMNetworkTestCase.m */; };
 		5AEF6BC0191823CF00BE766C /* XMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF6BBF191823CF00BE766C /* XMLWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		99BCC5511C150E970035E745 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99BCC5501C150E970035E745 /* Launch Screen.storyboard */; };
+		99C1C95A1C4F4C1800EE1A33 /* UIView+Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C1C9591C4F4C1800EE1A33 /* UIView+Theme.m */; };
+		99C1C95D1C4F4EF200EE1A33 /* PMTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C1C95C1C4F4EF200EE1A33 /* PMTheme.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -200,6 +202,10 @@
 		5AEF6BBE191823CF00BE766C /* XMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLWriter.h; sourceTree = "<group>"; };
 		5AEF6BBF191823CF00BE766C /* XMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLWriter.m; sourceTree = "<group>"; };
 		99BCC5501C150E970035E745 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		99C1C9581C4F4C1800EE1A33 /* UIView+Theme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Theme.h"; sourceTree = "<group>"; };
+		99C1C9591C4F4C1800EE1A33 /* UIView+Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Theme.m"; sourceTree = "<group>"; };
+		99C1C95B1C4F4EF200EE1A33 /* PMTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMTheme.h; sourceTree = "<group>"; };
+		99C1C95C1C4F4EF200EE1A33 /* PMTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTheme.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +246,8 @@
 			children = (
 				5A94FC021914342700FCCACD /* NetworkViewController.h */,
 				5A94FC031914342700FCCACD /* NetworkViewController.m */,
+				99C1C9581C4F4C1800EE1A33 /* UIView+Theme.h */,
+				99C1C9591C4F4C1800EE1A33 /* UIView+Theme.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -297,6 +305,7 @@
 				5A94FC0519144B1000FCCACD /* TBXML */,
 				5AAD1045190866970057BB66 /* Images.xcassets */,
 				5AAD1034190866970057BB66 /* Supporting Files */,
+				99C1C95E1C4F4EFD00EE1A33 /* Theme */,
 				5AE90E351912FC2900467F74 /* IPConfigView.xib */,
 				99BCC5501C150E970035E745 /* Launch Screen.storyboard */,
 			);
@@ -483,6 +492,15 @@
 			name = XMLWritier;
 			sourceTree = "<group>";
 		};
+		99C1C95E1C4F4EFD00EE1A33 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				99C1C95B1C4F4EF200EE1A33 /* PMTheme.h */,
+				99C1C95C1C4F4EF200EE1A33 /* PMTheme.m */,
+			);
+			name = Theme;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -615,7 +633,9 @@
 				5AD493B319254D620030E599 /* OrderDetailViewController.m in Sources */,
 				5A7FA5A91922B39F00410D1A /* PMPart.m in Sources */,
 				5AD493D519294FA50030E599 /* PartTableViewController.m in Sources */,
+				99C1C95A1C4F4C1800EE1A33 /* UIView+Theme.m in Sources */,
 				5AE90E02190F18D100467F74 /* PMXMLBuilder.m in Sources */,
+				99C1C95D1C4F4EF200EE1A33 /* PMTheme.m in Sources */,
 				5AE90E341912F6D800467F74 /* IPConfigViewController.m in Sources */,
 				5AD493BD192596A70030E599 /* PMModel.m in Sources */,
 				5A94FC041914342700FCCACD /* NetworkViewController.m in Sources */,
