@@ -10,13 +10,14 @@
 #import "PMUser.h"
 @interface StoreTableViewController () {
     PMUser *_user;
-    NSMutableArray *_filteredStores;
+    NSArray *_filteredStores;
 }
 
 @end
 
 @implementation StoreTableViewController
-@synthesize storeSearchBar = _storeSearchBar;
+@synthesize searchController = _searchController;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -30,13 +31,25 @@
 {
     [super viewDidLoad];
     [self setTitle:@"Stores"];
+    self.extendedLayoutIncludesOpaqueBars = YES;
+    
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    
+    [[self searchController] setSearchResultsUpdater:self];
+    [[self searchController] setDimsBackgroundDuringPresentation:NO];
+    [[[self searchController] searchBar] setScopeButtonTitles:@[]];
+    [self setDefinesPresentationContext:YES];
+    
+    [[self tableView] setTableHeaderView:[[self searchController] searchBar]];
     
 }
 
 - (void) viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     _user = [PMUser sharedInstance];
-    [[self tableView] reloadData];
     
+    
+    [[self tableView] reloadData];
     
 }
 
@@ -55,7 +68,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[_user stores] count];
+    
+    if ([[self searchController] isActive] && [[[[self searchController] searchBar] text] length] > 0) {
+        return [_filteredStores count];
+    } else {
+        return [[_user stores] count];
+    }
+    
 }
 
 
@@ -63,53 +82,44 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StoreCell" forIndexPath:indexPath];
     
-    [[cell textLabel] setText:[[[_user stores] objectAtIndex:indexPath.row] name]];
+    if ([[self searchController] isActive] && [[[[self searchController] searchBar] text] length] > 0) {
+        [[cell textLabel] setText:[[_filteredStores objectAtIndex:indexPath.row] name]];
+    } else {
+        [[cell textLabel] setText:[[[_user stores] objectAtIndex:indexPath.row] name]];
+    }
     
     return cell;
 }
 
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+#pragma mark - UISearchResultsUpdating
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void) updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *searchText = [[searchController searchBar] text];
+    
+    NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchText];
+    
+    _filteredStores = [[_user stores] filteredArrayUsingPredicate:filterPredicate];
+    
+    [[self tableView] reloadData];
+    
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
 
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    PMStore *currStore = [[_user stores] objectAtIndex:indexPath.row];
-    [_user setCurrentStore:currStore];
+    
+    PMStore *currStore = nil;
+    if ([[self searchController] isActive] && [[[[self searchController] searchBar] text] length] > 0) {
+        currStore = [_filteredStores objectAtIndex:indexPath.row];
+        [_user setCurrentStore:currStore];
+    } else {
+        currStore = [[_user stores] objectAtIndex:indexPath.row];
+        [_user setCurrentStore:currStore];
+        
+    }
+    
     
     NSLog(@"Set current store to %@", [[_user currentStore] name]);
 }

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface StoreTableViewController : UITableViewController <UISearchDisplayDelegate, UISearchDisplayDelegate>
-@property (nonatomic, strong) IBOutlet UISearchBar *storeSearchBar;
+@interface StoreTableViewController : UITableViewController <UISearchResultsUpdating>
+@property (nonatomic, strong) UISearchController *searchController;
 @end

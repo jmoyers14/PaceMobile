@@ -12,11 +12,13 @@
 @interface AccountTableViewController () {
     PMUser *_user;
     NSOperationQueue *_operations;
+    NSArray *_filteredAccounts;
 }
-
+@property (nonatomic, strong) UISearchController *searchController;
 @end
 
 @implementation AccountTableViewController
+@synthesize searchController = _searchController;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -32,6 +34,18 @@
     [super viewDidLoad];
     [self setTitle:@"Accounts"];
     _user = [PMUser sharedInstance];
+    
+    [self setExtendedLayoutIncludesOpaqueBars:YES];
+    [self setSearchController:[[UISearchController alloc] initWithSearchResultsController:nil]];
+    
+    [[self searchController] setSearchResultsUpdater:self];
+    [[self searchController] setDimsBackgroundDuringPresentation:NO];
+    [[[self searchController] searchBar] setScopeButtonTitles:@[]];
+    [self setDefinesPresentationContext:YES];
+    
+    [[self tableView] setTableHeaderView:[[self searchController] searchBar]];
+    
+    
     _operations = [[NSOperationQueue alloc] init];
     [_operations setMaxConcurrentOperationCount:1];
     [_operations setName:@"Find Accounts Operations"];
@@ -69,7 +83,11 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[[_user currentStore] accounts] count];
+    if ([[self searchController] isActive] && [[[[self searchController] searchBar] text] length] > 0) {
+        return [_filteredAccounts count];
+    } else {
+        return [[[_user currentStore] accounts] count];
+    }
 }
 
 
@@ -77,14 +95,34 @@
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AccountCell" forIndexPath:indexPath];
     
-    [[cell textLabel] setText:[[[[_user currentStore] accounts] objectAtIndex:indexPath.row] name]];
+    if ([[self searchController] isActive] && [[[[self searchController] searchBar] text] length] > 0) {
+        [[cell textLabel] setText:[[_filteredAccounts objectAtIndex:indexPath.row] name]];
+    } else {
+        [[cell textLabel] setText:[[[[_user currentStore] accounts] objectAtIndex:indexPath.row] name]];
+    }
     
     return cell;
 }
 
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [[_user currentStore] setCurrentAccount:[[[_user currentStore] accounts] objectAtIndex:indexPath.row]];
+    if ([[self searchController] isActive] && [[[[self searchController] searchBar] text] length] > 0) {
+        [[_user currentStore] setCurrentAccount:[_filteredAccounts objectAtIndex:indexPath.row]];
+    } else {
+        [[_user currentStore] setCurrentAccount:[[[_user currentStore] accounts] objectAtIndex:indexPath.row]];
+    }
     NSLog(@"current account is %@", [[[_user currentStore] currentAccount] name]);
+}
+
+#pragma mark - UISearchResultsUpdating
+
+- (void) updateSearchResultsForSearchController:(UISearchController *)searchController {
+    NSString *searchText = [[searchController searchBar] text];
+    
+    NSPredicate *filterPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchText];
+    
+    _filteredAccounts = [[[_user currentStore] accounts] filteredArrayUsingPredicate:filterPredicate];
+    
+    [[self tableView] reloadData];
 }
 
 #pragma mark - PMNetworkOperationDelegate
