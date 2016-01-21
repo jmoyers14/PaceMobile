@@ -7,6 +7,7 @@
 //
 
 #import "CreateOrderViewController.h"
+#import "PMTheme.h"
 
 @interface CreateOrderViewController () {
     PMUser *_user;
@@ -38,15 +39,21 @@
     [_operations setMaxConcurrentOperationCount:1];
     [_operations setName:@"createord operations"];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM/dd//yyyy"];
+    [formatter setDateFormat:@"MM/dd/yyyy"];
     
     [self.dateLabel setText:[formatter stringFromDate:[NSDate date]]];
     [self.storeLabel setText:[[_user currentStore] name]];
     [self.accountLabel setText:[[[_user currentStore] currentAccount] name]];
     [self hideSpinner];
+    [self styleCommentView];
     
     [self.commentView becomeFirstResponder];
     
+}
+
+- (void) styleCommentView {
+    [[[self commentView] layer] setBorderColor:[[PMTheme secondaryColor] CGColor]];
+    [[[self commentView] layer] setBorderWidth:1.0f];
 }
 
 - (void)didReceiveMemoryWarning

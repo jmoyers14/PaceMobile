@@ -159,6 +159,10 @@
 }
  */
 
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    [[self navigationItem] setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]];
+}
+
 
 #pragma mark - PMNetworkOperationDelegate
 -(void) networkRequestOperationDidFinish:(PMNetworkOperation *)operation {

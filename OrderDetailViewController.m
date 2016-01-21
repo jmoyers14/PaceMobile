@@ -107,6 +107,8 @@ typedef NS_ENUM(NSInteger, AlertTag) {
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     
+    [[self navigationItem] setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"" style:self.navigationItem.backBarButtonItem.style target:nil action:nil]];
+    
     if ([sender isKindOfClass:[ItemCell class]]) {
         EditItemViewController *destVC = [segue destinationViewController];
         ItemCell *ic = (ItemCell*)sender;
