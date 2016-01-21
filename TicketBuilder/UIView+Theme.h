@@ -10,4 +10,5 @@
 
 @interface UIView (UIView_Theme)
 + (UIView *) tableHeaderWithTitle:(NSString *)title;
++ (UIView *) partTableViewHeader;
 @end

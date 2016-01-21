@@ -26,4 +26,8 @@
     return [UIColor colorWithRed:255.0/255.0 green:193.0/255.0 blue:190.0/255.0 alpha:1.0f];
 }
 
++ (UIColor *) lightHeaderColor {
+    return [UIColor colorWithRed:239.0/255.0 green:239.0/255.0 blue:244.0/255.0 alpha:1.0f];
+}
+
 @end

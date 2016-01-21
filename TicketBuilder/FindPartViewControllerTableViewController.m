@@ -8,6 +8,8 @@
 
 #import "FindPartViewControllerTableViewController.h"
 #import "PMUser.h"
+#import "UIView+Theme.h"
+#import "NoPartsCell.h"
 @interface FindPartViewControllerTableViewController () {
     PMUser *_user;
     NSOperationQueue *_operations;
@@ -39,6 +41,17 @@
     _parts = [[NSArray alloc] init];
     [self hideSpinner];
     
+    [[self tableView] registerClass:[NoPartsCell class] forCellReuseIdentifier:[NoPartsCell cellIdentifier]];
+    [[self tableView] setRowHeight:UITableViewAutomaticDimension];
+    [[self tableView] setEstimatedRowHeight:60.0f];
+    [[self partNumTextField] becomeFirstResponder];
+    
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+   // [[self partNumTextField] becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -58,15 +71,28 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [_parts count];
+    return [_parts count] > 0 ? [_parts count] : 1;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PartDescCell *cell = [tableView dequeueReusableCellWithIdentifier:@"partDescCell"];
-    [cell setPart:[_parts objectAtIndex:[indexPath row]]];
-    return cell;
+    if ([_parts count] > 0) {
+        PartDescCell *cell = [tableView dequeueReusableCellWithIdentifier:@"partDescCell"];
+        [cell setPart:[_parts objectAtIndex:[indexPath row]]];
+        return cell;
+    } else {
+        NoPartsCell *cell = [tableView dequeueReusableCellWithIdentifier:[NoPartsCell cellIdentifier]];
+        return cell;
+    }
+}
+
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if ([_parts count] > 0) {
+        return [UIView partTableViewHeader];
+    } else {
+        return nil;
+    }
 }
 
 

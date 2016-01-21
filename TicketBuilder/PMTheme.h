@@ -13,4 +13,5 @@
 + (UIColor *) secondaryColor;
 + (UIColor *) acceptColor;
 + (UIColor *) deleteColor;
++ (UIColor *) lightHeaderColor;
 @end

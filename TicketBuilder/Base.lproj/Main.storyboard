@@ -1939,7 +1939,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Part Number" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9XA-td-FPV">
-                                    <rect key="frame" x="20" y="7" width="572" height="30"/>
+                                    <rect key="frame" x="8" y="7" width="584" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="QOH-ph-7DF"/>
                                     </constraints>
@@ -1962,9 +1962,14 @@
                                 <constraint firstAttribute="trailing" secondItem="TvH-A2-dML" secondAttribute="trailing" constant="20" id="2Jd-3H-Tqc"/>
                                 <constraint firstItem="9XA-td-FPV" firstAttribute="top" secondItem="otq-6b-ZZf" secondAttribute="top" constant="7" id="3Ni-Dm-U7U"/>
                                 <constraint firstAttribute="trailing" secondItem="9XA-td-FPV" secondAttribute="trailing" constant="8" id="Jsi-sM-Pby"/>
-                                <constraint firstItem="9XA-td-FPV" firstAttribute="leading" secondItem="otq-6b-ZZf" secondAttribute="leading" constant="20" id="dHj-qU-7da"/>
+                                <constraint firstItem="9XA-td-FPV" firstAttribute="leading" secondItem="otq-6b-ZZf" secondAttribute="leading" constant="8" id="dHj-qU-7da"/>
                                 <constraint firstItem="TvH-A2-dML" firstAttribute="top" secondItem="otq-6b-ZZf" secondAttribute="top" constant="12" id="h1O-zz-N4C"/>
                             </constraints>
+                        </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="kgq-YB-RZV">
+                            <rect key="frame" x="0.0" y="174" width="600" height="20"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="partDescCell" id="44r-wP-HbL" customClass="PartDescCell">
