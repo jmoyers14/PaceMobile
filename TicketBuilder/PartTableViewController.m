@@ -14,11 +14,11 @@ typedef NS_ENUM(NSInteger, PartSection) {
     PartSectionInfo,
     PartSectionStock,
     PartSectionPrice,
-    PartSectionBlank
+    PartSectionOrderDetails
 };
 
 @interface PartTableViewController ()
-
+@property (nonatomic, strong) UIPickerView *pickerView;
 @end
 
 @implementation PartTableViewController
@@ -38,6 +38,9 @@ typedef NS_ENUM(NSInteger, PartSection) {
 @synthesize sCoreTaxLabel = _sCoreTaxLabel;
 @synthesize lPartTaxLabel = _lPartTaxLabel;
 @synthesize lCoreTaxLabel = _lCoreTaxLabel;
+@synthesize pickerView = _pickerView;
+@synthesize quantityField = _quantityField;
+@synthesize typeControl = _typeControl;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -51,10 +54,16 @@ typedef NS_ENUM(NSInteger, PartSection) {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = [_currentPart part];
+    self.title = [NSString stringWithFormat:@"Part#: %@", [_currentPart part]];
     [self.partLabel setText:[_currentPart part]];
     [self.lineLabel setText:[_currentPart line]];
     [self.descLabel setText:[_currentPart partDesc]];
+    
+    [self configurePickerView];
+    
+    UITapGestureRecognizer *tpgr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
+    [[self view] addGestureRecognizer:tpgr];
+    
     switch ([_currentPart partType]) {
         case PMTypeAlternate:
             [self.typeLabel setText:@"Alternate"];
@@ -84,6 +93,7 @@ typedef NS_ENUM(NSInteger, PartSection) {
     [self.priceCoreLabel setText:[nf stringFromNumber:[_currentPart core]]];
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -94,8 +104,9 @@ typedef NS_ENUM(NSInteger, PartSection) {
     [((AddItemTableViewController*)[segue destinationViewController]) setCurrentPart:_currentPart];
 }
 
-- (IBAction)addPart:(id)sender {
-    [self performSegueWithIdentifier:@"AddPartSegue" sender:self];
+
+- (void) viewTapped:(id)sender {
+    [[self quantityField] resignFirstResponder];
 }
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -112,8 +123,8 @@ typedef NS_ENUM(NSInteger, PartSection) {
         case PartSectionPrice:
             title = @"Price";
             break;
-        case PartSectionBlank:
-            title = nil;
+        case PartSectionOrderDetails:
+            title = @"Order Details";
             break;
         default:
             title = nil;
@@ -121,6 +132,76 @@ typedef NS_ENUM(NSInteger, PartSection) {
     }
     
     return [UIView tableHeaderWithTitle:title];
+}
+
+- (void) configurePickerView {
+    [self setPickerView:[[UIPickerView alloc] init]];
+    [[self pickerView] setDelegate:self];
+    [[self pickerView] setDataSource:self];
+    
+    [[self quantityField] setInputView:[self pickerView]];
+    //[[self quantityField] setInputView:nil];
+}
+
+#pragma mark - UIPickerViewDelegate
+
+- (void) pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    [[self quantityField] setText:[NSString stringWithFormat:@"%ld", row]];
+}
+
+#pragma mark - UIPickerViewDataSource
+
+- (NSInteger) numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger) pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return [[self currentPart] instockAll] + 1;
+}
+
+- (NSString *) pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+   return [NSString stringWithFormat:@"%ld", row];
+}
+
+#pragma mark - Add Part
+
+- (IBAction)segValueChanged:(id)sender {
+    NSUInteger index = [(UISegmentedControl *)sender selectedSegmentIndex];
+    [[self typeControl] setSelectedSegmentIndex:index];
+    if (index == 0) {
+        [[self quantityField] setInputView:[self pickerView]];
+    } else {
+        [[self quantityField] setInputView:nil];
+    }
+}
+
+- (IBAction)addPart:(id)sender {
+    [self addItem];
+}
+
+- (void) addItem {
+    PMTransactionType transType = (PMTransactionType)[[self typeControl] selectedSegmentIndex];
+    NSUInteger quantity = [[[self quantityField] text] integerValue];
+    
+    
+    if (quantity == 0) {
+        [self displayErrorMessage:@"Invalid quantity"];
+        
+    } else if (quantity > [[self currentPart] instockAll] && transType == SaleTrans) {
+        [self displayErrorMessage:[NSString stringWithFormat:@"Only %lu parts in stock.", (unsigned long)[[self currentPart] instockAll]]];
+    } else {
+        
+        PMItem *item = [[PMItem alloc] initWithItemRow:0 part:_currentPart quantity:quantity transType:transType];
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:item, @"item", nil];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"AddItemNotification" object:nil userInfo:userInfo];
+        
+        if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
+        {
+            [self dismissViewControllerAnimated:true completion:nil];
+        }
+        
+    }
 }
 
 

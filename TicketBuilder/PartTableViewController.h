@@ -10,7 +10,7 @@
 #import "PMUser.h"
 #import "FindPartViewControllerTableViewController.h"
 
-@interface PartTableViewController : UITableViewController
+@interface PartTableViewController : UITableViewController <UIPickerViewDataSource, UIPickerViewDelegate>
 @property (nonatomic, strong) PMPart *currentPart;
 @property (nonatomic, strong) IBOutlet UILabel *partLabel;
 @property (nonatomic, strong) IBOutlet UILabel *lineLabel;
@@ -28,4 +28,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *lPartTaxLabel;
 @property (nonatomic, strong) IBOutlet UILabel *lCoreTaxLabel;
 
+
+@property (nonatomic, weak) IBOutlet UITextField *quantityField;
+@property (nonatomic, weak) IBOutlet UISegmentedControl *typeControl;
 @end
