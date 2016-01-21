@@ -18,4 +18,12 @@
     return [UIColor colorWithRed:24.0/255.0 green:49.0/255.0 blue:126.0/255.0 alpha:1.0f];
 }
 
++ (UIColor *) acceptColor {
+    return [UIColor colorWithRed:171.0/255.0 green:246.0/255.0 blue:168.0/255.0 alpha:1.0f];
+}
+
++ (UIColor *) deleteColor {
+    return [UIColor colorWithRed:255.0/255.0 green:193.0/255.0 blue:190.0/255.0 alpha:1.0f];
+}
+
 @end

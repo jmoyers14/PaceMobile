@@ -2052,6 +2052,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="u4o-07-wHa">
+                            <rect key="frame" x="0.0" y="586" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <sections>
                             <tableViewSection headerTitle="Info" id="WQi-cf-a0B">
                                 <cells>
@@ -2366,35 +2371,31 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                            <tableViewSection headerTitle="Price" id="TDX-9e-4yL">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="6iz-b8-eOz">
-                                        <rect key="frame" x="0.0" y="548" width="600" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="60" id="8Fr-Fg-jdn">
+                                        <rect key="frame" x="0.0" y="526" width="600" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6iz-b8-eOz" id="RhE-Wn-aG4">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8Fr-Fg-jdn" id="Efk-da-B5h">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Part To Order" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="voP-9k-hIH">
-                                                    <rect key="frame" x="8" y="11" width="584" height="21"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eND-OH-lcw">
+                                                    <rect key="frame" x="30" y="5" width="540" height="50"/>
+                                                    <color key="backgroundColor" red="0.66907868150000005" green="0.96624696600000004" blue="0.65921521979999997" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="knp-KW-Evg"/>
+                                                        <constraint firstAttribute="height" constant="50" id="xT1-oo-Xy0"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                    <state key="normal" title="Add Part To Order"/>
+                                                    <connections>
+                                                        <action selector="addPart:" destination="kF3-xd-xx4" eventType="touchUpInside" id="qV7-oj-u0D"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="voP-9k-hIH" firstAttribute="centerY" secondItem="RhE-Wn-aG4" secondAttribute="centerY" id="3dn-bZ-Zj7"/>
-                                                <constraint firstItem="voP-9k-hIH" firstAttribute="leading" secondItem="RhE-Wn-aG4" secondAttribute="leadingMargin" id="P3X-JW-Kpp"/>
-                                                <constraint firstItem="voP-9k-hIH" firstAttribute="trailing" secondItem="RhE-Wn-aG4" secondAttribute="trailingMargin" id="yww-Bk-vOK"/>
+                                                <constraint firstItem="eND-OH-lcw" firstAttribute="centerY" secondItem="Efk-da-B5h" secondAttribute="centerY" id="1sh-wr-boi"/>
+                                                <constraint firstItem="eND-OH-lcw" firstAttribute="centerX" secondItem="Efk-da-B5h" secondAttribute="centerX" id="Jvy-qt-TAC"/>
+                                                <constraint firstItem="eND-OH-lcw" firstAttribute="width" secondItem="Efk-da-B5h" secondAttribute="width" multiplier="0.9" id="z0Q-LV-Vgr"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="hda-6J-f5I" kind="show" id="LKf-7K-l13"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -2417,6 +2418,7 @@
                         <outlet property="stockLabel" destination="XZx-Hu-qGb" id="7YO-xW-NxL"/>
                         <outlet property="typeLabel" destination="i5D-B8-Z1s" id="g34-lQ-I7o"/>
                         <outlet property="weightLabel" destination="KZE-ah-sfy" id="yST-ZY-aXh"/>
+                        <segue destination="hda-6J-f5I" kind="show" identifier="AddPartSegue" id="yNd-8m-Fgp"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ScP-Xz-akg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2689,7 +2691,7 @@
                                             <constraint firstAttribute="height" constant="30" id="Hot-bE-ZVG"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                         <connections>
                                             <outlet property="delegate" destination="CwC-eL-6Uj" id="5sq-5v-Fgi"/>
                                         </connections>

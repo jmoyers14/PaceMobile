@@ -94,6 +94,10 @@ typedef NS_ENUM(NSInteger, PartSection) {
     [((AddItemTableViewController*)[segue destinationViewController]) setCurrentPart:_currentPart];
 }
 
+- (IBAction)addPart:(id)sender {
+    [self performSegueWithIdentifier:@"AddPartSegue" sender:self];
+}
+
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     
     NSString *title = nil;

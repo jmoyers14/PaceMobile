@@ -11,4 +11,6 @@
 @interface PMTheme : NSObject
 + (UIColor *) primaryColor;
 + (UIColor *) secondaryColor;
++ (UIColor *) acceptColor;
++ (UIColor *) deleteColor;
 @end
