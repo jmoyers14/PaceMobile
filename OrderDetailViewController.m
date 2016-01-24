@@ -7,6 +7,8 @@
 //
 
 #import "OrderDetailViewController.h"
+#import "NoDataCell.h"
+#import "UIView+Theme.h"
 
 typedef NS_ENUM(NSInteger, AlertTag) {
     AlertTagDelete,
@@ -64,6 +66,10 @@ typedef NS_ENUM(NSInteger, AlertTag) {
     [_operations setName:@"items queue"];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedAddItemNotification:) name:@"AddItemNotification" object:nil];
+    
+    [[self tableView] registerClass:[NoDataCell class] forCellReuseIdentifier:[NoDataCell cellIdentifier]];
+    [[[self tableView] tableFooterView] setHidden:YES];
+    
 }
 
 - (void) refreshItems {
@@ -127,7 +133,10 @@ typedef NS_ENUM(NSInteger, AlertTag) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
 
-    return [[_order items] count];
+    if ([[_order items] count] > 0)
+        return [[_order items] count];
+    else
+        return 1;
 
 }
 
@@ -135,12 +144,20 @@ typedef NS_ENUM(NSInteger, AlertTag) {
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
    
-    ItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"itemCell"];
-        
-    [cell setItem:[[_order items] objectAtIndex:[indexPath row]]];
-        
-    return cell;
+    if ([[_order items] count] > 0) {
+        ItemCell *cell = [tableView dequeueReusableCellWithIdentifier:@"itemCell"];
+        [cell setItem:[[_order items] objectAtIndex:[indexPath row]]];
+        return cell;
+    } else {
+        NoDataCell *cell = [tableView dequeueReusableCellWithIdentifier:[NoDataCell cellIdentifier]];
+        [[cell messageLabel] setText:@"No parts have been added to this order. Tap 'Add Part' to add a part for Sale, Return, Core Return or Defective return."];
+        return cell;
+    }
 
+}
+
+- (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [UIView orderTableViewHeader];
 }
 
 - (IBAction) finalize:(id) sender {
@@ -161,6 +178,8 @@ typedef NS_ENUM(NSInteger, AlertTag) {
 - (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
+
+
 
 
 
@@ -236,6 +255,12 @@ typedef NS_ENUM(NSInteger, AlertTag) {
                     [self.tableView reloadData];
 
                     [self.totalLabel setText:[nf stringFromNumber:ordTot]];
+                    
+                    if ([[_order items] count] > 0) {
+                        [[[self tableView] tableFooterView] setHidden:NO];
+                    } else {
+                        [[[self tableView] tableFooterView] setHidden:YES];
+                    }
 
                 }
             } else if([[operation identifier] isEqualToString:@"additem"]) {

@@ -9,7 +9,7 @@
 #import "FindPartViewControllerTableViewController.h"
 #import "PMUser.h"
 #import "UIView+Theme.h"
-#import "NoPartsCell.h"
+#import "NoDataCell.h"
 @interface FindPartViewControllerTableViewController () {
     PMUser *_user;
     NSOperationQueue *_operations;
@@ -31,7 +31,7 @@
     return self;
 }
 
-- (void)viewDidLoad
+- (void) viewDidLoad
 {
     [super viewDidLoad];
     _user = [PMUser sharedInstance];
@@ -41,7 +41,7 @@
     _parts = [[NSArray alloc] init];
     [self hideSpinner];
     
-    [[self tableView] registerClass:[NoPartsCell class] forCellReuseIdentifier:[NoPartsCell cellIdentifier]];
+    [[self tableView] registerClass:[NoDataCell class] forCellReuseIdentifier:[NoDataCell cellIdentifier]];
     [[self tableView] setRowHeight:UITableViewAutomaticDimension];
     [[self tableView] setEstimatedRowHeight:60.0f];
     [[self partNumTextField] becomeFirstResponder];
@@ -82,7 +82,7 @@
         [cell setPart:[_parts objectAtIndex:[indexPath row]]];
         return cell;
     } else {
-        NoPartsCell *cell = [tableView dequeueReusableCellWithIdentifier:[NoPartsCell cellIdentifier]];
+        NoDataCell *cell = [tableView dequeueReusableCellWithIdentifier:[NoDataCell cellIdentifier]];
         return cell;
     }
 }

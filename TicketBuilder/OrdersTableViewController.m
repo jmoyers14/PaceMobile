@@ -8,6 +8,7 @@
 
 #import "OrdersTableViewController.h"
 #import "OrderTableViewCell.h"
+#import "NoDataCell.h"
 @interface OrdersTableViewController () {
     PMUser *_user;
     PMAccount *_account;
@@ -37,6 +38,8 @@
     _operations = [[NSOperationQueue alloc] init];
     [_operations setMaxConcurrentOperationCount:1];
     [_operations setName:@"checkord operations"];
+    
+    [[self tableView] registerClass:[NoDataCell class] forCellReuseIdentifier:[NoDataCell cellIdentifier]];
     
 }
 
@@ -74,18 +77,28 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[_account orders] count];
+    if ([[_account orders] count] > 0) {
+        return [[_account orders] count];
+    } else {
+        return 1;
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orderCell"];
-    
-    PMOrder *order = [[_account orders] objectAtIndex:[indexPath row]];
-    
-    [cell setOrder:order];
-    return cell;
+    if ([[_account orders] count] > 0) {
+        OrderTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"orderCell"];
+        
+        PMOrder *order = [[_account orders] objectAtIndex:[indexPath row]];
+        
+        [cell setOrder:order];
+        return cell;
+    } else {
+        NoDataCell *cell = [tableView dequeueReusableCellWithIdentifier:[NoDataCell cellIdentifier]];
+        [[cell messageLabel] setText:@"There are no open orders for this account. To create a new order tap 'Create'."];
+        return  cell;
+    }
 }
 
 #pragma mark - PMNetworkOperationDelegate

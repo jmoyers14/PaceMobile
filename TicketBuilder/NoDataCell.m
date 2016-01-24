@@ -6,13 +6,13 @@
 //  Copyright © 2016 Bluesage. All rights reserved.
 //
 
-#import "NoPartsCell.h"
+#import "NoDataCell.h"
 #import "PMTheme.h"
 
-@implementation NoPartsCell
+@implementation NoDataCell
 
 + (NSString *) cellIdentifier {
-    return @"NoPartsCell";
+    return @"NoDataCell";
 }
 
 - (id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {

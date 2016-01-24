@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NoPartsCell : UITableViewCell
+@interface NoDataCell : UITableViewCell
 @property (nonatomic, strong) UILabel *messageLabel;
 + (NSString *) cellIdentifier;
 @end

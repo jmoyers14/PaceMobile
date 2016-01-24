@@ -72,4 +72,57 @@
     return header;
 }
 
++ (UIView *) orderTableViewHeader {
+    CGFloat width = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat height = 50.0;
+    UIView *header = [[UIView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    
+    [header setBackgroundColor:[UIColor lightGrayColor]];
+    
+    UILabel *lineNumberLabel = [[UILabel alloc] init];
+    UILabel *partNumberLabel = [[UILabel alloc] init];
+    UILabel *quantityLabel   = [[UILabel alloc] init];
+    UILabel *typeLabel       = [[UILabel alloc] init];
+    
+    [lineNumberLabel setText:@"Line #"];
+    [partNumberLabel setText:@"Part #"];
+    [quantityLabel setText:@"Quantity"];
+    [typeLabel setText:@"Type"];
+    
+    [lineNumberLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [partNumberLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [quantityLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [typeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [lineNumberLabel setTextAlignment:NSTextAlignmentLeft];
+    [partNumberLabel setTextAlignment:NSTextAlignmentCenter];
+    [quantityLabel setTextAlignment:NSTextAlignmentCenter];
+    [typeLabel setTextAlignment:NSTextAlignmentCenter];
+    
+    [header addSubview:lineNumberLabel];
+    [header addSubview:partNumberLabel];
+    [header addSubview:quantityLabel];
+    [header addSubview:typeLabel];
+    
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:lineNumberLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:header attribute:NSLayoutAttributeLeft multiplier:1.0f constant:8.0f]];
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:lineNumberLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:header attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+    
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:partNumberLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:lineNumberLabel attribute:NSLayoutAttributeRight multiplier:1.0f constant:8.0f]];
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:partNumberLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:header attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+    
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:quantityLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:partNumberLabel attribute:NSLayoutAttributeRight multiplier:1.0f constant:8.0f]];
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:quantityLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:header attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+    
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:typeLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:quantityLabel attribute:NSLayoutAttributeRight multiplier:1.0f constant:8.0f]];
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:typeLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:header attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.0f]];
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:typeLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:header attribute:NSLayoutAttributeRight multiplier:1.0f constant:-8.0f]];
+    
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:lineNumberLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:partNumberLabel attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:quantityLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:partNumberLabel attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:typeLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:quantityLabel attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f]];
+    
+    
+    return header;
+}
+
 @end

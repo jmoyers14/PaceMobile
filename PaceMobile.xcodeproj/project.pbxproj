@@ -76,7 +76,7 @@
 		99BCC5511C150E970035E745 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 99BCC5501C150E970035E745 /* Launch Screen.storyboard */; };
 		99C1C95A1C4F4C1800EE1A33 /* UIView+Theme.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C1C9591C4F4C1800EE1A33 /* UIView+Theme.m */; };
 		99C1C95D1C4F4EF200EE1A33 /* PMTheme.m in Sources */ = {isa = PBXBuildFile; fileRef = 99C1C95C1C4F4EF200EE1A33 /* PMTheme.m */; };
-		99F5782A1C50AD6E00405483 /* NoPartsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99F578291C50AD6E00405483 /* NoPartsCell.m */; };
+		99F5782A1C50AD6E00405483 /* NoDataCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 99F578291C50AD6E00405483 /* NoDataCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -207,8 +207,8 @@
 		99C1C9591C4F4C1800EE1A33 /* UIView+Theme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Theme.m"; sourceTree = "<group>"; };
 		99C1C95B1C4F4EF200EE1A33 /* PMTheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PMTheme.h; sourceTree = "<group>"; };
 		99C1C95C1C4F4EF200EE1A33 /* PMTheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PMTheme.m; sourceTree = "<group>"; };
-		99F578281C50AD6E00405483 /* NoPartsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoPartsCell.h; sourceTree = "<group>"; };
-		99F578291C50AD6E00405483 /* NoPartsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoPartsCell.m; sourceTree = "<group>"; };
+		99F578281C50AD6E00405483 /* NoDataCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoDataCell.h; sourceTree = "<group>"; };
+		99F578291C50AD6E00405483 /* NoDataCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoDataCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -446,8 +446,8 @@
 				5AD493D7192951C60030E599 /* PartDescCell.m */,
 				5AD493DF1929939E0030E599 /* OrderTableViewCell.h */,
 				5AD493E01929939E0030E599 /* OrderTableViewCell.m */,
-				99F578281C50AD6E00405483 /* NoPartsCell.h */,
-				99F578291C50AD6E00405483 /* NoPartsCell.m */,
+				99F578281C50AD6E00405483 /* NoDataCell.h */,
+				99F578291C50AD6E00405483 /* NoDataCell.m */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -610,7 +610,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99F5782A1C50AD6E00405483 /* NoPartsCell.m in Sources */,
+				99F5782A1C50AD6E00405483 /* NoDataCell.m in Sources */,
 				5AD493CF192930C10030E599 /* FindPartViewControllerTableViewController.m in Sources */,
 				5AAD1068190867860057BB66 /* YearTableViewController.m in Sources */,
 				5AD493C3192596C00030E599 /* PMGroup.m in Sources */,
