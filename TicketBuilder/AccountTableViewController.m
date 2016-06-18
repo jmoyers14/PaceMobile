@@ -105,7 +105,6 @@
 #pragma mark - UISearchBarDelegate methods
 
 - (void) searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    NSLog(@"%@", searchText);
     //xml to lookup all accounts for the store
     if (searchText.length > 3) {
         NSString *xml = [PMXMLBuilder findacctXMLWithUsername:[_user username]
