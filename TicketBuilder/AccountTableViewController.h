@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "PMNetworkOperation.h"
 #import "NetworkViewController.h"
-@interface AccountTableViewController : UITableViewController <PMNetworkOperationDelegate, UISearchResultsUpdating>
+@interface AccountTableViewController : UITableViewController <PMNetworkOperationDelegate, UISearchResultsUpdating, UISearchBarDelegate>
 
 @end
