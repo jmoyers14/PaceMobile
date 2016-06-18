@@ -10,10 +10,11 @@
 #import "NetworkViewController.h"
 #import "PartTableViewController.h"
 #import "PartDescCell.h"
+#import <AVFoundation/AVFoundation.h>
 
 
 
-@interface FindPartViewControllerTableViewController : UITableViewController <PMNetworkOperationDelegate, UITextFieldDelegate>
+@interface FindPartViewControllerTableViewController : UITableViewController <PMNetworkOperationDelegate, UITextFieldDelegate, AVCaptureMetadataOutputObjectsDelegate>
 
 @property (nonatomic, strong) IBOutlet UITextField *partNumTextField;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *spinner;

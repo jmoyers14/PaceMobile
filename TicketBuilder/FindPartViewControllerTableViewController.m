@@ -14,6 +14,12 @@
     PMUser *_user;
     NSOperationQueue *_operations;
     NSArray *_parts;
+    
+    AVCaptureSession *_session;
+    AVCaptureDevice  *_device;
+    AVCaptureDeviceInput *_input;
+    AVCaptureMetadataOutput *_output;
+    AVCaptureVideoPreviewLayer *_prevLayer;
 }
 
 @end
@@ -94,6 +100,41 @@
         return nil;
     }
 }
+#pragma mark - AVCaptureMetaDataDelegate
+
+- (IBAction)scanPart:(UIBarButtonItem *)sender {
+    [[self partNumTextField] resignFirstResponder];
+    
+    _session = [[AVCaptureSession alloc] init];
+    _device  = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    NSError *error = nil;
+    
+    _input = [AVCaptureDeviceInput deviceInputWithDevice:_device error:&error];
+    if (_input) {
+        [_session addInput:_input];
+    } else {
+        NSLog(@"Error: %@", error);
+    }
+    
+    _output = [[AVCaptureMetadataOutput alloc] init];
+    [_output setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+    [_session addOutput:_output];
+    
+    [_output setMetadataObjectTypes:[_output availableMetadataObjectTypes]];
+    
+    _prevLayer = [AVCaptureVideoPreviewLayer layerWithSession:_session];
+    [_prevLayer setFrame:[[self view] bounds]];
+    [_prevLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+    [[[self view] layer] addSublayer:_prevLayer];
+    
+    
+    [_session startRunning];
+    
+}
+
+- (void) captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection {
+    
+}
 
 
 #pragma mark - PMNetworkOperationDelegate
@@ -155,7 +196,13 @@
 
 - (IBAction)cancel:(id)sender {
     if ([sender isKindOfClass:[UIBarButtonItem class]]) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+        
+        
+        if (_prevLayer != nil && [[[[self view] layer] sublayers] containsObject:_prevLayer]) {
+            [_prevLayer removeFromSuperlayer];
+        } else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     }
 }
 
