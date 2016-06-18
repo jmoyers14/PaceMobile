@@ -116,6 +116,11 @@
         PMNetworkOperation *findacct = [[PMNetworkOperation alloc] initWithIdentifier:@"findacct" XML:xml andURL:[_user url]];
         [findacct setDelegate:self];
         [_operations addOperation:findacct];
+    } else {
+        if ([[[_user currentStore] accounts] count] > 0){
+            [[_user currentStore] setAccounts:[[NSArray alloc] init]];
+            [[self tableView] reloadData];
+        }
     }
 }
 
